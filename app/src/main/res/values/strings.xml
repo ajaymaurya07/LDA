@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">"Lucknow Development Authority"</string>
+    <string name="screen">screen</string>
+    <string name="services_at_your_fingertips">All Services</string>
+    <string name="lucknow_development_authority">LDA \nDigital Services</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="content_discription_mutation">mutation</string>
+    <string name="name_transfer_substitution_mutation"> Mutation</string>
+    <string name="content_discription_freehold_certificate">freehold certificate</string>
+    <string name="lease_exemption_certificate_freehold">Freehold Certificate</string>
+    <string name="content_discriptioncollection_yearly">Collection Yearly</string>
+    <string name="lease_collection_yearly">Lease Collection Yearly</string>
+    <string name="content_discription_payment_against_challan">payment against challan</string>
+    <string name="payment_against_demand_note_challan">Payment Against challan</string>
+    <string name="property_subdivision_and_reconstitution">Property Reconstitution</string>
+    <string name="content_dis_reconstruction">reconstruction</string>
+    <string name="content_dis_permission_to_mortage">permission to martgage</string>
+    <string name="application_for_regularization_of_excess_land_strip_of_land">Regularization of Excess Land</string>
+    <string name="content_dis_others">others</string>
+    <string name="others">Others</string>
+    <string name="content_dis_permission_for_sale_plot">Permission for Sale Plot</string>
+    <string name="permission_to_martgage">Martgage</string>
+    <string name="content_dis_logo">logo</string>
+    <string name="jhon">Jhon</string>
+    <string name="planning_and_development_organization_responsible_for_the_systematic_urban_growth_of_lucknow_city">Planning and Development Organization for the systematic urban growth of Lucknow city.</string>
+</resources>
