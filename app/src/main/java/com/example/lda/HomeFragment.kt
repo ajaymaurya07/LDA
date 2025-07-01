@@ -1,12 +1,14 @@
 package com.example.lda
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import com.example.lda.databinding.FragmentHomeBinding
+import com.example.lda.formfragment.parking.ParkingActivity
+import com.example.lda.serviceactivity.MutationService
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
@@ -23,10 +25,29 @@ class HomeFragment : Fragment() {
     ): View? {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        // Set click listener using binding
 
-//        val animation =AnimationUtils.loadAnimation(context,R.anim.wave)
-//        binding.wavingHandImageView.startAnimation(animation)
+        binding.mutation.setOnClickListener {
+            context?.let {
+                val intent = Intent(it, MutationService::class.java)
+                intent.putExtra("text","Name Transfer/Mutation")
+                startActivity(intent)
+            }
+        }
+        binding.freehold.setOnClickListener {
+            context?.let {
+                val intent = Intent(it, MutationService::class.java)
+                intent.putExtra("text","Freehold")
+                startActivity(intent)
+            }
+        }
+        binding.parking.setOnClickListener {
+            context?.let {
+                val intent = Intent(it, ParkingActivity::class.java)
+                intent.putExtra("text","Parking")
+                startActivity(intent)
+            }
+        }
+
 
         return binding.root
     }

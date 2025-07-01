@@ -24,4 +24,9 @@
     <string name="content_dis_logo">logo</string>
     <string name="jhon">Jhon</string>
     <string name="planning_and_development_organization_responsible_for_the_systematic_urban_growth_of_lucknow_city">Planning and Development Organization for the systematic urban growth of Lucknow city.</string>
+    <string name="lda_services">LDA SERVICES</string>
+    <string name="name_transfer_mutation">Name Transfer/Mutation</string>
+    <string name="mutation_reason">Mutation Reason</string>
+    <string name="mutation_reason_text">Mutation Reason*</string>
+    <string name="property_type">Property Type*</string>
 </resources>

@@ -12,7 +12,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LDA"
         tools:targetApi="31">
-
+        <activity
+            android:name=".formfragment.parking.ParkingHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".formfragment.parking.SlotBookingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".formfragment.parking.ParkingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".serviceactivity.FreeHoldServiceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".serviceactivity.MutationServiceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".serviceactivity.MutationService"
+            android:exported="false" />
         <activity
             android:name=".MainMenu"
             android:exported="true">
@@ -22,7 +39,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
