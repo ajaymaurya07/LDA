@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.lda"
+    namespace = "com.vdsai.prdfinance"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.lda"
+        applicationId = "com.vdsai.prdfinance"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
