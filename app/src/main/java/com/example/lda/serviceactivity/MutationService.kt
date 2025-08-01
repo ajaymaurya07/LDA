@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.example.lda.NoStatusFoundActivity
 import com.example.lda.R
 import com.example.lda.databinding.ActivityMutationServiceBinding
 
@@ -29,9 +30,17 @@ class MutationService : AppCompatActivity() {
             else if(navText=="Freehold"){
                 val intent= Intent(this,FreeHoldServiceActivity::class.java)
                 startActivity(intent)
+            }else if (navText=="Payment Against Challan"){
+                val intent= Intent(this,PaymentAgainstChallanActivity::class.java)
+                startActivity(intent)
             }
 
 
+        }
+
+        binding.trackStatus.setOnClickListener {
+            val intent= Intent(this,NoStatusFoundActivity::class.java)
+            startActivity(intent)
         }
 
     }

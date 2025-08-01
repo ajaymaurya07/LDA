@@ -74,14 +74,14 @@
 
             <!-- Card 1 -->
             <androidx.cardview.widget.CardView
-                android:id="@+id/application"
+                android:id="@+id/card1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="0dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/property"
+                app:layout_constraintEnd_toStartOf="@id/card2"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
@@ -97,15 +97,15 @@
 
             <!-- Card 2 -->
             <androidx.cardview.widget.CardView
-                android:id="@+id/property"
+                android:id="@+id/card2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="0dp"
                 android:backgroundTint="@color/grayDiv"
-                app:layout_constraintStart_toEndOf="@id/application"
-                app:layout_constraintEnd_toStartOf="@id/document"
+                app:layout_constraintStart_toEndOf="@id/card1"
+                app:layout_constraintEnd_toStartOf="@id/card3"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
@@ -121,13 +121,13 @@
 
             <!-- Card 3 -->
             <androidx.cardview.widget.CardView
-                android:id="@+id/document"
+                android:id="@+id/card3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="0dp"
                 android:backgroundTint="@color/grayDiv"
-                app:layout_constraintStart_toEndOf="@id/property"
+                app:layout_constraintStart_toEndOf="@id/card2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 

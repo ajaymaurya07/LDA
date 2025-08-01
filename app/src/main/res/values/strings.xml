@@ -29,4 +29,19 @@
     <string name="mutation_reason">Mutation Reason</string>
     <string name="mutation_reason_text">Mutation Reason*</string>
     <string name="property_type">Property Type*</string>
+    <string name="construction">Compounding of Unauthorized Construction</string>
+    <string name="noc_for_water">Application for NOC for Water / Power Connections and others</string>
+    <string name="restoretion_plote">Application for Restoration of Plot</string>
+    <string name="merge_plot">Application for Merger of Plot</string>
+    <string name="time_extention">Application for Time Extension-for deposition of premium due amount</string>
+    <string name="change_land_use">Application for Change in Land Use</string>
+    <string name="no_due_certificate">Issue of No Due Certificate</string>
+    <string name="re_allotment_letter">Issue of Re-allotment Letter</string>
+    <string name="strip_land">application for Regularization of excess land /strip of land</string>
+    <string name="approval_of_building_plan">Approval of Building Plan</string>
+    <string name="parking">Parking</string>
+    <string name="copy_sale_of_property">Copy Sale of Property</string>
+    <string name="aadhaar_card_new_owner">Aadhaar Card New Owner</string>
+    <string name="addhaar_card_previous_owner">Aadhaar Card Previous Owner</string>
+
 </resources>

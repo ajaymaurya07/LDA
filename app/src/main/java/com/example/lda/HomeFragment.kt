@@ -7,7 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.lda.databinding.FragmentHomeBinding
+import com.example.lda.formfragment.marketing.MarketingActivity
+import com.example.lda.formfragment.others.OthersActivity
 import com.example.lda.formfragment.parking.ParkingActivity
+import com.example.lda.formfragment.survey.PropertyOccupancyActivity
+import com.example.lda.formfragment.survey.SurveyActivity
 import com.example.lda.serviceactivity.MutationService
 
 class HomeFragment : Fragment() {
@@ -44,6 +48,44 @@ class HomeFragment : Fragment() {
             context?.let {
                 val intent = Intent(it, ParkingActivity::class.java)
                 intent.putExtra("text","Parking")
+                startActivity(intent)
+            }
+        }
+
+        binding.others.setOnClickListener {
+            context?.let {
+                val intent = Intent(it, OthersActivity::class.java)
+                intent.putExtra("text","Others")
+                startActivity(intent)
+            }
+        }
+
+        binding.paymentAgainstChallan.setOnClickListener {
+            context?.let {
+                val intent = Intent(it, MutationService::class.java)
+                intent.putExtra("text","Payment Against Challan")
+                startActivity(intent)
+            }
+        }
+
+        binding.leaseCollection.setOnClickListener {
+            context?.let {
+                val intent = Intent(it, SurveyActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
+        binding.marketing.setOnClickListener {
+            context?.let {
+                val intent = Intent(it, MarketingActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
+        binding.mortgage.setOnClickListener {
+            context?.let {
+                val intent = Intent(it, PropertyOccupancyActivity::class.java)
+                intent.putExtra("text","Mortgage")
                 startActivity(intent)
             }
         }

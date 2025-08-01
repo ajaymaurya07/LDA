@@ -8,6 +8,9 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.fragment.app.Fragment
 import com.example.lda.R
+import com.example.lda.formfragment.interfacePart.FragmentChangeLister
+import com.example.lda.utils.setupDropdown
+import com.google.android.material.button.MaterialButton
 
 
 class MutationReasonFragment : Fragment() {
@@ -26,16 +29,23 @@ class MutationReasonFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_mutation_reason, container, false)
 
         // Access the AutoCompleteTextView
-        val autoComplete: AutoCompleteTextView = view.findViewById(R.id.autoComplete)
+        val mutationReason: AutoCompleteTextView = view.findViewById(R.id.mutation_reason)
+        val propertyType: AutoCompleteTextView = view.findViewById(R.id.property_type)
+        val mutationBtn: MaterialButton = view.findViewById(R.id.mutation_btn)
+
 
         // Set options in dropdown
-        val options = listOf("Option 1", "Option 2", "Option 3")
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, options)
-        autoComplete.setAdapter(adapter)
+        val mutationList = listOf("Sale of Property", "Death", "Gift")
+        val propertyList = listOf("Leasehold", "Freehold")
+        setupDropdown(requireContext(), mutationReason, mutationList)
+        setupDropdown(requireContext(), propertyType, propertyList)
+
+        mutationBtn.setOnClickListener {
+            // Call activity method to replace fragment
+            (activity as? FragmentChangeLister)?.replaceWith(PropertyDetailsMutation(),"propertyDetailsCardView")
+        }
 
         return view
-
-
 
     }
 

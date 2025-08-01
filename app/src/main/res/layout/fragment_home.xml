@@ -290,6 +290,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <LinearLayout
+                            android:id="@+id/lease_collection"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:background="@drawable/card_background"
@@ -309,7 +310,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_regular"
                             android:gravity="center"
-                            android:text="@string/lease_collection_yearly"
+                            android:text="Survey"
                             android:textColor="@color/primary"
                             android:textSize="12sp"
                             android:textStyle="bold" />
@@ -339,6 +340,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <LinearLayout
+                            android:id="@+id/payment_against_challan"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:layout_marginEnd="15dp"
@@ -376,6 +378,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <LinearLayout
+                            android:id="@+id/marketing"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:layout_marginStart="15dp"
@@ -391,11 +394,11 @@
                         </LinearLayout>
 
                         <TextView
-                            android:layout_width="110dp"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_regular"
                             android:gravity="center"
-                            android:text="@string/property_subdivision_and_reconstitution"
+                            android:text="Marketing"
                             android:textColor="@color/primary"
                             android:textSize="12sp"
                             android:textStyle="bold" />
@@ -426,6 +429,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <LinearLayout
+                            android:id="@+id/mortgage"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:background="@drawable/card_background"
@@ -464,6 +468,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <LinearLayout
+                            android:id="@+id/others"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:background="@drawable/card_background"

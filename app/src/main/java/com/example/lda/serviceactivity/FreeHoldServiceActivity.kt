@@ -1,5 +1,6 @@
 package com.example.lda.serviceactivity
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
@@ -12,65 +13,81 @@ import androidx.fragment.app.Fragment
 import com.example.lda.R
 import com.example.lda.formfragment.freehold.ApplicationDetails
 import com.example.lda.formfragment.freehold.PropertyDetails
+import com.example.lda.formfragment.interfacePart.FragmentChangeLister
 import com.example.lda.formfragment.mutation.MutationReasonFragment
+import com.example.lda.formfragment.mutation.PropertyDetailsMutation
+import com.example.lda.formfragment.mutation.SupportingDocument
 
-class FreeHoldServiceActivity : AppCompatActivity() {
+class FreeHoldServiceActivity : AppCompatActivity(), FragmentChangeLister {
 
-    private lateinit var applicationDiv: CardView
-    private lateinit var propertyDiv: CardView
-    private lateinit var documentDiv: CardView
+    private lateinit var applicationDetails: CardView
+    private lateinit var propertyDetails: CardView
+    private lateinit var supportingDocument: CardView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         supportActionBar?.hide()
         setContentView(R.layout.activity_free_hold_service)
 
-        applicationDiv=findViewById(R.id.application)
-        propertyDiv=findViewById(R.id.property)
-        documentDiv=findViewById(R.id.document)
+        initViews()
+        setupBackButton()
+        observeFragmentChanges()
 
-
-        val backButton = findViewById<ImageView>(R.id.back_button)
-        backButton.setOnClickListener {
-            finish()
-        }
-        val applicationDetails = ApplicationDetails()
-        val propertyDetails=PropertyDetails()
-
-        setCurrentFragment(applicationDetails)
-
-
-        applicationDiv.setOnClickListener {
-            setCurrentFragment(applicationDetails)
-        }
-        propertyDiv.setOnClickListener {
-            setCurrentFragment(propertyDetails)
-        }
+        // Initial fragment
+        setCurrentFragment(ApplicationDetails(), addToBackStack = false)
+        highlightCard(applicationDetails)
 
     }
 
-    private fun setCurrentFragment(fragment: Fragment) {
+    private fun initViews() {
+        applicationDetails=findViewById(R.id.card1)
+        propertyDetails=findViewById(R.id.card2)
+        supportingDocument=findViewById(R.id.card3)
+    }
+
+    private fun setupBackButton() {
+        findViewById<ImageView>(R.id.back_button).setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+    }
+
+    private fun observeFragmentChanges() {
+        supportFragmentManager.addOnBackStackChangedListener {
+            val currentFragment = supportFragmentManager.findFragmentById(R.id.frameLayout)
+            when (currentFragment) {
+                is ApplicationDetails -> highlightCard(applicationDetails)
+                is PropertyDetails -> highlightCard(propertyDetails)
+                is SupportingDocument -> highlightCard(supportingDocument)
+            }
+        }
+    }
+
+    private fun highlightCard(selectedCard: CardView) {
+        val highlightColor = ContextCompat.getColor(this, R.color.secondary)
+        val normalColor = ContextCompat.getColor(this, R.color.grayDiv)
+
+        val cardViews = listOf(applicationDetails, propertyDetails, supportingDocument)
+        cardViews.forEach {
+            ViewCompat.setBackgroundTintList(it, ColorStateList.valueOf(normalColor))
+        }
+        ViewCompat.setBackgroundTintList(selectedCard, ColorStateList.valueOf(highlightColor))
+    }
+
+    private fun setCurrentFragment(fragment: Fragment, addToBackStack: Boolean = false) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.frameLayout, fragment)
+            if (addToBackStack) addToBackStack(null)
             commit()
         }
+    }
 
-        when (fragment) {
-            is ApplicationDetails -> {
-                applicationDiv.setCardBackgroundColor(ContextCompat.getColor(this, R.color.secondary))
-                propertyDiv.setCardBackgroundColor(ContextCompat.getColor(this, R.color.grayDiv))
-                documentDiv.setCardBackgroundColor(ContextCompat.getColor(this, R.color.grayDiv))
-            }
+    override fun replaceWith(fragment: Fragment, nextCardView: String) {
+        setCurrentFragment(fragment, addToBackStack = true)
 
-            is PropertyDetails -> {
-                propertyDiv.setCardBackgroundColor(ContextCompat.getColor(this, R.color.secondary))
-                applicationDiv.setCardBackgroundColor(ContextCompat.getColor(this, R.color.grayDiv))
-                documentDiv.setCardBackgroundColor(ContextCompat.getColor(this, R.color.grayDiv))
-            }
-
-            // You can add more cases here if you use the Document fragment later
+        when (nextCardView) {
+            "propertyDetailsCardView" -> highlightCard(propertyDetails)
+            "supportingDocumentCardView" -> highlightCard(supportingDocument)
         }
     }
 
