@@ -23,6 +23,24 @@
         android:theme="@style/Theme.LDA"
         tools:targetApi="31">
         <activity
+            android:name=".formfragment.parking.BookingSuccessActivity"
+            android:exported="false" />
+        <activity
+            android:name=".formfragment.parking.BookingFormActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LauncherActivity"
+            android:exported="false" />
+        <activity
+            android:name=".formfragment.propertyRegstration.DocumentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".formfragment.propertyRegstration.PropertyDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".formfragment.propertyRegstration.ResidentDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".NoStatusFoundActivity"
             android:exported="false" />
         <activity

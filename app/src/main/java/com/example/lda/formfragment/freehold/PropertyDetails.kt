@@ -1,6 +1,8 @@
 package com.example.lda.formfragment.freehold
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +12,7 @@ import android.widget.EditText
 import com.example.lda.R
 import com.example.lda.formfragment.interfacePart.FragmentChangeLister
 import com.example.lda.formfragment.mutation.SupportingDocument
+import com.example.lda.utils.AlertDialogHelper
 import com.example.lda.utils.DatePickerUtils
 import com.example.lda.utils.setupDropdown
 import com.google.android.material.button.MaterialButton
@@ -54,11 +57,44 @@ class PropertyDetails : Fragment() {
 
 
         mutationBtn.setOnClickListener {
+            val check=requiredFieldCheck(currentUseProperty.text.toString(),
+                usePropertyAllotment.text.toString(),
+                usePropertyPlan.text.toString(),
+                isPropertyMortgage.text.toString()
+            )
+
+            if (check){
+                return@setOnClickListener
+            }
             // Call activity method to replace fragment
             (activity as? FragmentChangeLister)?.replaceWith(SupportingDocument(),"supportingDocumentCardView")
         }
 
         return view
+    }
+
+
+    fun requiredFieldCheck(currentUseProperty:String,usePropertyAllotment:String,usePropertyPlan:String,
+                           isPropertyMortgage:String):Boolean{
+
+        if(currentUseProperty.isEmpty() || usePropertyAllotment.isEmpty() || usePropertyPlan.isEmpty() ||
+            isPropertyMortgage.isEmpty() ){
+            AlertDialogHelper.showAlertDialog(
+                requireContext(),
+                "Alert Message",
+                "Plz Add All Mandatory(*) Data!",
+                "Ok", { dialog, which ->
+                    dialog.dismiss()
+                },
+                "Cancel", { dialog, which ->
+                    // Action to take when user clicks 'No'
+                    dialog.dismiss() // Close the dialog
+                }
+            )
+            return true
+        }
+        return false
+
     }
 
 

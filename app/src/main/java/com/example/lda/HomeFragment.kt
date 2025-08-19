@@ -84,8 +84,8 @@ class HomeFragment : Fragment() {
 
         binding.mortgage.setOnClickListener {
             context?.let {
-                val intent = Intent(it, PropertyOccupancyActivity::class.java)
-                intent.putExtra("text","Mortgage")
+                val intent = Intent(it, MutationService::class.java)
+                intent.putExtra("text","Martgage")
                 startActivity(intent)
             }
         }

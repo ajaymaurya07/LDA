@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.fragment.app.Fragment
 import com.example.lda.R
 import com.example.lda.formfragment.interfacePart.FragmentChangeLister
+import com.example.lda.utils.AlertDialogHelper
 import com.example.lda.utils.setupDropdown
 import com.google.android.material.button.MaterialButton
 
@@ -41,6 +41,25 @@ class MutationReasonFragment : Fragment() {
         setupDropdown(requireContext(), propertyType, propertyList)
 
         mutationBtn.setOnClickListener {
+
+            val mutationReasonValue = mutationReason.text.toString()
+            val propertyTypeValue = propertyType.text.toString()
+            if (mutationReasonValue.isEmpty() || propertyTypeValue.isEmpty()) {
+                // Handle empty fields
+                AlertDialogHelper.showAlertDialog(
+                    requireContext(),
+                    "Alert Message",
+                    "Plz add All Mandatory(*) Fields Data!",
+                    "Ok", { dialog, which ->
+                        dialog.dismiss()
+                    },
+                    "Cancel", { dialog, which ->
+                        // Action to take when user clicks 'No'
+                        dialog.dismiss() // Close the dialog
+                    }
+                )
+                return@setOnClickListener
+            }
             // Call activity method to replace fragment
             (activity as? FragmentChangeLister)?.replaceWith(PropertyDetailsMutation(),"propertyDetailsCardView")
         }
@@ -48,6 +67,4 @@ class MutationReasonFragment : Fragment() {
         return view
 
     }
-
-
 }

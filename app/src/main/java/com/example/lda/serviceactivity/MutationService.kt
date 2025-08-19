@@ -34,6 +34,11 @@ class MutationService : AppCompatActivity() {
                 val intent= Intent(this,PaymentAgainstChallanActivity::class.java)
                 startActivity(intent)
             }
+            else if (navText=="Martgage"){
+                val intent= Intent(this,FreeHoldServiceActivity::class.java)
+                intent.putExtra("text","Martgage")
+                startActivity(intent)
+            }
 
 
         }

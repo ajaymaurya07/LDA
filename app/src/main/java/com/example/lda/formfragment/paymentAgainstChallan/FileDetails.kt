@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
+import android.widget.EditText
 import com.example.lda.R
 import com.example.lda.formfragment.interfacePart.FragmentChangeLister
+import com.example.lda.utils.AlertDialogHelper
 import com.example.lda.utils.setupDropdown
 import com.google.android.material.button.MaterialButton
 
@@ -28,6 +30,8 @@ class FileDetails : Fragment() {
         val saveNextBtn: MaterialButton = view.findViewById(R.id.save_next_btn)
 
         val schemeName: AutoCompleteTextView = view.findViewById(R.id.scheme_name)
+        // required textview
+        val fileNo: EditText = view.findViewById(R.id.file_no)
 
 
         val schemeNameList = listOf(
@@ -45,11 +49,39 @@ class FileDetails : Fragment() {
         setupDropdown(requireContext(), schemeName, schemeNameList)
 
         saveNextBtn.setOnClickListener {
+            val check=requiredFieldCheck(schemeName.text.toString(),
+                fileNo.text.toString()
+            )
+
+            if (check){
+                return@setOnClickListener
+            }
             // Call activity method to replace fragment
             (activity as? FragmentChangeLister)?.replaceWith(PlotDetails(),"plotDetailsCardView")
         }
 
         return view
+    }
+
+    fun requiredFieldCheck(schemeName:String,fileNo:String):Boolean{
+
+        if(schemeName.isEmpty() || fileNo.isEmpty()){
+            AlertDialogHelper.showAlertDialog(
+                requireContext(),
+                "Alert Message",
+                "Plz Add All Mandatory(*) Fields Data!",
+                "Ok", { dialog, which ->
+                    dialog.dismiss()
+                },
+                "Cancel", { dialog, which ->
+                    // Action to take when user clicks 'No'
+                    dialog.dismiss() // Close the dialog
+                }
+            )
+            return true
+        }
+        return false
+
     }
 
 

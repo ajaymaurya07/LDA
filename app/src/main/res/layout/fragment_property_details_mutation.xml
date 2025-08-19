@@ -35,15 +35,17 @@
                     android:layout_marginTop="10dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/da_property_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/da_property_code"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:inputType="number"
+                        android:maxLength="10"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -86,15 +88,18 @@
                     android:layout_marginTop="10dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/allottee_name"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/allottee_name"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:inputType="text"
+                        android:maxLength="30"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -109,15 +114,17 @@
                     android:layout_marginTop="10dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/father_spouse_name"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/father_spouse_name"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:maxLength="30"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -132,22 +139,27 @@
                     android:layout_marginTop="10dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/phone_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:prefixText="+91 "
+                    android:hint="Add 10 digit phone number">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/phone_number"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:maxLength="10" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+
 
                 <TextView
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Email Id:"
+                    android:text="Email Id*:"
                     android:fontFamily="@font/poppins_regular"
                     android:textColor="@color/primary"
                     android:textSize="12sp"
@@ -155,15 +167,17 @@
                     android:layout_marginTop="10dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/email_id"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/email_id"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:inputType="textEmailAddress"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -177,14 +191,14 @@
                     android:layout_marginTop="10dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/final_registary_date"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="DD/MM/YYYY"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/date"
+                        android:id="@+id/final_registary_date"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -202,15 +216,18 @@
                     android:layout_marginTop="10dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/total_cost"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:prefixText="₹ ">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/total_cost"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:inputType="number"
+                        android:maxLength="12"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -225,15 +242,18 @@
                     android:layout_marginTop="10dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/property_no"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/property_no"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:inputType="number"
+                        android:maxLength="12"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -246,16 +266,34 @@
                     android:textStyle="bold"
                     android:layout_marginTop="10dp" />
 
+<!--                <com.google.android.material.textfield.TextInputLayout-->
+
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="Enter"-->
+<!--                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">-->
+
+<!--                    <com.google.android.material.textfield.TextInputEditText-->
+<!--                        android:id="@+id/sector_block"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:maxLength="20"/>-->
+<!--                </com.google.android.material.textfield.TextInputLayout>-->
+
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/sector_block"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter"
+                    android:hint="Select"
+                    app:endIconMode="dropdown_menu"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <AutoCompleteTextView
+                        android:id="@+id/sector_block"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:inputType="none"
+                        android:focusable="false"
+                        android:paddingStart="10dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -291,7 +329,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Land Use"
+                    android:text="Land Use*"
                     android:fontFamily="@font/poppins_regular"
                     android:textColor="@color/primary"
                     android:textSize="12sp"
@@ -299,7 +337,6 @@
                     android:layout_marginTop="10dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Select"
@@ -327,43 +364,20 @@
                     android:layout_marginTop="10dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/postal_address"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/postal_address"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:minLines="3"
+                        android:gravity="top|start"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
-
-
-<!--                <TextView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Property Type"-->
-<!--                    android:fontFamily="@font/poppins_regular"-->
-<!--                    android:textColor="@color/primary"-->
-<!--                    android:textSize="12sp"-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:layout_marginTop="10dp" />-->
-
-<!--                <com.google.android.material.textfield.TextInputLayout-->
-<!--                    android:id="@+id/property_type"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:hint="Select"-->
-<!--                    app:endIconMode="dropdown_menu"-->
-<!--                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">-->
-
-<!--                    <AutoCompleteTextView-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:inputType="none"-->
-<!--                        android:focusable="false"-->
-<!--                        android:paddingStart="10dp" />-->
-<!--                </com.google.android.material.textfield.TextInputLayout>-->
 
 
                 <TextView
@@ -377,15 +391,20 @@
                     android:layout_marginTop="10dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/area_of_property"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/area_of_property"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:inputType="number"
+                        android:maxLength="12"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -403,15 +422,19 @@
                     android:layout_marginTop="10dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/covered_area_sqm"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/covered_area_sqm"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:inputType="number"
+                        android:maxLength="12"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -424,18 +447,22 @@
                     android:textColor="@color/primary"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    android:layout_marginTop="10dp" />
+                    android:layout_marginTop="10dp"
+                    />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/floor"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/floor"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:maxLength="3"
+                        android:inputType="number"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -450,15 +477,19 @@
                     android:layout_marginTop="10dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/current_property_value"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:prefixText="₹ ">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/current_property_value"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:inputType="number"
+                        android:maxLength="12"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -474,15 +505,20 @@
                     android:layout_marginTop="10dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/outstanding_amount"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:prefixText="₹ ">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/outstanding_amount"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:inputType="number"
+                        android:maxLength="12"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -497,15 +533,18 @@
                     android:layout_marginTop="10dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/no_of_intermediate_sales"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/no_of_intermediate_sales"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:inputType="number"
+                        android:maxLength="10"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>

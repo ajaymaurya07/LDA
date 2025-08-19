@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
+import android.widget.EditText
 import com.example.lda.R
 import com.example.lda.formfragment.interfacePart.FragmentChangeLister
+import com.example.lda.utils.AlertDialogHelper
 import com.example.lda.utils.setupDropdown
 import com.google.android.material.button.MaterialButton
 
@@ -28,7 +30,10 @@ class PlotDetails : Fragment() {
 
         val saveNextBtn: MaterialButton = view.findViewById(R.id.save_next_btn)
 
-        val schemeName: AutoCompleteTextView = view.findViewById(R.id.sector_name)
+        val sectorName: AutoCompleteTextView = view.findViewById(R.id.sector_name)
+
+        // required textview
+        val plotNo: EditText = view.findViewById(R.id.plot_no)
 
 
         val schemeNameList = listOf(
@@ -43,14 +48,42 @@ class PlotDetails : Fragment() {
             "sector 9"
         )
 
-        setupDropdown(requireContext(), schemeName, schemeNameList)
+        setupDropdown(requireContext(), sectorName, schemeNameList)
 
         saveNextBtn.setOnClickListener {
+            val check=requiredFieldCheck(sectorName.text.toString(),
+                plotNo.text.toString()
+            )
+
+            if (check){
+                return@setOnClickListener
+            }
             // Call activity method to replace fragment
             (activity as? FragmentChangeLister)?.replaceWith(AllotteDetails(),"allotteeDetailsCardView")
         }
 
         return view
+    }
+
+    fun requiredFieldCheck(schemeName:String,fileNo:String):Boolean{
+
+        if(schemeName.isEmpty() || fileNo.isEmpty()){
+            AlertDialogHelper.showAlertDialog(
+                requireContext(),
+                "Alert Message",
+                "Plz Add All Mandatory(*) Fields Data!",
+                "Ok", { dialog, which ->
+                    dialog.dismiss()
+                },
+                "Cancel", { dialog, which ->
+                    // Action to take when user clicks 'No'
+                    dialog.dismiss() // Close the dialog
+                }
+            )
+            return true
+        }
+        return false
+
     }
 
 

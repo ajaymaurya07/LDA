@@ -23,17 +23,15 @@ class ParkingActivity : AppCompatActivity() {
 
         val divSlotBooking = findViewById<LinearLayout>(R.id.div_slot_booking)
         divSlotBooking.setOnClickListener {
-            val intent = Intent(this, SlotBookingActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(this, SlotBookingActivity::class.java)
+//            startActivity(intent)
         }
 
         val divParkingHistory = findViewById<LinearLayout>(R.id.div_parking_history)
         divParkingHistory.setOnClickListener {
-            val intent = Intent(this, ParkingHistoryActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(this, ParkingHistoryActivity::class.java)
+//            startActivity(intent)
         }
-
-
 
     }
 }

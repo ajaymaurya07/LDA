@@ -3,6 +3,7 @@ package com.example.lda.serviceactivity
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -30,10 +31,14 @@ class FreeHoldServiceActivity : AppCompatActivity(), FragmentChangeLister {
         supportActionBar?.hide()
         setContentView(R.layout.activity_free_hold_service)
 
+        val navText=intent.getStringExtra("text")?:""
+        if (navText=="Martgage"){
+            findViewById<TextView>(R.id.nav_text).text=navText
+        }
+
         initViews()
         setupBackButton()
         observeFragmentChanges()
-
         // Initial fragment
         setCurrentFragment(ApplicationDetails(), addToBackStack = false)
         highlightCard(applicationDetails)

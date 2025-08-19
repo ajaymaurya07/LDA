@@ -18,13 +18,13 @@
             app:layout_constraintBottom_toTopOf="@id/save_next_btn"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
 
                 <TextView
-                    android:id="@+id/mutation_reason_star"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Application Type*"
@@ -38,7 +38,7 @@
 
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/mutation_reason_ll"
+
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -59,7 +59,6 @@
 
 
                 <TextView
-                    android:id="@+id/property_id_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Property Unique ID "
@@ -71,21 +70,20 @@
                     app:layout_constraintTop_toBottomOf="@id/mutation_reason_ll" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/property_id_ll"
                     android:layout_width="match_parent"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/property_id_text"
                     android:hint="Enter Property ID">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/property_unique_id"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:inputType="number"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
 
                 <TextView
-                    android:id="@+id/applicant_name_star"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Applicant Name*"
@@ -93,11 +91,9 @@
                     android:textColor="@color/primary"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/property_id_ll" />
+                    android:layout_marginTop="10dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/applicant_name_ll"
                     android:layout_width="match_parent"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_height="wrap_content"
@@ -105,13 +101,13 @@
                     android:hint="Enter Applicant Name">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/applicant_name"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </com.google.android.material.textfield.TextInputLayout>
 
 
                 <TextView
-                    android:id="@+id/applicant_father_name_star"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Applicant Father Name*"
@@ -123,7 +119,6 @@
                     app:layout_constraintTop_toBottomOf="@id/applicant_name_ll" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/applicant_father_name_ll"
                     android:layout_width="match_parent"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_height="wrap_content"
@@ -131,13 +126,13 @@
                     android:hint="Enter Applicant Father Name">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/applicant_father_name"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </com.google.android.material.textfield.TextInputLayout>
 
 
                 <TextView
-                    android:id="@+id/applicant_address_star"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Applicant Address*"
@@ -149,21 +144,19 @@
                     app:layout_constraintTop_toBottomOf="@id/applicant_father_name_ll" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/applicant_address_ll"
                     android:layout_width="match_parent"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/applicant_address_star"
                     android:hint="Enter Applicant Address">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/applicant_address"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </com.google.android.material.textfield.TextInputLayout>
 
 
                 <TextView
-                    android:id="@+id/applicant_property_star"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Applicant Property NO*"
@@ -175,7 +168,6 @@
                     app:layout_constraintTop_toBottomOf="@id/applicant_address_ll" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/applicant_property_ll"
                     android:layout_width="match_parent"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_height="wrap_content"
@@ -183,13 +175,14 @@
                     android:hint="Enter Property No">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/applicant_property_no"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:inputType="number"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
 
                 <TextView
-                    android:id="@+id/applicant_category_star"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Category Name*"
@@ -201,21 +194,20 @@
                     app:layout_constraintTop_toBottomOf="@id/applicant_property_ll" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/applicant_category_ll"
+
                     android:layout_width="match_parent"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/applicant_category_star"
                     android:hint="Enter Category Name">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/category_name"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </com.google.android.material.textfield.TextInputLayout>
 
 
                 <TextView
-                    android:id="@+id/applicant_block_star"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Block /Sector*"
@@ -227,21 +219,20 @@
                     app:layout_constraintTop_toBottomOf="@id/applicant_category_ll" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/applicant_block_ll"
+
                     android:layout_width="match_parent"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/applicant_block_star"
                     android:hint="Enter block/Sector">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/block"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </com.google.android.material.textfield.TextInputLayout>
 
 
                 <TextView
-                    android:id="@+id/applicant_floor_star"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Floor"
@@ -249,25 +240,24 @@
                     android:textColor="@color/primary"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/applicant_block_ll" />
+                    android:layout_marginTop="10dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/applicant_floor_ll"
+
                     android:layout_width="match_parent"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/applicant_floor_star"
                     android:hint="Enter Floor">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/floor"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:inputType="number"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
 
                 <TextView
-                    android:id="@+id/applicant_area_star"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Area of House /Plot*"
@@ -275,25 +265,24 @@
                     android:textColor="@color/primary"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/applicant_floor_ll" />
+                    android:layout_marginTop="10dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/applicant_area_ll"
+
                     android:layout_width="match_parent"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/applicant_area_star"
                     android:hint="Enter Area">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/area_of_house"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:inputType="number"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
 
                 <TextView
-                    android:id="@+id/applicant_cost_star"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Total Cost Of Property*"
@@ -301,25 +290,24 @@
                     android:textColor="@color/primary"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/applicant_area_ll" />
+                    android:layout_marginTop="10dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/applicant_cost_ll"
+
                     android:layout_width="match_parent"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/applicant_cost_star"
                     android:hint="Enter Total Cost">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/total_cost_of_property"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:inputType="number"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
 
                 <TextView
-                    android:id="@+id/applicant_mobile_star"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Mobile Number *"
@@ -327,11 +315,10 @@
                     android:textColor="@color/primary"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/applicant_cost_ll" />
+                    android:layout_marginTop="10dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/applicant_mobile_ll"
+
                     android:layout_width="match_parent"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_height="wrap_content"
@@ -339,13 +326,14 @@
                     android:hint="Enter Mobile Number">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/mobile_number"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:inputType="number"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
 
                 <TextView
-                    android:id="@+id/applicant_email_star"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Email Id *"
@@ -353,24 +341,24 @@
                     android:textColor="@color/primary"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/applicant_mobile_ll" />
+                    android:layout_marginTop="10dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/applicant_email_ll"
+
                     android:layout_width="match_parent"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/applicant_email_star"
                     android:hint="Enter Email">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/email_id"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:inputType="textEmailAddress"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
         </ScrollView>
 
 

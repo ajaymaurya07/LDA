@@ -43,5 +43,8 @@
     <string name="copy_sale_of_property">Copy Sale of Property</string>
     <string name="aadhaar_card_new_owner">Aadhaar Card New Owner</string>
     <string name="addhaar_card_previous_owner">Aadhaar Card Previous Owner</string>
+    <string name="news_text">If you or your family own a property — whether it was allotted by LDA or acquired by inheritance — and your name is not recorded with us officially, now is the time to register! \n📝 Submit details + available documents via online form or visit LDA Single Window Counter.</string>
+    <string name="announment">Announcement</string>
+
 
 </resources>

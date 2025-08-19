@@ -2,15 +2,18 @@ package com.example.lda.formfragment.mutation
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.lda.R
+import com.example.lda.utils.AlertDialogHelper
 import com.example.lda.utils.ImagePickerHandler
 
 
@@ -51,6 +54,8 @@ class SupportingDocument : Fragment() {
         button02 = container2.findViewById(R.id.button)
         button03 = container3.findViewById(R.id.button)
 
+        val checkBox = view.findViewById<CheckBox>(R.id.checkbox)
+
         // Register camera and gallery launchers
         cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
             if (success) {
@@ -83,5 +88,58 @@ class SupportingDocument : Fragment() {
 
         // Assign launchers
         imagePickerHandler.setLaunchers(cameraLauncher, galleryLauncher)
+
+
+        val submitButton = view.findViewById<Button>(R.id.mutation_btn)
+        submitButton.setOnClickListener {
+            if (fileText1.text.isNullOrEmpty() && fileText2.text.isNullOrEmpty() && fileText3.text.isNullOrEmpty() ){
+                AlertDialogHelper.showAlertDialog(
+                    requireContext(),
+                    "Alert Message",
+                    "Plz Select Minimum One Image!",
+                    "Ok", { dialog, which ->
+                        dialog.dismiss()
+                    },
+                    "Cancel", { dialog, which ->
+                        dialog.dismiss() // Close the dialog
+                    }
+                )
+                return@setOnClickListener
+            }
+            else if (!checkBox.isChecked){
+                AlertDialogHelper.showAlertDialog(
+                    requireContext(),
+                    "Alert Message",
+                    "Plz Select Check Box!",
+                    "Ok", { dialog, which ->
+                        dialog.dismiss()
+                    },
+                    "Cancel", { dialog, which ->
+                        dialog.dismiss()
+                    }
+                )
+                return@setOnClickListener
+            }
+
+            AlertDialogHelper.showAlertDialog(
+                requireContext(),
+                "Alert Message",
+                "Saved Successfully!!",
+                "Ok", { dialog, which ->
+                    dialog.dismiss()
+                    // Go back 3 fragments
+                    val fm = requireActivity().supportFragmentManager
+                    if (fm.backStackEntryCount >= 3) {
+                        repeat(3) { fm.popBackStack() }
+                    } else {
+                        requireActivity().finish() // If less than 3 in stack, just finish
+                    }
+                },
+                "Cancel", { dialog, which ->
+                    dialog.dismiss()
+                }
+            )
+
+        }
     }
 }
