@@ -1,5 +1,7 @@
 package com.example.lda.formfragment.mutation
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import android.widget.ProgressBar
+import androidx.core.content.ContextCompat
 import com.example.lda.R
 import com.example.lda.formfragment.interfacePart.FragmentChangeLister
 import com.example.lda.server.GeminiRequest
@@ -82,32 +85,53 @@ class PropertyDetailsMutation : Fragment() {
 
             override fun afterTextChanged(s: Editable?) {
                 val input = s.toString()
+                val phoneIdLayout=view.findViewById<TextInputLayout>(R.id.phoneIdLayout)
                 if (input.isNotEmpty()) {
                     if (!InputValidator.isValidPhone(input)) {
                         isPhoneValid=false
+                        phoneIdLayout.endIconMode = TextInputLayout.END_ICON_NONE
                         phoneNumber.error = "Invalid Phone Number"
                     } else {
                         isPhoneValid=true
                         phoneNumber.error = null
+                        phoneIdLayout.endIconMode = TextInputLayout.END_ICON_CUSTOM
+                        phoneIdLayout.endIconDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.ic_check_circle)
+                        phoneIdLayout.setEndIconTintList(ContextCompat.getColorStateList(requireContext(), R.color.primary))
                     }
+                }
+                else {
+                    phoneIdLayout.endIconMode = TextInputLayout.END_ICON_NONE
+                    phoneNumber.error = null
                 }
             }
 
         })
 
         emaiId.setOnFocusChangeListener { _, hasFocus ->
+
             if (!hasFocus) {
                 val input = emaiId.text.toString().trim()
+                val emailProgressBar=view.findViewById<ProgressBar>(R.id.emailLoader)
+                val emaiIdLayout=view.findViewById<TextInputLayout>(R.id.emailIdLayout)
                 if (input.isNotEmpty()) {
+                    emailProgressBar.visibility=View.VISIBLE
                     validateEmailWithGemini(input) { isValid ->
+                        emailProgressBar.visibility=View.GONE
                         if (isValid) {
                             emaiId.error = null
                             isEmailValid=true
+                            emaiIdLayout.endIconMode = TextInputLayout.END_ICON_CUSTOM
+                            emaiIdLayout.endIconDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.ic_check_circle)
+                            emaiIdLayout.setEndIconTintList(ContextCompat.getColorStateList(requireContext(), R.color.primary))
                         } else {
                             isEmailValid=false
+                            emaiIdLayout.endIconMode = TextInputLayout.END_ICON_NONE
                             emaiId.error = "Invalid Email Id!"
                         }
                     }
+                }else {
+                    emaiIdLayout.endIconMode = TextInputLayout.END_ICON_NONE
+                    emaiId.error = null
                 }
             }
         }
@@ -115,58 +139,89 @@ class PropertyDetailsMutation : Fragment() {
         allotteName.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
                 val input = allotteName.text.toString().trim()
+                val alloteeProgressBar=view.findViewById<ProgressBar>(R.id.alloteeLoader)
+                val allotteeNameLayout=view.findViewById<TextInputLayout>(R.id.allotteeNameLayout)
 
                 if (input.isNotEmpty()) {
-
+                    alloteeProgressBar.visibility=View.VISIBLE
                     validateNameWithGemini(input) { isValid ->
-                        Log.d("TAG", "onCreateView: $input $isValid")
+                        alloteeProgressBar.visibility=View.GONE
                         if (isValid) {
                             allotteName.error = null
                             isAlloteeNameValid=true
+                            allotteeNameLayout.endIconMode = TextInputLayout.END_ICON_CUSTOM
+                            allotteeNameLayout.endIconDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.ic_check_circle)
+                            allotteeNameLayout.setEndIconTintList(ContextCompat.getColorStateList(requireContext(), R.color.primary))
                         } else {
-
                             isAlloteeNameValid=false
+                            allotteeNameLayout.endIconMode = TextInputLayout.END_ICON_NONE
                             allotteName.error = "Not a valid human name!"
                         }
 
                     }
-                }
-            }
-        }
-        fatherSpouseName.setOnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                val input = fatherSpouseName.text.toString().trim()
-                if (input.isNotEmpty()) {
-                    validateNameWithGemini(input) { isValid ->
-                        if (isValid) {
-                            fatherSpouseName.error = null
-                            isFatherSpouseNameValid=true
-                        } else {
-                            isFatherSpouseNameValid=false
-                            Log.d("TAG", "onCreateView: $isFatherSpouseNameValid")
-                            fatherSpouseName.error = "Not a valid human name!"
-                        }
-                    }
+                }else {
+                    allotteeNameLayout.endIconMode = TextInputLayout.END_ICON_NONE
+                    allotteName.error = null
                 }
             }
         }
 
-        postelAddress.setOnFocusChangeListener { _, hasFocus ->
+
+        fatherSpouseName.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                val address = postelAddress.text.toString().trim()
-                if (address.isNotEmpty()) {
-                    validateAddressWithGemini(address) { isValid ->
-                        if (!isValid) {
-                            isPostalAddressValid=false
-                            postelAddress.error = "Invalid Address!"
+                val input = fatherSpouseName.text.toString().trim()
+                val fatherProgressBar=view.findViewById<ProgressBar>(R.id.fatherLoader)
+                val fatherNameLayout=view.findViewById<TextInputLayout>(R.id.fatherNameLayout)
+                if (input.isNotEmpty()) {
+                    fatherProgressBar.visibility=View.VISIBLE
+                    validateNameWithGemini(input) { isValid ->
+                        fatherProgressBar.visibility=View.GONE
+                        if (isValid) {
+                            fatherSpouseName.error = null
+                            isFatherSpouseNameValid=true
+                            fatherNameLayout.endIconMode = TextInputLayout.END_ICON_CUSTOM
+                            fatherNameLayout.endIconDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.ic_check_circle)
+                            fatherNameLayout.setEndIconTintList(ContextCompat.getColorStateList(requireContext(), R.color.primary))
                         } else {
-                            postelAddress.error = null
-                            isPostalAddressValid=true
+                            isFatherSpouseNameValid=false
+                            fatherNameLayout.endIconMode = TextInputLayout.END_ICON_NONE
+                            fatherSpouseName.error = "Not a valid human name!"
                         }
                     }
+                }else {
+                    fatherNameLayout.endIconMode = TextInputLayout.END_ICON_NONE
+                    fatherSpouseName.error = null
                 }
             }
         }
+
+//        postelAddress.setOnFocusChangeListener { _, hasFocus ->
+//            if (!hasFocus) {
+//                val postalProgressBar=view.findViewById<ProgressBar>(R.id.postalLoader)
+//                val address = postelAddress.text.toString().trim()
+//                val postalIdLayout=view.findViewById<TextInputLayout>(R.id.postalIdLayout)
+//                if (address.isNotEmpty()) {
+//                    postalProgressBar.visibility=View.VISIBLE
+//                    validateAddressWithGemini(address) { isValid ->
+//                        postalProgressBar.visibility=View.GONE
+//                        if (!isValid) {
+//                            isPostalAddressValid=false
+//                            postalIdLayout.endIconMode = TextInputLayout.END_ICON_NONE
+//                            postelAddress.error = "Invalid Address!"
+//                        } else {
+//                            postelAddress.error = null
+//                            isPostalAddressValid=true
+//                            postalIdLayout.endIconMode = TextInputLayout.END_ICON_CUSTOM
+//                            postalIdLayout.endIconDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.ic_check_circle)
+//                            postalIdLayout.setEndIconTintList(ContextCompat.getColorStateList(requireContext(), R.color.primary))
+//                        }
+//                    }
+//                }else {
+//                    postalIdLayout.endIconMode = TextInputLayout.END_ICON_NONE
+//                    postelAddress.error = null
+//                }
+//            }
+//        }
 
 
 
@@ -252,10 +307,10 @@ class PropertyDetailsMutation : Fragment() {
                 return@setOnClickListener
             }
 
-            if (postelAddress.text.toString().isNotEmpty() && !isPostalAddressValid){
-                showErrorDialog("Postal Address Invalid!")
-                return@setOnClickListener
-            }
+//            if (postelAddress.text.toString().isNotEmpty() && !isPostalAddressValid){
+//                showErrorDialog("Postal Address Invalid!")
+//                return@setOnClickListener
+//            }
 
             if (check) {
                 showErrorDialog("Plz Add All Mandatory(*) Fields Data!")

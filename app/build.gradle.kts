@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.example.lda"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.lda"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -66,8 +66,6 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
-
-
 
 
     implementation ("androidx.viewpager2:viewpager2:1.0.0")

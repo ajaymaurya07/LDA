@@ -53,11 +53,11 @@ class HomeFragment : Fragment() {
         }
 
         binding.others.setOnClickListener {
-            context?.let {
-                val intent = Intent(it, OthersActivity::class.java)
-                intent.putExtra("text","Others")
-                startActivity(intent)
-            }
+//            context?.let {
+//                val intent = Intent(it, OthersActivity::class.java)
+//                intent.putExtra("text","Others")
+//                startActivity(intent)
+//            }
         }
 
         binding.paymentAgainstChallan.setOnClickListener {
@@ -83,11 +83,11 @@ class HomeFragment : Fragment() {
         }
 
         binding.mortgage.setOnClickListener {
-            context?.let {
-                val intent = Intent(it, MutationService::class.java)
-                intent.putExtra("text","Martgage")
-                startActivity(intent)
-            }
+//            context?.let {
+//                val intent = Intent(it, MutationService::class.java)
+//                intent.putExtra("text","Martgage")
+//                startActivity(intent)
+//            }
         }
 
 

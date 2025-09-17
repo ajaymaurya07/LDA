@@ -16,7 +16,7 @@ data class GeminiResponse(
 interface GeminiApi {
     @Headers(
         "Content-Type: application/json",
-        "x-goog-api-key: AIzaSyDfOl-pJyZLSOdHpBF20Xgtt1g1SEcuO9o"   // 🔑 यहाँ पर अपनी Gemini API Key डालना
+        "x-goog-api-key: AIzaSyDhIShAtj_E7piEdLZ5EslchH3omRh_l_E"
     )
     @POST("v1beta/models/gemini-1.5-flash:generateContent")
     fun validateName(@Body body: GeminiRequest): Call<GeminiResponse>

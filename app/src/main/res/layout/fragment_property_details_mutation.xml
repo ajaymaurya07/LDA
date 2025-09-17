@@ -87,20 +87,36 @@
                     android:textStyle="bold"
                     android:layout_marginTop="10dp" />
 
-                <com.google.android.material.textfield.TextInputLayout
-
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/allotteeNameLayout"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:endIconMode="custom"
+                        app:endIconDrawable="@null">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/allottee_name"
-                        android:layout_width="match_parent"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/allottee_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="text"
+                            android:maxLength="30"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <ProgressBar
+                        android:id="@+id/alloteeLoader"
+                        style="?android:attr/progressBarStyleSmall"
+                        android:layout_width="30dp"
                         android:layout_height="match_parent"
-                        android:inputType="text"
-                        android:maxLength="30"/>
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:visibility="gone"/>
+
+                </LinearLayout>
+
+
 
                 <TextView
 
@@ -113,19 +129,49 @@
                     android:textStyle="bold"
                     android:layout_marginTop="10dp" />
 
-                <com.google.android.material.textfield.TextInputLayout
+<!--                <com.google.android.material.textfield.TextInputLayout-->
 
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="Enter"-->
+<!--                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">-->
+
+<!--                    <com.google.android.material.textfield.TextInputEditText-->
+<!--                        android:id="@+id/father_spouse_name"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:maxLength="30"/>-->
+<!--                </com.google.android.material.textfield.TextInputLayout>-->
+
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/fatherNameLayout"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:endIconMode="custom"
+                        app:endIconDrawable="@null">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/father_spouse_name"
-                        android:layout_width="match_parent"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/father_spouse_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="text"
+                            android:maxLength="30"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <ProgressBar
+                        android:id="@+id/fatherLoader"
+                        style="?android:attr/progressBarStyleSmall"
+                        android:layout_width="30dp"
                         android:layout_height="match_parent"
-                        android:maxLength="30"/>
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:visibility="gone"/>
+
+                </LinearLayout>
 
                 <TextView
 
@@ -138,25 +184,52 @@
                     android:textStyle="bold"
                     android:layout_marginTop="10dp" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:prefixText="+91 "
-                    android:hint="Add 10 digit phone number">
+<!--                <com.google.android.material.textfield.TextInputLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                    >-->
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/phone_number"
-                        android:layout_width="match_parent"
+<!--                    <com.google.android.material.textfield.TextInputEditText-->
+<!--                        -->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:inputType="phone"-->
+<!--                        android:maxLength="10" />-->
+<!--                </com.google.android.material.textfield.TextInputLayout>-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/phoneIdLayout"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:inputType="phone"
-                        android:maxLength="10" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        app:prefixText="+91 "
+                        android:hint="Add 10 digit phone number"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:endIconMode="custom"
+                        app:endIconDrawable="@null">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/phone_number"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="phone"
+                            android:maxLength="10"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <ProgressBar
+                        android:id="@+id/phoneLoader"
+                        style="?android:attr/progressBarStyleSmall"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"/>
+
+                </LinearLayout>
 
 
 
                 <TextView
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Email Id*:"
@@ -166,19 +239,51 @@
                     android:textStyle="bold"
                     android:layout_marginTop="10dp" />
 
-                <com.google.android.material.textfield.TextInputLayout
+<!--                <com.google.android.material.textfield.TextInputLayout-->
 
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="Enter"-->
+<!--                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">-->
+
+<!--                    <com.google.android.material.textfield.TextInputEditText-->
+<!--                        android:id="@+id/email_id"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:inputType="textEmailAddress"/>-->
+<!--                </com.google.android.material.textfield.TextInputLayout>-->
+
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/emailIdLayout"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:endIconMode="custom"
+                        app:endIconDrawable="@null">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/email_id"
-                        android:layout_width="match_parent"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/email_id"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="text"
+                            android:maxLength="30"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <ProgressBar
+                        android:id="@+id/emailLoader"
+                        style="?android:attr/progressBarStyleSmall"
+                        android:layout_width="30dp"
                         android:layout_height="match_parent"
-                        android:inputType="textEmailAddress"/>
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:visibility="gone"/>
+
+                </LinearLayout>
+
+
 
                 <TextView
                     android:layout_width="match_parent"
@@ -363,21 +468,38 @@
                     android:textStyle="bold"
                     android:layout_marginTop="10dp" />
 
-                <com.google.android.material.textfield.TextInputLayout
 
+
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/postalIdLayout"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:endIconMode="custom"
+                        app:endIconDrawable="@null">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/postal_address"
-                        android:layout_width="match_parent"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/postal_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:minLines="3"
+                            android:gravity="top|start"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <ProgressBar
+                        android:id="@+id/postalLoader"
+                        style="?android:attr/progressBarStyleSmall"
+                        android:layout_width="30dp"
                         android:layout_height="match_parent"
-                        android:minLines="3"
-                        android:gravity="top|start"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:visibility="gone"/>
+
+                </LinearLayout>
 
 
                 <TextView
