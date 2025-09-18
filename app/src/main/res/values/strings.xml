@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">"Lucknow Development Authority"</string>
+    <string name="app_name">"Case Tracker"</string>
     <string name="screen">screen</string>
     <string name="services_at_your_fingertips">All Services</string>
     <string name="lucknow_development_authority">LDA \nDigital Services</string>
@@ -45,6 +45,9 @@
     <string name="addhaar_card_previous_owner">Aadhaar Card Previous Owner</string>
     <string name="news_text">If you or your family own a property — whether it was allotted by LDA or acquired by inheritance — and your name is not recorded with us officially, now is the time to register! \n📝 Submit details + available documents via online form or visit LDA Single Window Counter.</string>
     <string name="announment">Announcement</string>
+    <string name="high_courts_district_courts_of_india"><![CDATA[High Courts & District Courts of India]]></string>
+    <string name="ecourt_tracker">Case Tracker</string>
+    <string name="logo">logo</string>
 
 
 </resources>

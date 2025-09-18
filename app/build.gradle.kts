@@ -9,7 +9,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.lda"
+        applicationId = "com.vdsai.eCourt"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -28,11 +28,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
     buildFeatures{
         dataBinding = true
@@ -50,27 +50,24 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-
-    // CameraX for camera functionality
-    val camerax_version = "1.3.4"
-    implementation("androidx.camera:camera-core:$camerax_version")
-    implementation ("androidx.camera:camera-camera2:$camerax_version")
-    implementation ("androidx.camera:camera-lifecycle:$camerax_version")
-    implementation ("androidx.camera:camera-view:$camerax_version")
-    implementation ("androidx.camera:camera-extensions:$camerax_version")
+    implementation(libs.androidx.camera.core)
+    implementation (libs.androidx.camera.camera2)
+    implementation (libs.androidx.camera.lifecycle)
+    implementation (libs.androidx.camera.view)
+    implementation (libs.androidx.camera.extensions)
 
 
     // retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation(libs.retrofit)
     // GSON
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation(libs.converter.gson)
 
-    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
+    implementation (libs.logging.interceptor)
 
 
-    implementation ("androidx.viewpager2:viewpager2:1.0.0")
-    implementation ("com.github.bumptech.glide:glide:4.15.1")
-    implementation ("me.relex:circleindicator:2.1.6") // Optional for dots
+    implementation (libs.androidx.viewpager2)
+    implementation (libs.glide)
+    implementation (libs.circleindicator) // Optional for dots
 
 
 }
