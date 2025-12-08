@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".eCourtUi.HearingActivity">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            >
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolBar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                style="@style/Widget.MaterialComponents.Toolbar.Primary"
+                app:title="Crn Number: DSLYND45689"
+                app:navigationIcon="@drawable/left_icon"
+                app:navigationIconTint="@color/white"
+                app:contentInsetStartWithNavigation="0dp"/>
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/topAppBar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:fillViewport="true"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Case Details"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/primary"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/montserrat_bold" />
+
+
+                <!--         add note -->
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/add_note_label_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/top_div_background"
+                    android:gravity="center"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_note"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/montserrat_bold" />
+                </LinearLayout>
+
+
+                <!--        note text-->
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/note_text_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp"
+                    android:background="@drawable/bg_light_primary">
+
+                    <!-- Note text -->
+                    <TextView
+                        android:id="@+id/note_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="14sp"
+                        android:text=""
+                        android:textColor="@android:color/black" />
+
+                    <!-- Edit button -->
+                    <ImageView
+                        android:id="@+id/btn_edit"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/edit_24"
+                        android:contentDescription="Edit"
+                        android:padding="4dp"
+                        app:tint="@color/tertiary" />
+
+                    <!-- Delete button -->
+                    <ImageView
+                        android:id="@+id/btn_delete"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/delete"
+                        android:contentDescription="Delete"
+                        android:padding="4dp"
+                        app:tint="@color/tertiary" />
+                </LinearLayout>
+
+
+                <!--        case details-->
+                <LinearLayout
+                    android:id="@+id/basicDetailsLabelLl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/top_div_background"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Basic Details"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/montserrat_bold" />
+                </LinearLayout>
+
+
+                <TableLayout
+                    android:id="@+id/basicDetailsTable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="0,1" />
+
+
+                <!--        case status-->
+                <LinearLayout
+                    android:id="@+id/hearingDetailsLabelll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/top_div_background"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hearing Details"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/montserrat_bold" />
+                </LinearLayout>
+
+
+                <TableLayout
+                    android:id="@+id/hearingDetailsTable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="0,1" />
+
+
+                <!--        Petitioner and Advocate-->
+
+                <LinearLayout
+                    android:id="@+id/courtDetailsLabelLl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/top_div_background"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Court Details"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/montserrat_bold" />
+                </LinearLayout>
+
+                <TableLayout
+                    android:id="@+id/courtDetailsTable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="0" />
+
+
+                <!--        Respondent And Advocate-->
+                <LinearLayout
+                    android:id="@+id/legalDetailsLabelll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/top_div_background"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:layout_marginTop="20dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Legal Details"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/montserrat_bold" />
+                </LinearLayout>
+
+                <TableLayout
+                    android:id="@+id/legalDetailsTable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="0,1" />
+
+                <!--        act-->
+                <LinearLayout
+                    android:id="@+id/caseStatusLabelLl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/top_div_background"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="Case Status"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <TableLayout
+                    android:id="@+id/caseStatusTable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="0,1" />
+
+                <!--        fir Details-->
+                <LinearLayout
+                    android:id="@+id/categoryDetailsTableLabelll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/top_div_background"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Category Details"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/montserrat_bold" />
+                </LinearLayout>
+
+                <TableLayout
+                    android:id="@+id/categoryDetailsTable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="0,1" />
+
+                <!--        Case History-->
+
+                <LinearLayout
+                    android:id="@+id/iaDetailsTableLabelll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/top_div_background"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="IA Details"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/montserrat_bold" />
+                </LinearLayout>
+
+                <TableLayout
+                    android:id="@+id/iaDetailsTable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="0,1" />
+
+
+                <!--        Final Order /Judgement-->
+                <LinearLayout
+                    android:id="@+id/hearingHistoryTableLabelll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/top_div_background"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hearing History"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/montserrat_bold" />
+                </LinearLayout>
+
+                <TableLayout
+                    android:id="@+id/hearingHistoryTable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="0,1" />
+
+
+
+                <LinearLayout
+                    android:id="@+id/interimOrderTableLabelll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/top_div_background"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Interim Order"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/montserrat_bold" />
+                </LinearLayout>
+
+                <TableLayout
+                    android:id="@+id/interimOrderTable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="0,1" />
+
+
+                <LinearLayout
+                    android:id="@+id/petitionerAndAdvocateTableLabelll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/top_div_background"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Petitioner Name And Advocate"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/montserrat_bold" />
+                </LinearLayout>
+
+                <TableLayout
+                    android:id="@+id/petitionerAndAdvocateTable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="0,1" />
+
+
+
+                <LinearLayout
+                    android:id="@+id/respondentAndAdvocateTableLabelll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/top_div_background"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Respondent Name And Advocate"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/montserrat_bold" />
+                </LinearLayout>
+
+                <TableLayout
+                    android:id="@+id/respondentAndAdvocateTable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="0,1" />
+
+
+                <LinearLayout
+                    android:id="@+id/subOrdinateCourtTableLabelll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/top_div_background"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sub-Ordinate Court Information"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/montserrat_bold" />
+                </LinearLayout>
+
+                <TableLayout
+                    android:id="@+id/subOrdinateCourtTable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="0,1" />
+
+
+            </LinearLayout>
+        </ScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,51 @@
+package com.example.lda.model
+
+import com.google.gson.annotations.SerializedName
+
+data class FinalOrderDetailResponse(
+
+	@field:SerializedName("status_message")
+	val statusMessage: String? = null,
+
+	@field:SerializedName("result")
+	val result: List<FinalOrderDetailResultItem?>? = null,
+
+	@field:SerializedName("status_code")
+	val statusCode: String? = null
+)
+
+data class FinalOrderDetailResultItem(
+
+	@field:SerializedName("next_hearing")
+	val nextHearing: String? = null,
+
+	@field:SerializedName("interim_calculated_deadline")
+	val interimCalculatedDeadline: Any? = null,
+
+	@field:SerializedName("registration_number")
+	val registrationNumber: String? = null,
+
+	@field:SerializedName("respondent_name")
+	val respondentName: String? = null,
+
+	@field:SerializedName("interim_action")
+	val interimAction: String? = null,
+
+	@field:SerializedName("filing_date")
+	val filingDate: String? = null,
+
+	@field:SerializedName("case_type")
+	val caseType: String? = null,
+
+	@field:SerializedName("interim_notes")
+	val interimNotes: Any? = null,
+
+	@field:SerializedName("petitioner_name")
+	val petitionerName: String? = null,
+
+	@field:SerializedName("designation")
+	val designation: String? = null,
+
+	@field:SerializedName("cnr_number")
+	val cnrNumber: String? = null
+)

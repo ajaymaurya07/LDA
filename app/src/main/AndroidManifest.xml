@@ -6,13 +6,16 @@
         android:name="android.hardware.camera"
         android:required="false" />
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
+        android:name=".eCourtUi.MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -23,13 +26,46 @@
         android:theme="@style/Theme.LDA"
         tools:targetApi="31">
         <activity
-            android:name=".eCourtUi.MainActivity"
+            android:name=".eCourtUi.viewAllActivity.DesignationWiseCasesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".eCourtUi.LoginActivity.LoginActivity"
             android:exported="true" >
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
 <!--            </intent-filter>-->
+        </activity>
+        <activity
+            android:name=".eCourtUi.viewAllActivity.ViewAllRecentFinalOrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".eCourtUi.viewAllActivity.ViewAllRecentInterimOrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".eCourtUi.SummaryDashboard"
+            android:exported="false" />
+        <activity
+            android:name=".eCourtUi.FinalOrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".eCourtUi.InterminOrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".eCourtUi.HearingActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateAlwaysVisible" />
+        <activity
+            android:name=".eCourtUi.MainActivity"
+            android:exported="true">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".formfragment.parking.BookingSuccessActivity"

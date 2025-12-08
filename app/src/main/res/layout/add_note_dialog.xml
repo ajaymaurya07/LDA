@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Note"
+        android:textColor="@color/primary"
+        android:textSize="16sp"
+        android:fontFamily="@font/montserrat_bold"
+        />
+
+
+    <EditText
+        android:id="@+id/edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Text Here"
+        android:minLines="3"
+        android:background="@drawable/bg_edittext"
+        android:layout_marginVertical="8dp"
+        android:gravity="top|start"
+        android:inputType="textMultiLine"
+        android:padding="10dp"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:layout_marginHorizontal="10dp">
+        <ImageView
+            android:id="@+id/add"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/add"
+            android:background="@drawable/top_div_background"
+            android:layout_marginHorizontal="5dp"/>
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/close"
+            android:background="@drawable/top_div_background"
+            android:padding="12dp"
+            android:layout_marginHorizontal="5dp"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

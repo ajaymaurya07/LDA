@@ -1,176 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp">
+
+    <!-- Profile Image Container with Shadow and Edit Icon -->
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageView"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:contentDescription="Profile Picture"
+        android:scaleType="centerCrop"
+        android:src="@drawable/profile_icon_02"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"/>
+
+    <!-- User Name with Status Indicator -->
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Mr. John"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/montserrat_bold"
+        app:layout_constraintTop_toBottomOf="@id/imageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
-    <LinearLayout
-        android:id="@+id/main"
+
+    <!-- Card for User Info -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/info_card"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@drawable/profile_icon_02"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"/>
-
-
-
-        <!-- User Name TextView -->
-        <TextView
-            android:id="@+id/user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="User Name:Jhon"
-            android:textSize="20sp"
-            android:fontFamily="@font/montserrat_bold"
-            android:padding="10dp"
-            android:layout_marginTop="20dp"/>
-
-        <!-- Horizontal Line below User Name -->
-        <View
-            android:id="@+id/line2"
-            android:layout_width="match_parent"
-            android:layout_height="1.5dp"
-            android:background="@android:color/darker_gray"
-            app:layout_constraintTop_toTopOf="@id/user_id"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <!-- User ID TextView -->
-        <TextView
-            android:id="@+id/user_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Phone Number : 9865145212"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:padding="10dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@id/user_name"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <!-- Horizontal Line below User ID -->
-        <View
-            android:id="@+id/line3"
-            android:layout_width="match_parent"
-            android:layout_height="1.5dp"
-            android:background="@android:color/darker_gray"
-            app:layout_constraintTop_toTopOf="@id/user_type"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <!-- User Type TextView -->
-        <TextView
-            android:id="@+id/user_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Gmail : jhon@gmail.com"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:padding="10dp"
-           />
-
-        <!-- Horizontal Line below User Type -->
-
-
-        <View
-            android:id="@+id/line7"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"
-            app:layout_constraintTop_toTopOf="@id/change_password_layout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-
-        <!-- Horizontal Line below Zone -->
-        <View
-            android:id="@+id/line5"
-            android:layout_width="match_parent"
-            android:layout_height="1.5dp"
-            android:background="@android:color/darker_gray"
-            app:layout_constraintTop_toTopOf="@id/layout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="1dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/user_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:cardUseCompatPadding="true">
 
         <LinearLayout
-            android:id="@+id/change_password_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:orientation="vertical"
+            android:padding="10dp">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/baseline_24"/>
-            <TextView
-                android:id="@+id/change_password"
+            <!-- user id Number -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Change Password"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:padding="10dp"
-                />
-        </LinearLayout>
-        <!-- Logout TextView -->
+                android:orientation="horizontal"
+                android:paddingVertical="5dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true">
 
-        <View
-            android:id="@+id/line4"
-            android:layout_width="match_parent"
-            android:layout_height="1.5dp"
-            android:background="@android:color/darker_gray"
-            app:layout_constraintTop_toTopOf="@id/zone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/profile_icon"
+                    android:contentDescription="Phone Icon"
+                    app:tint="@color/material_on_surface_emphasis_medium" />
 
-        <LinearLayout
-            android:id="@+id/layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/change_password_layout"
-            android:orientation="horizontal"
-            android:gravity="center">
+                <TextView
+                    android:id="@+id/user_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="User ID: court_001"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/poppins_regular" />
+            </LinearLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/baseline_logout_24"/>
-            <TextView
-                android:id="@+id/logout"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E8ECEF"
+                android:layout_marginVertical="8dp" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E8ECEF"
+                android:layout_marginVertical="8dp" />
+
+
+            <!-- user id Number -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Logout"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:padding="10dp"
-                />
+                android:orientation="horizontal"
+                android:paddingVertical="5dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/profile_icon"
+                    android:contentDescription="Phone Icon"
+                    app:tint="@color/material_on_surface_emphasis_medium" />
+
+                <TextView
+                    android:id="@+id/user_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="User Type: court_001"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E8ECEF"
+                android:layout_marginVertical="8dp" />
+
+            <!-- Phone Number -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="5dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/phone"
+                    android:contentDescription="Phone Icon"
+                    app:tint="@color/material_on_surface_emphasis_medium" />
+
+                <TextView
+                    android:id="@+id/mobile_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="9865145212"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E8ECEF"
+                android:layout_marginVertical="8dp" />
+
+            <!-- Gmail -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="5dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/baseline_email_24"
+                    android:contentDescription="Email Icon"
+                    app:tint="@color/material_on_surface_emphasis_medium" />
+
+                <TextView
+                    android:id="@+id/department"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="Department"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/poppins_regular" />
+            </LinearLayout>
         </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 
-        <View
-            android:id="@+id/line6"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout"/>
 
-    </LinearLayout>
-</layout>
+    <!-- Logout Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Logout"
+        android:textSize="16sp"
+        android:padding="14dp"
+        app:icon="@drawable/baseline_logout_24"
+        app:iconGravity="start"
+        app:cornerRadius="10dp"
+        app:backgroundTint="#FFFFFF"
+        android:fontFamily="@font/poppins_medium"
+        app:strokeColor="#D32F2F"
+        app:strokeWidth="1dp"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        app:layout_constraintTop_toBottomOf="@id/info_card"
+        app:layout_constraintStart_toStartOf="parent"
+         />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

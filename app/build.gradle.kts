@@ -1,7 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("com.google.devtools.ksp")
+    id("com.google.devtools.ksp") version "2.0.0-1.0.24"
+    id("kotlin-parcelize")
 }
 // ecout project
 android {
@@ -36,6 +37,7 @@ android {
     }
     buildFeatures{
         dataBinding = true
+        viewBinding = true
     }
 }
 
@@ -46,6 +48,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -67,7 +71,14 @@ dependencies {
 
     implementation (libs.androidx.viewpager2)
     implementation (libs.glide)
-    implementation (libs.circleindicator) // Optional for dots
+    implementation (libs.circleindicator)
+
+
+    implementation ("androidx.room:room-runtime:2.8.2")
+    ksp ("androidx.room:room-compiler:2.8.2")
+    implementation ("androidx.room:room-ktx:2.6.1")
+
+
 
 
 }

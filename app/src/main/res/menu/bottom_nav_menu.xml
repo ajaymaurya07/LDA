@@ -5,11 +5,26 @@
         android:title="Home"
         android:icon="@drawable/home_icon"/>
     <item
-        android:id="@+id/service"
-        android:title="Services"
-        android:icon="@drawable/service_icon"/>
+        android:id="@+id/cause_list"
+        android:title="Cause List"
+        android:icon="@drawable/square"/>
+
+<!--    <item-->
+<!--        android:id="@+id/search"-->
+<!--        android:title="Search"-->
+<!--        android:icon="@drawable/search"/>-->
+
+    <item
+        android:id="@+id/nav_notifications"
+        android:icon="@drawable/notification"
+        android:title="Notifications" />
+
     <item
         android:id="@+id/profile"
         android:title="Profile"
         android:icon="@drawable/profile_icon"/>
+
+
+
+
 </menu>
