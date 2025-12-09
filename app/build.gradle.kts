@@ -10,7 +10,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.vdsai.eCourt"
+        applicationId = "com.vdsai.house_tax_final"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
