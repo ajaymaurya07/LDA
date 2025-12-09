@@ -3,9 +3,8 @@ package com.example.lda.houseTax
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.lda.R
+import com.example.lda.utils.SystemBarsHelper.applySafeAreaInsets
 
 class DashBoardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,5 +13,13 @@ class DashBoardActivity : AppCompatActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_dash_board)
 
+
+
+        applySafeAreaInsets(
+            rootView = findViewById(R.id.root),
+            bottomBar = findViewById(R.id.bottomNavigationView),
+            statusBarColor = getColor(R.color.primary),
+            lightStatusBar = true,
+        )
     }
 }
