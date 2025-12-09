@@ -6,7 +6,7 @@
         android:icon="@drawable/home_icon"/>
     <item
         android:id="@+id/cause_list"
-        android:title="Cause List"
+        android:title="My Dashboard"
         android:icon="@drawable/square"/>
 
 <!--    <item-->
@@ -17,11 +17,11 @@
     <item
         android:id="@+id/nav_notifications"
         android:icon="@drawable/notification"
-        android:title="Notifications" />
+        android:title="My Transactions" />
 
     <item
         android:id="@+id/profile"
-        android:title="Profile"
+        android:title="Account"
         android:icon="@drawable/profile_icon"/>
 
 

@@ -9,6 +9,7 @@ import com.example.lda.databinding.ActivityMainMenuBinding
 import com.example.lda.eCourtUi.CauseListFragment
 import com.example.lda.eCourtUi.NotificationFragment
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
+import com.example.lda.houseTax.DashboradFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainMenu : AppCompatActivity() {
@@ -36,7 +37,7 @@ class MainMenu : AppCompatActivity() {
         val causeListFragment = CauseListFragment()
         val notificationFragment = NotificationFragment()
         val profileFragment = ProfileFragment()
-        val dashBoardFragment = DasBoardFragment()
+        val dashBoardFragment = DashboradFragment()
 
         setCurrentFragment(dashBoardFragment)
 
