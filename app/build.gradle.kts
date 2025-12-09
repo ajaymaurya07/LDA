@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.lda"
+    namespace = "com.example.house_tax"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.lda"
+        applicationId = "com.example.house_tax"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
