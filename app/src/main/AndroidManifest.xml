@@ -23,6 +23,21 @@
         android:theme="@style/Theme.LDA"
         tools:targetApi="31">
         <activity
+            android:name=".houseTax.DashBoardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".houseTax.LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".houseTax.OtpActivity"
+            android:exported="false" />
+        <activity
             android:name=".formfragment.parking.BookingSuccessActivity"
             android:exported="false" />
         <activity
@@ -85,11 +100,13 @@
         <activity
             android:name=".MainMenu"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
 
         <provider
