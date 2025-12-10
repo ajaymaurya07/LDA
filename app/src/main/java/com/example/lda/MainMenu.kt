@@ -31,7 +31,7 @@ class MainMenu : AppCompatActivity() {
             bottomBar = findViewById(R.id.bottomNavigationView),
             toolbar = findViewById(R.id.topAppBar),
             statusBarColor = getColor(R.color.primary),
-            lightStatusBar = false,
+            lightStatusBar = true,
         )
 
         val causeListFragment = CauseListFragment()

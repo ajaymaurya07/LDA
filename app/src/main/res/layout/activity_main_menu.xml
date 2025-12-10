@@ -10,30 +10,14 @@
         tools:context=".MainMenu"
         android:background="@color/white">
 
-        <!-- AppBarLayout with Toolbar -->
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/topAppBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolBar"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                style="@style/Widget.MaterialComponents.Toolbar.Primary"
-                app:title="E-Court Smart Tracker" />
-
-        </com.google.android.material.appbar.AppBarLayout>
 
         <!-- Fragment container -->
         <FrameLayout
             android:id="@+id/flFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/topAppBar"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

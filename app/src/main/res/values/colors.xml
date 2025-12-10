@@ -11,4 +11,5 @@
 <!--    <color name="secondary">#ffbd18</color>-->
     <color name="grayDiv">#D9D9D9</color>
     <color name="gray">#a9a9a9 </color>
+    <color name="statusbarcolor">#F7F8FC</color>
 </resources>

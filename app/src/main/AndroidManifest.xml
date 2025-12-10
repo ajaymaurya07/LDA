@@ -26,6 +26,12 @@
         android:theme="@style/Theme.LDA"
         tools:targetApi="31">
         <activity
+            android:name=".houseTax.PropertySearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".houseTax.PaymentActivity"
+            android:exported="false" />
+        <activity
             android:name=".houseTax.DashboardActivity"
             android:exported="false" />
         <activity

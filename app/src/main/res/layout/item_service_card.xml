@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="130dp"
     android:orientation="vertical"
@@ -19,8 +20,8 @@
             android:id="@+id/serviceIcon"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/home_icon"
-            android:tint="#4A73DB"/>
+            android:src="@drawable/property_tax_icon"
+            app:tint="#4A73DB" />
     </LinearLayout>
 
     <!-- Title -->
@@ -29,8 +30,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Service Title"
-        android:textStyle="bold"
+        android:text="Property Tax"
+        android:fontFamily="@font/poppins_medium"
         android:textColor="#000000"
         android:textSize="15sp" />
 
@@ -40,8 +41,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
-        android:text="Subtitle here"
+        android:text="Manage all property needs"
         android:textColor="#777777"
-        android:textSize="13sp" />
+        android:textSize="13sp"
+        android:fontFamily="@font/poppins_regular"/>
 
 </LinearLayout>

@@ -7,22 +7,18 @@
     <item
         android:id="@+id/cause_list"
         android:title="My Dashboard"
-        android:icon="@drawable/square"/>
+        android:icon="@drawable/dashboard_icon"/>
 
-<!--    <item-->
-<!--        android:id="@+id/search"-->
-<!--        android:title="Search"-->
-<!--        android:icon="@drawable/search"/>-->
 
     <item
         android:id="@+id/nav_notifications"
-        android:icon="@drawable/notification"
+        android:icon="@drawable/transaction_icon"
         android:title="My Transactions" />
 
     <item
         android:id="@+id/profile"
         android:title="Account"
-        android:icon="@drawable/profile_icon"/>
+        android:icon="@drawable/account_icon"/>
 
 
 
