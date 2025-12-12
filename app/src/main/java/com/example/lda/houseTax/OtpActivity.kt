@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
@@ -12,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import com.example.lda.MainMenu
 import com.example.lda.R
 import com.example.lda.databinding.ActivityOtpBinding
+import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
 
 
 class OtpActivity : AppCompatActivity() {
@@ -31,6 +33,17 @@ class OtpActivity : AppCompatActivity() {
         binding.btnVerify.setOnClickListener {
             val intent= Intent(this, MainMenu::class.java)
             startActivity(intent)
+        }
+
+        applySafeAreaInsets(
+            rootView = findViewById(R.id.root),
+            statusBarColor = getColor(R.color.primary),
+            lightStatusBar = true,
+        )
+
+        val toolbar = findViewById<ImageView>(R.id.navBack)
+        toolbar.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
         }
     }
 

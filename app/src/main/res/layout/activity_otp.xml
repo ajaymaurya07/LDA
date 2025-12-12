@@ -3,11 +3,51 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/main"
+        android:id="@+id/root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_login_gradient"
         tools:context=".houseTax.OtpActivity">
+<!--        android:background="@drawable/bg_login_gradient"-->
+
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolBar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                style="@style/Widget.MaterialComponents.Toolbar.Surface"
+                app:contentInsetStartWithNavigation="0dp">
+
+                <!-- Back Icon -->
+                <ImageView
+                    android:id="@+id/navBack"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/left_icon"
+                    android:layout_marginStart="12dp"
+                    android:layout_gravity="start|center_vertical"
+                    android:padding="4dp" />
+
+                <!-- Title placed manually -->
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Otp Screen"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="20dp"
+                    android:layout_gravity="center_vertical" />
+
+            </com.google.android.material.appbar.MaterialToolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
 
         <!-- Logo -->
         <ImageView
@@ -16,10 +56,10 @@
             android:layout_height="200dp"
             android:src="@drawable/urban_logo"
             android:contentDescription="@string/app_name"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/topAppBar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="100dp"/>
+            android:layout_marginTop="50dp"/>
 
         <!-- Title -->
         <TextView
@@ -138,10 +178,25 @@
             android:layout_marginTop="26dp"
             android:layout_marginHorizontal="32dp"
             android:padding="14dp"
-            app:cornerRadius="10dp"
             app:layout_constraintTop_toBottomOf="@id/tvResend"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <!-- If Mobile Not Registered -->
+        <TextView
+            android:id="@+id/tvRegisterHere"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mobile number not registered?  Register here"
+            android:textColor="@color/primary"
+            android:textSize="13sp"
+            android:layout_marginTop="13dp"
+            app:layout_constraintTop_toBottomOf="@id/btnVerify"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="@font/poppins_regular"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

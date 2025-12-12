@@ -5,61 +5,99 @@ import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
 import com.example.lda.R
-import com.example.lda.adaptor.FilterAdapter
 import com.example.lda.databinding.ActivityPropertySearchBinding
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
 
 class PropertySearchActivity : AppCompatActivity() {
+
     lateinit var binding: ActivityPropertySearchBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_property_search)
         enableEdgeToEdge()
-
-        binding= DataBindingUtil.setContentView(this, R.layout.activity_property_search)
-
         applySafeAreaInsets(
             rootView = findViewById(R.id.root),
             statusBarColor = getColor(R.color.primary),
             lightStatusBar = true,
         )
 
-        val filters = listOf(
-            "By Owner Details",
-            "By Property ID",
-            "By House No",
-            "By Location Details",
-            "By Payment Details",
-            "By Ward & House No"
+        highlightCard(binding.cardOwner)
+        loadFormFragment(ByOwnerNameFragment())
+        setupCardClicks()
+
+
+    }
+
+    private fun setupCardClicks() {
+
+        // By Owner Name
+        binding.cardOwner.setOnClickListener {
+            highlightCard(binding.cardOwner)
+            loadFormFragment(ByOwnerNameFragment())
+        }
+
+        // By Property ID
+        binding.cardProperty.setOnClickListener {
+            highlightCard(binding.cardProperty)
+            loadFormFragment(ByPropertyIdFragment())
+        }
+
+        // By House No (or Ward & House No)
+        binding.cardHouse.setOnClickListener {
+            highlightCard(binding.cardHouse)
+            loadFormFragment(SearchByHouseNoFragment())
+        }
+
+        binding.cardMobileNo.setOnClickListener {
+            highlightCard(binding.cardMobileNo)
+            loadFormFragment(ByMobileNumberFragment())
+        }
+
+        binding.cardPayment.setOnClickListener {
+            highlightCard(binding.cardPayment)
+            loadFormFragment(ByPaymentReciptFragment())
+
+        }
+
+        binding.cardLocation.setOnClickListener {
+            highlightCard(binding.cardLocation)
+            loadFormFragment(LocationBasedFragment())
+
+        }
+
+
+
+
+    }
+
+    private fun highlightCard(selected: View) {
+        val allCards = listOf(
+            binding.cardOwner,
+            binding.cardProperty,
+            binding.cardHouse,
+            binding.cardLocation,
+            binding.cardPayment,
+            binding.cardMobileNo
         )
 
-        binding.filterRecycler.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-
-        binding.filterRecycler.adapter = FilterAdapter(filters) {
-            showForm(it)
+        // reset colors
+        allCards.forEach {
+            it.setBackgroundResource(R.drawable.filter_card_bg)
         }
+
+        // highlight selected card
+        selected.setBackgroundResource(R.drawable.filter_card_selected)
     }
 
-    private fun showForm(selected: String) {
-
-        // hide all
-        binding.formOwner.visibility = View.GONE
-        binding.formPropertyId.visibility = View.GONE
-        binding.formHouse.visibility = View.GONE
-        binding.formLocation.visibility = View.GONE
-        binding.formPayment.visibility = View.GONE
-        binding.formWardHouse.visibility = View.GONE
-
-        // show selected
-        when (selected) {
-            "By Owner Details" -> binding.formOwner.visibility = View.VISIBLE
-            "By Property ID" -> binding.formPropertyId.visibility = View.VISIBLE
-            "By House No" -> binding.formHouse.visibility = View.VISIBLE
-            "By Location Details" -> binding.formLocation.visibility = View.VISIBLE
-            "By Payment Details" -> binding.formPayment.visibility = View.VISIBLE
-            "By Ward & House No" -> binding.formWardHouse.visibility = View.VISIBLE
-        }
+    private fun loadFormFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.formContainer, fragment)
+            .commit()
     }
 }
+

@@ -29,7 +29,8 @@
                 android:src="@drawable/left_icon"
                 android:layout_marginStart="12dp"
                 android:layout_gravity="start|center_vertical"
-                android:padding="4dp"/>
+                android:padding="4dp"
+                android:visibility="gone"/>
 
             <!-- Title placed manually -->
             <TextView
@@ -46,140 +47,147 @@
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-
-    <!-- Horizontal Filter Cards -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/filterRecycler"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:padding="8dp"
-        android:scrollbars="none"
-        />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
 
-    <!-- ========= ALL FORMS (Initially Hidden) ========= -->
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        <!-- Row 1 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:orientation="horizontal"
+            android:gravity="center">
 
-            <!-- By Owner Form -->
             <LinearLayout
-                android:id="@+id/formOwner"
-                android:orientation="vertical"
-                android:visibility="gone"
-                android:padding="12dp"
-                android:background="@drawable/service_card_bg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:id="@+id/cardOwner"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:layout_margin="3dp"
+                android:background="@drawable/filter_card_bg">
 
                 <TextView
-                    android:text="By Owner Details"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"/>
+                    android:text="By Owner"
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
             </LinearLayout>
 
-            <!-- By Property ID Form -->
             <LinearLayout
-                android:id="@+id/formPropertyId"
-                android:orientation="vertical"
-                android:visibility="gone"
-                android:padding="12dp"
-                android:background="@drawable/service_card_bg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:id="@+id/cardProperty"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:layout_margin="3dp"
+                android:background="@drawable/filter_card_bg">
 
                 <TextView
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="By Property ID"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"/>
             </LinearLayout>
 
-            <!-- By House No Form -->
             <LinearLayout
-                android:id="@+id/formHouse"
-                android:orientation="vertical"
-                android:visibility="gone"
-                android:padding="12dp"
-                android:background="@drawable/service_card_bg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:id="@+id/cardHouse"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:layout_margin="3dp"
+                android:background="@drawable/filter_card_bg">
 
                 <TextView
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="By House Number"
-                    android:textSize="18sp"
-                    android:textStyle="bold"/>
-            </LinearLayout>
-
-            <!-- By Location Details -->
-            <LinearLayout
-                android:id="@+id/formLocation"
-                android:orientation="vertical"
-                android:visibility="gone"
-                android:padding="12dp"
-                android:background="@drawable/service_card_bg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
                     android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="By Location Details"
-                    android:textSize="18sp"
-                    android:textStyle="bold"/>
-            </LinearLayout>
-
-            <!-- By Payment -->
-            <LinearLayout
-                android:id="@+id/formPayment"
-                android:orientation="vertical"
-                android:visibility="gone"
-                android:padding="12dp"
-                android:background="@drawable/service_card_bg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="By Payment Details"
-                    android:textSize="18sp"
-                    android:textStyle="bold"/>
-            </LinearLayout>
-
-            <!-- By Ward/House No -->
-            <LinearLayout
-                android:id="@+id/formWardHouse"
-                android:orientation="vertical"
-                android:visibility="gone"
-                android:padding="12dp"
-                android:background="@drawable/service_card_bg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="By Ward House Number"
-                    android:textSize="18sp"
+                    android:text="By House No"
+                    android:textSize="14sp"
                     android:textStyle="bold"/>
             </LinearLayout>
 
         </LinearLayout>
 
-    </ScrollView>
+        <!-- Row 2 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <LinearLayout
+                android:id="@+id/cardLocation"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:layout_margin="3dp"
+                android:background="@drawable/filter_card_bg">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="By Location"
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cardPayment"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:layout_margin="3dp"
+                android:background="@drawable/filter_card_bg">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="By Payment"
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cardMobileNo"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:layout_margin="3dp"
+                android:background="@drawable/filter_card_bg">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="By Mobile No"
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E6E6E6"
+        android:layout_marginVertical="10dp" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/formContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="androidx.fragment.app.Fragment"
+        />
+
+
 
 </LinearLayout>
 </layout>

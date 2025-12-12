@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/root"
+
+
+        >
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolBar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                style="@style/Widget.MaterialComponents.Toolbar.Surface"
+                app:contentInsetStartWithNavigation="0dp">
+
+                <!-- Back Icon -->
+                <ImageView
+                    android:id="@+id/navBack"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/left_icon"
+                    android:layout_marginStart="12dp"
+                    android:layout_gravity="start|center_vertical"
+                    android:padding="4dp" />
+
+                <!-- Title placed manually -->
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Grievance Form"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="20dp"
+                    android:layout_gravity="center_vertical" />
+
+            </com.google.android.material.appbar.MaterialToolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="10dp"
+            android:background="#F5F6FA"
+            >
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <!-- Category -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Select Grievance Category"
+                            android:layout_marginTop="10dp"
+                           >
+
+                            <AutoCompleteTextView
+                                android:id="@+id/etCategory"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <!-- Mobile -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="PID"
+                            android:layout_marginTop="5dp"
+                            android:enabled="false">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="phone"
+                                android:maxLength="10"
+                                android:text="10409800068001"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <!-- Zone -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Select Zone"
+                            android:enabled="false"
+                            android:layout_marginTop="5dp">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/etZone"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Ward -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Select Ward"
+                            android:layout_marginTop="5dp"
+                            android:enabled="false">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/etWard"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <!-- Name -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Owner Name"
+                            android:layout_marginTop="5dp"
+                            android:enabled="false"
+                            >
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Mr. S.K Dash"
+                                />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Mobile -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Mobile Number"
+                            android:layout_marginTop="5dp"
+                            android:enabled="false">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etMobile"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="phone"
+                                android:maxLength="10"
+                                android:text="5263153425"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Address -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Address"
+                            android:layout_marginTop="5dp"
+                            android:enabled="false">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etAddress"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="22/7 2nd type anwar ganj rajkot"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Description -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Describe Your Issue"
+                            android:layout_marginTop="5dp">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etDescription"
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:gravity="top"
+                                android:inputType="textMultiLine" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Attach Button -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnAttach"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Attach Document / Photo"
+                            android:layout_marginTop="5dp"
+                            app:backgroundTint="@color/primary"
+                            android:textColor="@android:color/white"
+                            app:icon="@drawable/ic_upload"
+                            app:iconTint="@android:color/white"
+                            app:iconGravity="textStart"
+                            app:iconPadding="8dp"
+                            app:iconSize="25dp"
+                            android:padding="12dp"
+                            android:textAllCaps="false"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/poppins_medium"/>   <!-- ⭐ SMALL ICON HERE -->
+
+
+                        <!-- Submit -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnSubmit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Submit Grievance"
+                            android:textColor="@android:color/white"
+                            android:layout_marginTop="5dp"
+                            app:backgroundTint="@color/primary"
+                            android:padding="12dp"
+                            android:textAllCaps="false"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/poppins_medium"/>
+
+                    </LinearLayout>
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+
+
+</layout>

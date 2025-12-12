@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/root">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/topAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            style="@style/Widget.MaterialComponents.Toolbar.Surface"
+            app:contentInsetStartWithNavigation="0dp">
+
+            <!-- Back Icon -->
+            <ImageView
+                android:id="@+id/navBack"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/left_icon"
+                android:layout_marginStart="12dp"
+                android:layout_gravity="start|center_vertical"
+                android:padding="4dp" />
+
+            <!-- Title placed manually -->
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Property Tax Assessment"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginStart="20dp"
+                android:layout_gravity="center_vertical" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#F5F6FA">
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvPropertyAssessment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Property Tax Assessment"
+            android:textColor="@color/primary"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:autoLink="none"/>
+
+
+        <!-- Card Container -->
+<!--        <com.google.android.material.card.MaterialCardView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:cardCornerRadius="14dp"-->
+<!--            app:cardElevation="3dp"-->
+<!--            android:backgroundTint="#FFFFFF"-->
+<!--            android:padding="0dp"-->
+<!--            app:cardUseCompatPadding="true">-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical">-->
+
+<!--                &lt;!&ndash; One Row Reusable Design &ndash;&gt;-->
+<!--                &lt;!&ndash; ROW 1 &ndash;&gt;-->
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/rowPayTax"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="70dp"-->
+<!--                    android:gravity="center_vertical"-->
+<!--                    android:paddingHorizontal="16dp">-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:text="Pay Property Tax"-->
+<!--                        android:textSize="16sp"-->
+<!--                        android:textColor="#111" />-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="20dp"-->
+<!--                        android:layout_height="20dp"-->
+<!--                        android:src="@drawable/ic_arrow_right"-->
+<!--                        app:tint="#444" />-->
+<!--                </LinearLayout>-->
+
+<!--                <View-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="1dp"-->
+<!--                    android:background="#E5E5E5" />-->
+
+<!--                &lt;!&ndash; ROW 2 &ndash;&gt;-->
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/applyGrievance"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="70dp"-->
+<!--                    android:gravity="center_vertical"-->
+<!--                    android:paddingHorizontal="16dp">-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:text="Apply Grievance"-->
+<!--                        android:textSize="16sp"-->
+<!--                        android:textColor="#111" />-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="20dp"-->
+<!--                        android:layout_height="20dp"-->
+<!--                        android:src="@drawable/ic_arrow_right"-->
+<!--                        app:tint="#444" />-->
+<!--                </LinearLayout>-->
+
+<!--                <View-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="1dp"-->
+<!--                    android:background="#E5E5E5" />-->
+
+<!--                &lt;!&ndash; ROW 3 &ndash;&gt;-->
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/track_grivance_card"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="70dp"-->
+<!--                    android:gravity="center_vertical"-->
+<!--                    android:paddingHorizontal="16dp">-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:text="Track Grievance"-->
+<!--                        android:textSize="16sp"-->
+<!--                        android:textColor="#111" />-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="20dp"-->
+<!--                        android:layout_height="20dp"-->
+<!--                        android:src="@drawable/ic_arrow_right"-->
+<!--                        app:tint="#444" />-->
+<!--                </LinearLayout>-->
+
+
+
+<!--            </LinearLayout>-->
+
+<!--        </com.google.android.material.card.MaterialCardView>-->
+
+    </LinearLayout>
+</LinearLayout>
+</layout>

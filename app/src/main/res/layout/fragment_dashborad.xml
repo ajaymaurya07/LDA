@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@drawable/logo"
     android:orientation="vertical"
     tools:context=".houseTax.DashboradFragment">
 
@@ -25,7 +25,7 @@
             android:id="@+id/tvDashboardTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Citizen Dashboard"
+            android:text="Welcome"
             android:textSize="16sp"
             android:fontFamily="@font/poppins_medium"
             android:textColor="#000000"/>
@@ -33,7 +33,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Welcome"
+            android:text="PID:10400780031001"
             android:textSize="13sp"
             android:textColor="#7A7A7A"
             android:fontFamily="@font/poppins_regular"/>
@@ -41,96 +41,15 @@
     </LinearLayout>
 
 
-
-
-    <!-- Pay & Track Section -->
-    <LinearLayout
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/sliderViewPager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:layout_height="120dp"
+        android:padding="8dp"
+        android:layout_marginTop="10dp"/>
 
-        <TextView
-            android:text="@string/pay_track"
-            android:textSize="18sp"
-            android:fontFamily="@font/poppins_bold"
-            android:textColor="#000000"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
 
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:text="Pay your bills instantly."
-            android:layout_marginTop="3dp"
-            android:textColor="#7A7A7A"
-            android:textSize="13sp"
-            android:fontFamily="@font/poppins_regular"/>
 
-        <!-- Payment Cards -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="18dp">
-
-            <!-- Quick Payment -->
-            <LinearLayout
-                android:id="@+id/quick_payment_card"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:padding="15dp"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_marginEnd="12dp"
-                android:backgroundTint="#F4B400"
-                android:background="@drawable/card_rounded">
-
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:src="@drawable/rupee_icon"
-                    app:tint="#FFFFFF"/>
-
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:text="Quick Payment"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginTop="8dp"
-                    android:textSize="13sp"
-                    android:gravity="center"
-                    android:fontFamily="@font/poppins_regular"/>
-            </LinearLayout>
-
-            <!-- Track Application -->
-            <LinearLayout
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:padding="15dp"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_marginStart="12dp"
-                android:background="@drawable/card_rounded_blue">
-
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:src="@drawable/track_icon"
-                    app:tint="#FFFFFF"/>
-
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:text="Track Application"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textSize="14sp"
-                    android:gravity="center"/>
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
 
     <!-- Quick Services Title -->
     <TextView
@@ -153,13 +72,48 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:columnCount="2"
-            android:padding="16dp"
-            android:rowCount="2">
+            android:padding="5dp"
+            android:alignmentMode="alignMargins"
+            android:useDefaultMargins="true">
 
-            <!-- single service card -->
-            <include layout="@layout/item_service_card"/>
+            <!-- CARD 1 -->
+            <include
+                android:id="@+id/property_tax_card"
+                layout="@layout/item_service_card"
+                android:layout_width="0dp"
+                android:layout_height="180dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"/>
+
+            <!-- CARD 2 -->
+            <include
+                android:id="@+id/property_tax_assesment_card"
+                layout="@layout/item_service_assesment"
+                android:layout_width="0dp"
+                android:layout_height="180dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"/>
+
+            <!-- CARD 3 -->
+            <include
+                android:id="@+id/track_grivance_card"
+                layout="@layout/item_track_grivance"
+                android:layout_width="0dp"
+                android:layout_height="180dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"/>
+
+            <!-- CARD 4 -->
+            <include
+                android:id="@+id/payment_history_card"
+                layout="@layout/item_payment_history"
+                android:layout_width="0dp"
+                android:layout_height="180dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"/>
 
         </GridLayout>
+
     </ScrollView>
 
 </LinearLayout>

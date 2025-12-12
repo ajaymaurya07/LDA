@@ -8,212 +8,212 @@
     android:layout_margin="5dp">
 
     <!-- Profile Image Container with Shadow and Edit Icon -->
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imageView"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
-        android:contentDescription="Profile Picture"
-        android:scaleType="centerCrop"
-        android:src="@drawable/profile_icon_02"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="10dp"/>
+<!--    <com.google.android.material.imageview.ShapeableImageView-->
+<!--        android:id="@+id/imageView"-->
+<!--        android:layout_width="180dp"-->
+<!--        android:layout_height="180dp"-->
+<!--        android:contentDescription="Profile Picture"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        android:src="@drawable/profile_icon_02"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        android:layout_marginTop="10dp"/>-->
 
-    <!-- User Name with Status Indicator -->
-    <TextView
-        android:id="@+id/user_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Mr. John"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/montserrat_bold"
-        app:layout_constraintTop_toBottomOf="@id/imageView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-
-
-    <!-- Card for User Info -->
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/info_card"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="1dp"
-        app:cardBackgroundColor="#FFFFFF"
-        app:layout_constraintTop_toBottomOf="@id/user_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:cardUseCompatPadding="true">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <!-- user id Number -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="5dp"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/profile_icon"
-                    android:contentDescription="Phone Icon"
-                    app:tint="@color/material_on_surface_emphasis_medium" />
-
-                <TextView
-                    android:id="@+id/user_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:text="User ID: court_001"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/poppins_regular" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#E8ECEF"
-                android:layout_marginVertical="8dp" />
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#E8ECEF"
-                android:layout_marginVertical="8dp" />
-
-
-            <!-- user id Number -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="5dp"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/profile_icon"
-                    android:contentDescription="Phone Icon"
-                    app:tint="@color/material_on_surface_emphasis_medium" />
-
-                <TextView
-                    android:id="@+id/user_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:fontFamily="@font/poppins_regular"
-                    android:text="User Type: court_001"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#E8ECEF"
-                android:layout_marginVertical="8dp" />
-
-            <!-- Phone Number -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="5dp"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/phone"
-                    android:contentDescription="Phone Icon"
-                    app:tint="@color/material_on_surface_emphasis_medium" />
-
-                <TextView
-                    android:id="@+id/mobile_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:fontFamily="@font/poppins_regular"
-                    android:text="9865145212"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <!-- Divider -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#E8ECEF"
-                android:layout_marginVertical="8dp" />
-
-            <!-- Gmail -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="5dp"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/baseline_email_24"
-                    android:contentDescription="Email Icon"
-                    app:tint="@color/material_on_surface_emphasis_medium" />
-
-                <TextView
-                    android:id="@+id/department"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:text="Department"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/poppins_regular" />
-            </LinearLayout>
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+<!--    &lt;!&ndash; User Name with Status Indicator &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/user_name"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:text="Mr. John"-->
+<!--        android:textSize="26sp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:fontFamily="@font/montserrat_bold"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/imageView"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent" />-->
 
 
 
-    <!-- Logout Button -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Logout"
-        android:textSize="16sp"
-        android:padding="14dp"
-        app:icon="@drawable/baseline_logout_24"
-        app:iconGravity="start"
-        app:cornerRadius="10dp"
-        app:backgroundTint="#FFFFFF"
-        android:fontFamily="@font/poppins_medium"
-        app:strokeColor="#D32F2F"
-        app:strokeWidth="1dp"
-        style="@style/Widget.Material3.Button.OutlinedButton"
-        app:layout_constraintTop_toBottomOf="@id/info_card"
-        app:layout_constraintStart_toStartOf="parent"
-         />
+<!--    &lt;!&ndash; Card for User Info &ndash;&gt;-->
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:id="@+id/info_card"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="24dp"-->
+<!--        app:cardCornerRadius="10dp"-->
+<!--        app:cardElevation="1dp"-->
+<!--        app:cardBackgroundColor="#FFFFFF"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/user_name"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:cardUseCompatPadding="true">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            android:padding="10dp">-->
+
+<!--            &lt;!&ndash; user id Number &ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:paddingVertical="5dp"-->
+<!--                android:background="?attr/selectableItemBackground"-->
+<!--                android:clickable="true"-->
+<!--                android:focusable="true">-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="20dp"-->
+<!--                    android:layout_height="20dp"-->
+<!--                    android:src="@drawable/profile_icon"-->
+<!--                    android:contentDescription="Phone Icon"-->
+<!--                    app:tint="@color/material_on_surface_emphasis_medium" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/user_id"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="20dp"-->
+<!--                    android:text="User ID: court_001"-->
+<!--                    android:textSize="16sp"-->
+<!--                    android:fontFamily="@font/poppins_regular" />-->
+<!--            </LinearLayout>-->
+
+<!--            <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="1dp"-->
+<!--                android:background="#E8ECEF"-->
+<!--                android:layout_marginVertical="8dp" />-->
+
+
+<!--            <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="1dp"-->
+<!--                android:background="#E8ECEF"-->
+<!--                android:layout_marginVertical="8dp" />-->
+
+
+<!--            &lt;!&ndash; user id Number &ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:paddingVertical="5dp"-->
+<!--                android:background="?attr/selectableItemBackground"-->
+<!--                android:clickable="true"-->
+<!--                android:focusable="true">-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="20dp"-->
+<!--                    android:layout_height="20dp"-->
+<!--                    android:src="@drawable/profile_icon"-->
+<!--                    android:contentDescription="Phone Icon"-->
+<!--                    app:tint="@color/material_on_surface_emphasis_medium" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/user_type"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="20dp"-->
+<!--                    android:fontFamily="@font/poppins_regular"-->
+<!--                    android:text="User Type: court_001"-->
+<!--                    android:textSize="16sp" />-->
+<!--            </LinearLayout>-->
+
+<!--            <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="1dp"-->
+<!--                android:background="#E8ECEF"-->
+<!--                android:layout_marginVertical="8dp" />-->
+
+<!--            &lt;!&ndash; Phone Number &ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:paddingVertical="5dp"-->
+<!--                android:background="?attr/selectableItemBackground"-->
+<!--                android:clickable="true"-->
+<!--                android:focusable="true">-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="20dp"-->
+<!--                    android:layout_height="20dp"-->
+<!--                    android:src="@drawable/phone"-->
+<!--                    android:contentDescription="Phone Icon"-->
+<!--                    app:tint="@color/material_on_surface_emphasis_medium" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/mobile_number"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="20dp"-->
+<!--                    android:fontFamily="@font/poppins_regular"-->
+<!--                    android:text="9865145212"-->
+<!--                    android:textSize="16sp" />-->
+<!--            </LinearLayout>-->
+
+<!--            &lt;!&ndash; Divider &ndash;&gt;-->
+<!--            <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="1dp"-->
+<!--                android:background="#E8ECEF"-->
+<!--                android:layout_marginVertical="8dp" />-->
+
+<!--            &lt;!&ndash; Gmail &ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:paddingVertical="5dp"-->
+<!--                android:background="?attr/selectableItemBackground"-->
+<!--                android:clickable="true"-->
+<!--                android:focusable="true">-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="20dp"-->
+<!--                    android:layout_height="20dp"-->
+<!--                    android:src="@drawable/baseline_email_24"-->
+<!--                    android:contentDescription="Email Icon"-->
+<!--                    app:tint="@color/material_on_surface_emphasis_medium" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/department"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="20dp"-->
+<!--                    android:text="Department"-->
+<!--                    android:textSize="16sp"-->
+<!--                    android:fontFamily="@font/poppins_regular" />-->
+<!--            </LinearLayout>-->
+<!--        </LinearLayout>-->
+<!--    </com.google.android.material.card.MaterialCardView>-->
+
+
+
+<!--    &lt;!&ndash; Logout Button &ndash;&gt;-->
+<!--    <com.google.android.material.button.MaterialButton-->
+<!--        android:id="@+id/logout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:text="Logout"-->
+<!--        android:textSize="16sp"-->
+<!--        android:padding="14dp"-->
+<!--        app:icon="@drawable/baseline_logout_24"-->
+<!--        app:iconGravity="start"-->
+<!--        app:cornerRadius="10dp"-->
+<!--        app:backgroundTint="#FFFFFF"-->
+<!--        android:fontFamily="@font/poppins_medium"-->
+<!--        app:strokeColor="#D32F2F"-->
+<!--        app:strokeWidth="1dp"-->
+<!--        style="@style/Widget.Material3.Button.OutlinedButton"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/info_card"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--         />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

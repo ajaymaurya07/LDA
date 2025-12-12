@@ -32,19 +32,19 @@ class ProfileFragment : Fragment() {
         val mobileNumber = SharedPrefHelper.getMobileNumber(requireContext()).toString()
         val department = SharedPrefHelper.getDepartment(requireContext()).toString()
 
-        binding.userId.text="User ID: $userId"
-        binding.userName.text="User Name: $userName"
-        binding.userType.text="User Type: $userType"
-        binding.mobileNumber.text="Mobile Number: $mobileNumber"
-        binding.department.text="Department: $department"
-
-
-        binding.logout.setOnClickListener {
-            SharedPrefHelper.clearAll(requireContext())
-            val intent= Intent(requireContext(), LoginActivity::class.java)
-            startActivity(intent)
-            requireActivity().finish()
-        }
+//        binding.userId.text="User ID: $userId"
+//        binding.userName.text="User Name: $userName"
+//        binding.userType.text="User Type: $userType"
+//        binding.mobileNumber.text="Mobile Number: $mobileNumber"
+//        binding.department.text="Department: $department"
+//
+//
+//        binding.logout.setOnClickListener {
+//            SharedPrefHelper.clearAll(requireContext())
+//            val intent= Intent(requireContext(), LoginActivity::class.java)
+//            startActivity(intent)
+//            requireActivity().finish()
+//        }
 
         return binding.root
     }

@@ -1,0 +1,94 @@
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="14dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="3dp"
+    app:strokeColor="#DDE1E7"
+    app:strokeWidth="1dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="14dp"
+        android:orientation="vertical">
+
+        <!-- Top Row: PID + Details Button -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvPid"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="PID: 104007800031001"
+                android:textColor="#1A1A1A"
+                android:textSize="15sp"
+                android:fontFamily="@font/poppins_medium" />
+
+            <!-- Modern button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnViewDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View Details"
+                android:textSize="13sp"
+                android:textColor="@android:color/white"
+                android:textAllCaps="false"
+                android:fontFamily="@font/poppins_regular"
+                />
+        </LinearLayout>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E6E6E6"
+            android:layout_marginVertical="10dp" />
+
+        <!-- Owner Name -->
+        <TextView
+            android:id="@+id/tvOwnerName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Owner: Mohd. Arif Siddiqui"
+            android:textSize="13sp"
+            android:layout_marginBottom="3dp"
+            android:fontFamily="@font/poppins_regular"/>
+
+        <!-- Ward + Mohalla -->
+        <TextView
+            android:id="@+id/tvWard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ward: Anwar Ganj"
+            android:textSize="13sp"
+            android:fontFamily="@font/poppins_regular"/>
+
+        <TextView
+            android:id="@+id/tvMohalla"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mohalla: Anwar Ganj"
+            android:textSize="13sp"
+            android:fontFamily="@font/poppins_regular"/>
+
+        <!-- Mobile -->
+        <TextView
+            android:id="@+id/tvMobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mobile: 983****910"
+            android:textSize="13sp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/poppins_regular"/>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

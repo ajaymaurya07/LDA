@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#F5F6FA"
+        android:id="@+id/root">
+
+
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolBar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                style="@style/Widget.MaterialComponents.Toolbar.Surface"
+                app:contentInsetStartWithNavigation="0dp">
+
+                <!-- Back Icon -->
+                <ImageView
+                    android:id="@+id/navBack"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/left_icon"
+                    android:layout_marginStart="12dp"
+                    android:layout_gravity="start|center_vertical"
+                    android:padding="4dp" />
+
+                <!-- Title placed manually -->
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Arv History"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="20dp"
+                    android:layout_gravity="center_vertical" />
+
+            </com.google.android.material.appbar.MaterialToolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+
+
+
+
+        <!-- HISTORY LIST -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <!-- Year & Effective Date -->
+                <TextView
+                    android:id="@+id/tvYear"
+                    android:text="Date: 01-04-2020"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_regular"/>
+
+                <!-- Old ARV -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvOldArv"
+                    android:text="Old ARV: 1800"
+                    android:textSize="13sp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_regular"/>
+
+                <!-- New ARV -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvNewArv"
+                    android:text="New ARV: 2300"
+                    android:textSize="13sp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_regular"/>
+
+                <!-- Reason -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvReason"
+                    android:text="Reason: Annual Revision"
+                    android:textSize="13sp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_regular"/>
+
+                <!-- Approved By -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvApproved"
+                    android:text="Approved By: Revenue Inspector"
+                    android:textSize="13sp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_regular"/>
+
+                <!-- Order No -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvOrderNo"
+                    android:text="Order No: ORD567899"
+                    android:textSize="13sp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_regular"/>
+
+                <TextView
+                    android:id="@+id/tvPropertyId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Property ID: 104007700642001"
+                    android:textSize="13sp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_regular"/>
+
+                <TextView
+                    android:id="@+id/tvOwnerName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Owner: Mohd. Arif Siddiqui"
+                    android:textSize="13sp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_regular"/>
+
+                <TextView
+                    android:id="@+id/tvAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Address: 77/82, COOLIE BAZAR"
+                    android:textSize="13sp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_regular"/>
+
+                <!-- PDF Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnViewOrder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="View Order"
+                    android:layout_marginTop="12dp"
+                    android:textColor="@android:color/white"
+                    app:backgroundTint="@color/primary"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textSize="13sp"
+                    android:padding="10dp"
+                    android:textAllCaps="false"
+                    />
+
+
+
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </LinearLayout>
+</layout>
