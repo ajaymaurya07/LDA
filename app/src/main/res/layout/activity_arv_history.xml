@@ -38,7 +38,7 @@
                     android:id="@+id/tvTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Arv History"
+                    android:text="Arv Change History"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -68,15 +68,15 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp">
 
-                <!-- Year & Effective Date -->
                 <TextView
-                    android:id="@+id/tvYear"
-                    android:text="Date: 01-04-2020"
+                    android:id="@+id/tvPropertyId"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="Property ID: 104007700642001"
                     android:textSize="13sp"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/poppins_regular"/>
+
 
                 <!-- Old ARV -->
                 <TextView
@@ -103,7 +103,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/tvReason"
-                    android:text="Reason: Annual Revision"
+                    android:text="Arv Change Reason: Annual Revision"
                     android:textSize="13sp"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/poppins_regular"/>
@@ -119,56 +119,50 @@
                     android:fontFamily="@font/poppins_regular"/>
 
                 <!-- Order No -->
+                <!-- Year & Effective Date -->
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tvYear"
+                    android:text="Arv Change Date: 01-04-2020"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tvOrderNo"
-                    android:text="Order No: ORD567899"
                     android:textSize="13sp"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/poppins_regular"/>
 
-                <TextView
-                    android:id="@+id/tvPropertyId"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Property ID: 104007700642001"
-                    android:textSize="13sp"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="@font/poppins_regular"/>
 
-                <TextView
-                    android:id="@+id/tvOwnerName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Owner: Mohd. Arif Siddiqui"
-                    android:textSize="13sp"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="@font/poppins_regular"/>
 
-                <TextView
-                    android:id="@+id/tvAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Address: 77/82, COOLIE BAZAR"
-                    android:textSize="13sp"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="@font/poppins_regular"/>
+<!--                <TextView-->
+<!--                    android:id="@+id/tvOwnerName"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Owner: Mohd. Arif Siddiqui"-->
+<!--                    android:textSize="13sp"-->
+<!--                    android:layout_marginTop="5dp"-->
+<!--                    android:fontFamily="@font/poppins_regular"/>-->
 
-                <!-- PDF Button -->
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnViewOrder"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="View Order"
-                    android:layout_marginTop="12dp"
-                    android:textColor="@android:color/white"
-                    app:backgroundTint="@color/primary"
-                    android:fontFamily="@font/poppins_medium"
-                    android:textSize="13sp"
-                    android:padding="10dp"
-                    android:textAllCaps="false"
-                    />
+<!--                <TextView-->
+<!--                    android:id="@+id/tvAddress"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Address: 77/82, COOLIE BAZAR"-->
+<!--                    android:textSize="13sp"-->
+<!--                    android:layout_marginTop="5dp"-->
+<!--                    android:fontFamily="@font/poppins_regular"/>-->
+
+<!--                &lt;!&ndash; PDF Button &ndash;&gt;-->
+<!--                <com.google.android.material.button.MaterialButton-->
+<!--                    android:id="@+id/btnViewOrder"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="View Order"-->
+<!--                    android:layout_marginTop="12dp"-->
+<!--                    android:textColor="@android:color/white"-->
+<!--                    app:backgroundTint="@color/primary"-->
+<!--                    android:fontFamily="@font/poppins_medium"-->
+<!--                    android:textSize="13sp"-->
+<!--                    android:padding="10dp"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    />-->
 
 
 
@@ -176,6 +170,9 @@
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
+
+
+
 
 
     </LinearLayout>

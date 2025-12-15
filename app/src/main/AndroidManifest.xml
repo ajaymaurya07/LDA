@@ -26,6 +26,24 @@
         android:theme="@style/Theme.LDA"
         tools:targetApi="31">
         <activity
+            android:name=".houseTax.ByMapActivity"
+            android:exported="false" />
+        <activity
+            android:name=".houseTax.RegisterMobileNumberActivity"
+            android:exported="false" />
+        <activity
+            android:name=".houseTax.LauncherActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".houseTax.propertTaxAssessment.calculationScreenActivity"
+            android:exported="false" />
+        <activity
             android:name=".houseTax.paymentDetails.ArvHistoryActivity"
             android:exported="false" />
         <activity
@@ -38,8 +56,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".houseTax.PropertyTaxAssessment"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+            android:exported="false" />
         <activity
             android:name=".houseTax.GravianceActivity"
             android:exported="false"
@@ -52,11 +69,13 @@
             android:name=".houseTax.PropertySearchActivity"
             android:exported="true"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".houseTax.PropertyDetailsActivity"
@@ -223,6 +242,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+
+
     </application>
 
 </manifest>

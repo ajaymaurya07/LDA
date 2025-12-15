@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/logo"
+
     android:orientation="vertical"
     tools:context=".houseTax.DashboradFragment">
-
+<!--    android:background="@drawable/last_01"-->
     <!-- Top Navbar -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
         android:background="#FFFFFF"
         android:elevation="1dp"
         android:paddingHorizontal="20dp"
-        android:paddingTop="20dp">
+        android:paddingTop="10dp">
 
         <!-- Dashboard Title -->
         <TextView
@@ -85,19 +85,32 @@
                 android:layout_columnWeight="1"
                 android:layout_margin="8dp"/>
 
-            <!-- CARD 2 -->
-            <include
-                android:id="@+id/property_tax_assesment_card"
-                layout="@layout/item_service_assesment"
-                android:layout_width="0dp"
-                android:layout_height="180dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"/>
+
 
             <!-- CARD 3 -->
             <include
                 android:id="@+id/track_grivance_card"
                 layout="@layout/item_track_grivance"
+                android:layout_width="0dp"
+                android:layout_height="180dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"/>
+
+
+
+            <include
+                android:id="@+id/arv_history_card"
+                layout="@layout/item_arv_history"
+                android:layout_width="0dp"
+                android:layout_height="180dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"/>
+
+
+            <!-- CARD 2 -->
+            <include
+                android:id="@+id/property_tax_assesment_card"
+                layout="@layout/item_service_assesment"
                 android:layout_width="0dp"
                 android:layout_height="180dp"
                 android:layout_columnWeight="1"

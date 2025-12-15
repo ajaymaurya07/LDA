@@ -47,7 +47,7 @@ class LocationBasedFragment : Fragment() {
         val zones = listOf("Zone 1", "Zone 2", "Zone 3")
         val wards = listOf("Ward 1", "Ward 2", "Ward 3")
         val mohallas = listOf("Mohalla A", "Mohalla B")
-        val chucks = listOf("Chuck 1", "Chuck 2")
+        val chucks = listOf("Chk 1", "Chk 2")
         val houses = listOf("House 10", "House 20")
 
         binding.etZone.setAdapter(ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, zones))

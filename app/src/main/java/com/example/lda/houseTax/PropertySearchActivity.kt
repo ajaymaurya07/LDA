@@ -58,11 +58,7 @@ class PropertySearchActivity : AppCompatActivity() {
             loadFormFragment(ByMobileNumberFragment())
         }
 
-        binding.cardPayment.setOnClickListener {
-            highlightCard(binding.cardPayment)
-            loadFormFragment(ByPaymentReciptFragment())
 
-        }
 
         binding.cardLocation.setOnClickListener {
             highlightCard(binding.cardLocation)
@@ -71,7 +67,11 @@ class PropertySearchActivity : AppCompatActivity() {
         }
 
 
+        binding.cardMap.setOnClickListener {
+            highlightCard(binding.cardMap)
+            loadFormFragment(ByMapFragment())
 
+        }
 
     }
 
@@ -81,8 +81,8 @@ class PropertySearchActivity : AppCompatActivity() {
             binding.cardProperty,
             binding.cardHouse,
             binding.cardLocation,
-            binding.cardPayment,
-            binding.cardMobileNo
+            binding.cardMobileNo,
+            binding.cardMap
         )
 
         // reset colors

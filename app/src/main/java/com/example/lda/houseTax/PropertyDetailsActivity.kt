@@ -40,8 +40,7 @@ class PropertyDetailsActivity : AppCompatActivity() {
         rv.layoutManager = LinearLayoutManager(this)
 
         val dummyList = listOf(
-            PropertyModel("104007800031001", "Anwar Ganj", "Anwar Ganj", "Mohd. Arif Siddiqui", "7394961470"),
-            PropertyModel("104009200755001", "Anwar Ganj", "Heermam Purawa", "Shamsuddeen", "7394961470"),
+            PropertyModel("104007800031001", "Anwar Ganj", "Anwar Ganj", "Mohd. Arif Siddiqui", "7394961470")
         )
 
         adapter = PropertyAdaptor(dummyList) { selected ->

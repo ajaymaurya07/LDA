@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".houseTax.propertTaxAssessment.FirstScreenFragment">
+
+    <!-- 🔹 SCROLL VIEW -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:background="#F5F6FA">
+
+        <!-- 🔹 SINGLE CHILD -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- ZONE -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Zone Name*"
+                android:enabled="false">
+
+                <AutoCompleteTextView
+                    android:id="@+id/etZone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Zone 1"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- WARD -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="Ward Name*"
+                android:enabled="false">
+
+                <AutoCompleteTextView
+                    android:id="@+id/etWard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ward 1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- CHK -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="Chk*"
+                android:enabled="false">
+
+                <AutoCompleteTextView
+                    android:id="@+id/etChk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Chk 1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- ROAD WIDTH -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Road Width*"
+                android:layout_marginTop="16dp"
+                android:textSize="14sp"
+                android:fontFamily="@font/poppins_medium"/>
+
+            <RadioGroup
+                android:id="@+id/rgRoadWidth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Less than 12 Meter"
+                    android:fontFamily="@font/poppins_regular"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Between 12 to 24 Meter"
+                    android:fontFamily="@font/poppins_regular"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Greater than 24 Meter"
+                    android:fontFamily="@font/poppins_regular"/>
+            </RadioGroup>
+
+            <!-- CONSTRUCTION TYPE -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Type Of Construction*"
+                android:layout_marginTop="16dp"
+                android:textSize="14sp"
+                android:fontFamily="@font/poppins_medium"/>
+
+            <RadioGroup
+                android:id="@+id/rgConstruction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pakka Bhawan RCC or RBC"
+                    android:fontFamily="@font/poppins_regular"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kacha Bhawan"
+                    android:fontFamily="@font/poppins_regular"/>
+
+
+
+            </RadioGroup>
+
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>

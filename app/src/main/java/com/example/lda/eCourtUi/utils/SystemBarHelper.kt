@@ -54,7 +54,7 @@ object SystemBarsHelper {
         toolbar: View? = null,
         bottomBar: View? = null,
         lightStatusBar: Boolean = true,
-        statusBarColor: Int = Color.TRANSPARENT,
+        statusBarColor: Int = Color.WHITE,
     ) {
         // If both toolbar and bottomBar are present, use primary color for status bar
         val finalStatusBarColor = if (toolbar != null && bottomBar != null) {

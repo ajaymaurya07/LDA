@@ -45,7 +45,6 @@ class MainMenu : AppCompatActivity() {
 
             when (it.itemId) {
                 R.id.home ->setCurrentFragment(dashBoardFragment)
-                R.id.cause_list -> setCurrentFragment(causeListFragment)
                 R.id.nav_notifications->setCurrentFragment(notificationFragment)
                 R.id.profile -> setCurrentFragment(profileFragment)
             }

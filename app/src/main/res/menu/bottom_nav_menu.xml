@@ -4,16 +4,13 @@
         android:id="@+id/home"
         android:title="Home"
         android:icon="@drawable/home_icon"/>
-    <item
-        android:id="@+id/cause_list"
-        android:title="My Dashboard"
-        android:icon="@drawable/dashboard_icon"/>
+
 
 
     <item
         android:id="@+id/nav_notifications"
         android:icon="@drawable/transaction_icon"
-        android:title="My Transactions" />
+        android:title="My Payment History" />
 
     <item
         android:id="@+id/profile"

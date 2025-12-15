@@ -694,7 +694,7 @@
                                 android:id="@+id/tvRoadWidth"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="--"
+                                android:text="12m"
                                 android:textSize="13sp"
                                 android:fontFamily="@font/poppins_medium"/>
                         </LinearLayout>

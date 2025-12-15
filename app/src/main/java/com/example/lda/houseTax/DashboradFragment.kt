@@ -12,6 +12,7 @@ import com.example.lda.R
 import com.example.lda.databinding.FragmentDashboradBinding
 import com.example.lda.houseTax.data.SliderAdapter
 import com.example.lda.houseTax.data.SliderItem
+import com.example.lda.houseTax.paymentDetails.ArvHistoryActivity
 
 class DashboradFragment : Fragment() {
 
@@ -43,6 +44,11 @@ class DashboradFragment : Fragment() {
 
         binding.paymentHistoryCard.cardPaymentHistory.setOnClickListener {
             val intent = Intent(activity, PaymentHistoryActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.arvHistoryCard.cardArvHistory.setOnClickListener {
+            val intent = Intent(activity, ArvHistoryActivity::class.java)
             startActivity(intent)
         }
 

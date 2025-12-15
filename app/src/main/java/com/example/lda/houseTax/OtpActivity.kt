@@ -35,6 +35,11 @@ class OtpActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.tvRegisterHere.setOnClickListener {
+            val intent= Intent(this, RegisterMobileNumberActivity::class.java)
+            startActivity(intent)
+        }
+
         applySafeAreaInsets(
             rootView = findViewById(R.id.root),
             statusBarColor = getColor(R.color.primary),

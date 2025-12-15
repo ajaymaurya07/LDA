@@ -1,16 +1,14 @@
-package com.example.lda
+package com.example.lda.houseTax.propertTaxAssessment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.lda.databinding.FragmentProfileBinding
+import com.example.lda.R
 
 
-class ProfileFragment : Fragment() {
-    var _binding: FragmentProfileBinding? = null
-    private val binding get() = _binding!!
+class FourthScreenFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,12 +18,9 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding= FragmentProfileBinding.inflate(inflater,container,false)
-
-
-
-        return binding.root
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_sixth, container, false)
     }
 
 
