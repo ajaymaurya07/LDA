@@ -7,6 +7,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:id="@+id/root"
+        android:background="@drawable/bg_with_opacity"
 
 
         >
@@ -52,7 +53,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingHorizontal="10dp"
-            android:background="#F5F6FA"
             >
 
             <LinearLayout

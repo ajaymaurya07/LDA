@@ -7,7 +7,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     tools:context=".houseTax.PropertySearchActivity"
-    android:id="@+id/root">
+    android:id="@+id/root"
+    android:background="@drawable/bg_with_opacity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/topAppBar"
@@ -178,6 +179,8 @@
         </LinearLayout>
 
     </LinearLayout>
+
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -190,8 +193,6 @@
         android:layout_height="match_parent"
         android:name="androidx.fragment.app.Fragment"
         />
-
-
 
 </LinearLayout>
 </layout>

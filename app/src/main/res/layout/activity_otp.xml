@@ -6,7 +6,8 @@
         android:id="@+id/root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".houseTax.OtpActivity">
+        tools:context=".houseTax.OtpActivity"
+        android:background="@drawable/bg_with_opacity">
 <!--        android:background="@drawable/bg_login_gradient"-->
 
 
