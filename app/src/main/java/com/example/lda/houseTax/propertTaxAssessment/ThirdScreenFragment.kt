@@ -3,6 +3,7 @@ package com.example.lda.houseTax.propertTaxAssessment
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,15 +12,23 @@ import android.widget.Button
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.example.lda.R
+import com.example.lda.databinding.FragmentFourthScreenBinding
 import com.example.lda.houseTax.viewmodel.SharedViewModel
 import com.google.android.material.textfield.TextInputEditText
+import java.util.Calendar
 
 
 class ThirdScreenFragment : Fragment() {
 
+    private var _binding:FragmentFourthScreenBinding?=null
+    private val binding get() = _binding!!
+
     private lateinit var etRentArea: TextInputEditText
     private lateinit var etOwnArea: TextInputEditText
     private lateinit var etTotalArea: TextInputEditText
+    private lateinit var etConstructionYear: TextInputEditText
+    private lateinit var etAgeOfConstruction: TextInputEditText
+    private lateinit var etAreaRate: TextInputEditText
     private lateinit var viewModel: SharedViewModel
 
 
@@ -27,17 +36,32 @@ class ThirdScreenFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
-        val view = inflater.inflate(R.layout.fragment_fourth_screen, container, false)
-
+        _binding= FragmentFourthScreenBinding.inflate(inflater,container,false)
         viewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
 
 
         // Initialize views
-        etRentArea = view.findViewById(R.id.etRentArea)
-        etOwnArea = view.findViewById(R.id.etOwnArea)
-        etTotalArea = view.findViewById(R.id.etTotalArea)
+        etRentArea = binding.etRentArea
+        etOwnArea = binding.etOwnArea
+        etTotalArea = binding.etTotalArea
+        etConstructionYear= binding.etConstructionYear
+        etAgeOfConstruction= binding.etAgeOfStructure
+        etAreaRate= binding.etAreaRate
+
+
+        val constructionYear=2010
+
+        etConstructionYear.setText("$constructionYear")
+        val age=getAgeOfConstruction(constructionYear)
+        etAgeOfConstruction.setText("$age")
+
+        viewModel.age.value=age
+
+        val areaRate=viewModel.areaRate.value
+        etAreaRate.setText("$areaRate")
+
 
         etRentArea.addTextChangedListener {
             viewModel.rentArea.value = it.toString()
@@ -47,11 +71,19 @@ class ThirdScreenFragment : Fragment() {
             viewModel.ownArea.value = it.toString()
         }
 
+
+        viewModel.ageOfConstruction.value=age
+        viewModel.constructionYear.value=binding.etConstructionYear.text.toString()
+
+        val rgAreaType = binding.rgAreaType
+        rgAreaType.check(R.id.rbCovered)
+
         setupAreaCalculation()
 
-        return view
+        return binding.root
     }
 
+    // calculate total area
     private fun setupAreaCalculation() {
 
         val watcher = object : TextWatcher {
@@ -78,5 +110,13 @@ class ThirdScreenFragment : Fragment() {
 
         val total = rent + own
         etTotalArea.setText(total.toString())
+    }
+
+    fun getAgeOfConstruction(constructionYear: Int): Int {
+
+        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+        val age = currentYear - constructionYear
+
+        return age
     }
 }

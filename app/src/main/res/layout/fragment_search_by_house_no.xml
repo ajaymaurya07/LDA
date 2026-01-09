@@ -2,7 +2,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp">
 
     <LinearLayout
@@ -11,20 +10,27 @@
         android:orientation="vertical">
 
 
-        <!-- Zone Dropdown -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Select Zone"
-            android:textColor="#333333"
-            android:textSize="14sp"
-            android:layout_marginBottom="4dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilZone"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <AutoCompleteTextView
+                android:id="@+id/etUlb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Choose ULB"
+                android:inputType="none"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
 
             <AutoCompleteTextView
                 android:id="@+id/etZone"
@@ -35,21 +41,13 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
-        <!-- Ward Dropdown -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Select Ward"
-            android:textColor="#333333"
-            android:textSize="14sp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="4dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilWard"
+
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
 
             <AutoCompleteTextView
                 android:id="@+id/etWard"
@@ -60,21 +58,16 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
-        <!-- House Number -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Enter House Number"
-            android:textColor="#333333"
-            android:textSize="14sp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="4dp"/>
+
+
+
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilHouseNo"
+
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etHouseNo"
@@ -83,6 +76,9 @@
                 android:hint="Enter House Number"
                 android:inputType="text"/>
         </com.google.android.material.textfield.TextInputLayout>
+
+
+
 
 
         <!-- Search Button -->

@@ -10,20 +10,44 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Owner Name -->
-        <TextView
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Choose ULB"-->
+<!--            android:textColor="#333333"-->
+<!--            android:textSize="14sp"-->
+<!--            android:layout_marginBottom="4dp"/>-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Owner Name"
-            android:textColor="#333333"
-            android:textSize="14sp"
-            android:layout_marginBottom="4dp"/>
+            android:layout_marginTop="16dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/etUlb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Choose ULB"
+                android:inputType="none"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Owner Name -->
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Owner Name"-->
+<!--            android:textColor="#333333"-->
+<!--            android:textSize="14sp"-->
+<!--            android:layout_marginBottom="4dp"-->
+<!--            android:layout_marginTop="16dp"/>-->
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilOwnerName"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etOwnerName"
@@ -34,20 +58,21 @@
 
 
         <!-- Father Name -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Father Name"
-            android:textColor="#333333"
-            android:textSize="14sp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="4dp"/>
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Father Name"-->
+<!--            android:textColor="#333333"-->
+<!--            android:textSize="14sp"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:layout_marginBottom="4dp"/>-->
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilFatherName"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etFatherName"
@@ -56,31 +81,6 @@
                 android:hint="Enter father name"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-
-        <!-- Mobile Number -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Mobile Number"
-            android:textColor="#333333"
-            android:textSize="14sp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="4dp"/>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilMobile"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etMobile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="phone"
-                android:maxLength="10"
-                android:hint="Enter mobile number"/>
-        </com.google.android.material.textfield.TextInputLayout>
 
 
         <!-- Search Button -->

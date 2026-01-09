@@ -93,7 +93,7 @@
                 android:enabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etContact"
+                    android:id="@+id/etPhoneNo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="phone"
@@ -109,7 +109,7 @@
                 android:fontFamily="@font/poppins_medium"/>
 
             <RadioGroup
-                android:id="@+id/rgRoadWidth"
+                android:id="@+id/rgPropertyType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

@@ -147,7 +147,8 @@
                 android:layout_height="50dp"
                 android:gravity="center"
                 android:layout_margin="3dp"
-                android:background="@drawable/filter_card_bg">
+                android:background="@drawable/filter_card_bg"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"

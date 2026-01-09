@@ -24,6 +24,8 @@ import com.example.lda.R
 import com.example.lda.databinding.ActivityPayment2Binding
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
 import com.example.lda.houseTax.paymentDetails.ArvHistoryActivity
+import com.example.lda.model.Data
+import com.google.gson.Gson
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -45,6 +47,12 @@ class PaymentActivity : AppCompatActivity() {
             statusBarColor = getColor(R.color.primary),
             lightStatusBar = true,
         )
+
+        val json = intent.getStringExtra("property_data_json")
+        val pid = intent.getStringExtra("pid")
+
+        val data: Data? = json?.let { Gson().fromJson(it, Data::class.java) }
+
 
         val toolbar = findViewById<ImageView>(R.id.navBack)
         toolbar.setOnClickListener {
@@ -79,11 +87,15 @@ class PaymentActivity : AppCompatActivity() {
 
         binding.btnPaymentHistory.setOnClickListener {
             val intent = Intent(this, PaymentHistoryActivity::class.java)
+            intent.putExtra("property_data_json", json)
             startActivity(intent)
         }
 
 
         binding.btnPayTax.setOnClickListener {
+
+
+
 
             // 1️⃣ Show loading dialog
             val dialog = ProgressDialog(this)
@@ -130,6 +142,38 @@ class PaymentActivity : AppCompatActivity() {
             generatePropertyPdf()
         }
 
+
+
+
+
+        binding.tvHeader.text="PID: $pid"
+        val billDetails=data?.billDetails
+        binding.tvTotalArv.text= billDetails?.houseCurrentTax
+        binding.tvYearlyTax.text= billDetails?.houseTaxInterest
+        binding.tvCurrentTax.text= billDetails?.houseTaxArrear
+        binding.tvTotalTaxDue.text= billDetails?.houseTaxNetAmount
+        binding.tvInterest.text= billDetails?.finYear
+        binding.tvArrear.text= billDetails?.billDate
+
+
+        val propertyDetails=data?.propertyDetails
+        binding.tvPropertyId.text=pid
+        binding.tvZone.text=propertyDetails?.zoneName
+        binding.tvWardName.text=propertyDetails?.wardName
+        binding.tvMohalla.text=propertyDetails?.mohallaName
+        binding.tvOwnershipType.text=propertyDetails?.propertyType
+        binding.tvHouseNo.text=propertyDetails?.houseNo
+        binding.tvAddress.text=propertyDetails?.address
+        binding.tvArea.text=propertyDetails?.totalArea
+        binding.tvRoadWidth.text=propertyDetails?.propertyUseAs
+        binding.tvYearlyTax2.text=propertyDetails?.chukNo
+
+        val ownerDetails=data?.ownerDetails
+        binding.tvOwnerName.text=ownerDetails?.ownerName
+        binding.tvOwnerMobile.text=ownerDetails?.mobileNo
+        binding.tvOwnerFatherName.text=ownerDetails?.fatherName
+
+        
     }
 
     private fun generatePaymentReceiptPDF(txnId: String, date: String, time: String) {

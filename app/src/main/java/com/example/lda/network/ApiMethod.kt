@@ -9,14 +9,26 @@ import com.example.lda.model.IaCaseDetailsResponse
 import com.example.lda.model.IaDetailsCountResponse
 import com.example.lda.model.InterimOrderCategoryResponse
 import com.example.lda.model.LoginResponse
+import com.example.lda.model.MohallaListResponse
 import com.example.lda.model.NextHearingResponse
 import com.example.lda.model.NotCaRejoinderFiledResponse
+import com.example.lda.model.PropertyDetailsResponse
+import com.example.lda.model.PropertySearchResponse
 import com.example.lda.model.RecentInterimOrderCaseDetailByTypeResponse
+import com.example.lda.model.UlbDataResponse
+import com.example.lda.model.WardListResponse
+import com.example.lda.model.ZoneListResponse
+import com.example.lda.utils.dataClass.PropertyDetailsRequest
+import com.example.lda.utils.dataClass.PropertySearchRequest
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 
 interface ApiMethod {
@@ -174,6 +186,55 @@ interface ApiMethod {
         ):Call<NotCaRejoinderFiledResponse>
 
 
+
+
+    @GET("apis/ulbdata")
+    fun ulbData(
+        @Header("Authorization") authorization:String,
+        ):Call<UlbDataResponse>
+
+
+    @GET("apis/zonedata/{ulbId}")
+    fun zoneList(
+        @Header("Authorization") authorization: String,
+        @Path("ulbId") ulbId: String
+    ): Call<ZoneListResponse>
+
+
+    @GET("apis/warddata/{ulbId}/{zoneId}")
+    fun wardList(
+        @Header("Authorization") authorization: String,
+        @Path("ulbId") ulbId: String,
+        @Path("zoneId") zoneId: String
+    ): Call<WardListResponse>
+
+    @GET("apis/mohalladata/{ulbId}/{zoneId}/{wardId}")
+    fun mohallaList(
+        @Header("Authorization") authorization: String,
+        @Path("ulbId") ulbId: String,
+        @Path("zoneId") zoneId: String,
+        @Path("wardId") wardId: String
+    ): Call<MohallaListResponse>
+
+
+    @Headers(
+        "Content-Type: application/json",
+        "Accept: application/json")
+    @POST("apis/propertysearch")
+    fun propertySearch(
+        @Header("Authorization") authorization: String,
+        @Body request: PropertySearchRequest
+    ): Call<PropertySearchResponse>
+
+
+    @Headers(
+        "Content-Type: application/json",
+        "Accept: application/json")
+    @POST("apis/propertydetails")
+    fun propertyDetails(
+        @Header("Authorization") authorization: String,
+        @Body request: PropertyDetailsRequest
+    ): Call<PropertyDetailsResponse>
 
 
 }

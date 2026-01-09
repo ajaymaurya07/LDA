@@ -1,24 +1,37 @@
 package com.example.lda.houseTax
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.lda.R
 import com.example.lda.databinding.ActivityPropertySearchBinding
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
+import com.example.lda.houseTax.viewmodel.SharedViewModel
+import com.example.lda.model.PropertySearchResponse
+import com.example.lda.utils.LoderHelper
+import com.example.lda.viewmodel.LoginViewModel
+
 
 class PropertySearchActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityPropertySearchBinding
+    lateinit var viewModel: SharedViewModel
+    private lateinit var loderHelper: LoderHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_property_search)
+        viewModel=ViewModelProvider(this)[SharedViewModel::class.java]
+        loderHelper= LoderHelper(this)
+
         enableEdgeToEdge()
         applySafeAreaInsets(
             rootView = findViewById(R.id.root),
@@ -31,7 +44,59 @@ class PropertySearchActivity : AppCompatActivity() {
         setupCardClicks()
 
 
+        viewModel.ulbData()
+        observerErrorMessage()
+        observerLoader()
+        observePropertyResult()
+
+
+
     }
+
+    private fun observerErrorMessage(){
+        viewModel.errorMessage.observe(this) {
+            it?.let { msg ->
+                Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun observerLoader(){
+        viewModel.isLoading.observe(this){
+            if (it){
+                loderHelper.startLoadingDialog("Data is loading...")
+            }else{
+                loderHelper.dismissDialog()
+            }
+        }
+    }
+
+
+    private fun observePropertyResult() {
+
+        viewModel.propertyList.observe(this) { list ->
+
+            if (list.isNullOrEmpty()) {
+                Toast.makeText(
+                    this,
+                    "Property data not available",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@observe
+            }
+
+            // ✅ SAFE navigation (Activity context)
+            val intent = Intent(this, SelectPropertyActivity::class.java)
+            intent.putParcelableArrayListExtra(
+                "property_list",
+                ArrayList(list)
+            )
+            startActivity(intent)
+
+        }
+    }
+
+
 
     private fun setupCardClicks() {
 

@@ -11,20 +11,32 @@
         android:orientation="vertical">
 
         <!-- Mobile Number Label -->
-        <TextView
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mobile Number"
-            android:textColor="#333333"
-            android:textSize="14sp"
-            android:layout_marginBottom="4dp" />
+            android:layout_marginTop="16dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/etUlb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Select ULB"
+                android:inputType="none"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <!-- Label -->
+
+
 
         <!-- Mobile Number Input -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilMobile"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etMobile"

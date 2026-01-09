@@ -2,6 +2,7 @@ package com.example.lda.houseTax
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -12,7 +13,9 @@ import com.example.lda.R
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
 import com.example.lda.houseTax.data.PropertyAdaptor
 import com.example.lda.houseTax.data.PropertyModel
+import com.example.lda.model.Data
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.gson.Gson
 
 class PropertyDetailsActivity : AppCompatActivity() {
 
@@ -36,15 +39,29 @@ class PropertyDetailsActivity : AppCompatActivity() {
         }
 
 
+        val json = intent.getStringExtra("property_data_json")
+        val pid = intent.getStringExtra("pid")
+
+        val data: Data? = json?.let { Gson().fromJson(it, Data::class.java) }
+
+        val wardName= data?.propertyDetails?.wardName ?: ""
+        val mohallaNane= data?.propertyDetails?.mohallaName ?: ""
+        val ownerName= data?.ownerDetails?.ownerName ?: ""
+        val mobileNumber= data?.ownerDetails?.mobileNo ?: ""
+
+
+
         val rv = findViewById<RecyclerView>(R.id.rvPropertyList)
         rv.layoutManager = LinearLayoutManager(this)
 
         val dummyList = listOf(
-            PropertyModel("104007800031001", "Anwar Ganj", "Anwar Ganj", "Mohd. Arif Siddiqui", "7394961470")
+            PropertyModel(pid!!, wardName,mohallaNane,ownerName,mobileNumber)
         )
 
         adapter = PropertyAdaptor(dummyList) { selected ->
             val intent= Intent(this,PaymentActivity::class.java)
+            intent.putExtra("property_data_json", json)
+            intent.putExtra("pid",pid)
             startActivity(intent)
         }
 

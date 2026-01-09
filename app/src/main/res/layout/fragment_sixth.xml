@@ -40,7 +40,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
-                        android:text="206.4"/>
+                        android:text="0.0"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Space android:layout_width="12dp"
@@ -60,7 +60,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
-                        android:text="103.2"/>
+                        android:text="0.0"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
@@ -85,7 +85,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
-                        android:text="2476.8"/>
+                        android:text="0.0"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Space android:layout_width="12dp"
@@ -105,7 +105,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
-                        android:text="1238.4"/>
+                        android:text="0.0"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
@@ -130,7 +130,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
-                        android:text="804.96"/>
+                        android:text="0.0"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Space android:layout_width="12dp"
@@ -150,7 +150,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
-                        android:text="154.8"/>
+                        android:text="0.0"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
@@ -171,10 +171,11 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etFinalArvOwner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
-                        android:text="1671.8400"/>
+                        android:text="0.0"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Space android:layout_width="12dp"
@@ -190,10 +191,11 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etFinalArvRented"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
-                        android:text="1398.20"/>
+                        android:text="0.0"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
@@ -218,7 +220,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
-                        android:text="250.76"/>
+                        android:text="0.0"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Space android:layout_width="12dp"
@@ -238,7 +240,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
-                        android:text="208.98"/>
+                        android:text="0.0"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
@@ -251,10 +253,11 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etTotalArv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
-                    android:text="3070.04"/>
+                    android:text="0.0"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -266,10 +269,11 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etTotalAssessmentTax"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
-                    android:text="459.72"/>
+                    android:text="0.0"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 

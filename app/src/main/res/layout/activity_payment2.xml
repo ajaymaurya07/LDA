@@ -114,7 +114,7 @@
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content"
-                                    android:text="Total ARV"
+                                    android:text="Current House Tax"
                                     android:textSize="13sp"
                                     android:textColor="#2C3E50"
                                     android:fontFamily="@font/poppins_regular" />
@@ -140,7 +140,7 @@
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content"
-                                    android:text="Yearly Tax"
+                                    android:text="House Tax Interest"
                                     android:textColor="#2C3E50"
                                     android:textSize="13sp"
                                     android:fontFamily="@font/poppins_regular" />
@@ -172,7 +172,7 @@
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content"
-                                    android:text="Current Tax"
+                                    android:text="House Tax Arrear"
                                     android:textColor="#2C3E50"
                                     android:textSize="13sp"
                                     android:fontFamily="@font/poppins_regular" />
@@ -198,7 +198,7 @@
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content"
-                                    android:text="Arrear"
+                                    android:text="Bill Date"
                                     android:textColor="#2C3E50"
                                     android:textSize="13sp"
                                     android:fontFamily="@font/poppins_regular" />
@@ -224,7 +224,7 @@
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content"
-                                    android:text="Interest"
+                                    android:text="Financial Year"
                                     android:textColor="#2C3E50"
                                     android:textSize="13sp"
                                     android:fontFamily="@font/poppins_regular" />
@@ -251,7 +251,7 @@
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content"
-                                    android:text="Total Tax Due"
+                                    android:text="House Tax Payable Amout"
                                     android:textColor="#2C3E50"
                                     android:textSize="16sp"
                                     android:fontFamily="@font/poppins_medium" />
@@ -440,7 +440,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:paddingVertical="6dp">
+                            android:paddingVertical="6dp"
+                            android:visibility="gone">
 
                             <TextView
                                 android:layout_width="0dp"
@@ -464,7 +465,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:paddingVertical="6dp">
+                            android:paddingVertical="6dp"
+                            android:visibility="gone">
 
                             <TextView
                                 android:layout_width="0dp"
@@ -494,7 +496,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Zone No."
+                                android:text="Zone Name"
                                 android:textSize="13sp"
                                 android:fontFamily="@font/poppins_medium"/>
 
@@ -518,7 +520,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Corporator Ward"
+                                android:text="Ward Name"
                                 android:textSize="13sp"
                                 android:fontFamily="@font/poppins_medium"/>
 
@@ -566,7 +568,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Ownership Type"
+                                android:text="propertyType"
                                 android:textSize="13sp"
                                 android:fontFamily="@font/poppins_medium"/>
 
@@ -686,7 +688,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Road Width"
+                                android:text="Property Use As"
                                 android:textSize="13sp"
                                 android:fontFamily="@font/poppins_medium"/>
 
@@ -710,12 +712,60 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Yearly Tax"
+                                android:text="chukNo"
                                 android:textSize="13sp"
                                 android:fontFamily="@font/poppins_medium"/>
 
                             <TextView
                                 android:id="@+id/tvYearlyTax2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="352"
+                                android:textSize="13sp"
+                                android:fontFamily="@font/poppins_medium"/>
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="6dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Owner Mobile Number"
+                                android:textSize="13sp"
+                                android:fontFamily="@font/poppins_medium"/>
+
+                            <TextView
+                                android:id="@+id/tvOwnerMobile"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="352"
+                                android:textSize="13sp"
+                                android:fontFamily="@font/poppins_medium"/>
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingVertical="6dp">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Owner Father Name"
+                                android:textSize="13sp"
+                                android:fontFamily="@font/poppins_medium"/>
+
+                            <TextView
+                                android:id="@+id/tvOwnerFatherName"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="352"

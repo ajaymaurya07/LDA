@@ -26,6 +26,9 @@
         android:theme="@style/Theme.LDA"
         tools:targetApi="31">
         <activity
+            android:name=".houseTax.SelectPropertyActivity"
+            android:exported="false" />
+        <activity
             android:name=".houseTax.ByMapActivity"
             android:exported="false" />
         <activity
@@ -242,9 +245,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
-
-
     </application>
 
 </manifest>

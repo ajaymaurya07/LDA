@@ -12,13 +12,24 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.lda.MainMenu
 import com.example.lda.R
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
+import com.example.lda.houseTax.data.PaymentHistoryAdaptor
+import com.example.lda.houseTax.data.PropertySelectAdaptor
+import com.example.lda.model.CurrReceiptDetailsItem
+import com.example.lda.model.Data
+import com.example.lda.model.PrevReceiptDetailsItem
+import com.example.lda.model.PropertyItem
 import com.google.android.material.button.MaterialButton
+import com.google.gson.Gson
 import java.io.File
 import java.io.FileOutputStream
 
 class PaymentHistoryActivity : AppCompatActivity() {
+    lateinit var paymentHistoryAdaptor: PaymentHistoryAdaptor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,13 +42,58 @@ class PaymentHistoryActivity : AppCompatActivity() {
             lightStatusBar = true,
         )
 
+
         findViewById<ImageView>(R.id.navBack).setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        findViewById<MaterialButton>(R.id.btnDownloadReceipt).setOnClickListener {
-            generateReceiptPdf()
+
+        val json = intent.getStringExtra("property_data_json")
+        val data: Data? = json?.let { Gson().fromJson(it, Data::class.java) }
+
+
+
+        val receiptList = data?.prevReceiptDetails?.filterNotNull() ?: emptyList()
+        val currentReceiptList = data?.currReceiptDetails?.filterNotNull() ?: emptyList()
+
+        val convertedPrevList = receiptList.map { prev ->
+            CurrReceiptDetailsItem(
+                receiptNo = prev.receiptNo,
+                billNo = prev.billNo,
+                receiptDate = prev.receiptDate,
+                paymentMode = prev.paymentMode,
+                paymentDate = prev.paymentDate,
+                challanId = prev.challanId,
+                chequeNo = prev.chequeNo,
+                propertyTaxNetAmount = prev.propertyTaxNetAmount,
+                propertyTaxPaidAmount = prev.propertyTaxPaidAmount,
+
+            )
         }
+
+        val finalList: List<CurrReceiptDetailsItem> =
+            currentReceiptList + convertedPrevList
+
+
+
+
+
+        val rv = findViewById<RecyclerView>(R.id.recyler_view_payment)
+        rv.layoutManager = LinearLayoutManager(this)
+
+
+        paymentHistoryAdaptor = PaymentHistoryAdaptor(finalList) { selected ->
+
+//            val intent = Intent(this, MainMenu::class.java).apply {
+//                putExtra("pid", selected.propertyId)
+//            }
+//
+//            startActivity(intent)
+
+        }
+        rv.adapter = paymentHistoryAdaptor
+
+
     }
 
     private fun generateReceiptPdf() {

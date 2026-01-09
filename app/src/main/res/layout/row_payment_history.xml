@@ -1,0 +1,128 @@
+<com.google.android.material.card.MaterialCardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="1dp"
+    app:strokeColor="#E5E7EB"
+    app:cardUseCompatPadding="true"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <!-- HEADER -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvReceiptNo"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Receipt No: RCPT1023409"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="#111827" />
+
+            <!-- STATUS CHIP -->
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PAID"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/bg_status_paid" />
+        </LinearLayout>
+
+        <!-- DIVIDER -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="10dp"
+            android:background="#E5E7EB" />
+
+        <!-- DETAILS -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#F9FAFB"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/billNo"
+                android:text="Bill No : 125542"
+                style="@style/ReceiptItemStyle"/>
+
+            <TextView
+                android:id="@+id/receiptDate"
+                android:text="Receipt Date : 08/07/2002"
+                style="@style/ReceiptItemStyle"/>
+
+            <TextView
+                android:id="@+id/paymentMode"
+                android:text="Payment Mode : UPI"
+                style="@style/ReceiptItemStyle"/>
+
+            <TextView
+                android:id="@+id/paymentDate"
+                android:text="Payment Date : 09/22/2020"
+                style="@style/ReceiptItemStyle"/>
+
+            <TextView
+                android:id="@+id/challanId"
+                android:text="Challan ID : -"
+                style="@style/ReceiptItemStyle"/>
+
+            <TextView
+                android:id="@+id/chequeNo"
+                android:text="Cheque No : -"
+                style="@style/ReceiptItemStyle"/>
+
+            <TextView
+                android:id="@+id/propertyTaxNetAmount"
+                android:text="Net Amount : ₹ 1,250"
+                style="@style/ReceiptItemStyle"/>
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/propertyTaxDiscount"
+                android:text="Tax Discount : -"
+                style="@style/ReceiptItemStyle"/>
+
+            <TextView
+                android:id="@+id/propertyTaxPaidAmount"
+                android:text="Paid Amount : ₹ 1,250"
+                style="@style/ReceiptItemStyle"/>
+        </LinearLayout>
+
+        <!-- DOWNLOAD BUTTON -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDownloadReceipt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Download Receipt"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            app:cornerRadius="12dp"
+            app:iconPadding="8dp"
+            app:backgroundTint="@color/primary"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

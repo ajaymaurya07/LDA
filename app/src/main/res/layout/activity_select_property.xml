@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@drawable/bg_with_opacity"
-        >
+        android:background="@drawable/bg_with_opacity">
 
+        <!-- Top AppBar -->
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/topAppBar"
             android:layout_width="match_parent"
@@ -30,32 +30,36 @@
                     android:src="@drawable/left_icon"
                     android:layout_marginStart="12dp"
                     android:layout_gravity="start|center_vertical"
-                    android:padding="4dp" />
+                    android:padding="4dp"/>
 
                 <!-- Title placed manually -->
                 <TextView
                     android:id="@+id/tvTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Payment History"
+                    android:text="Select Property"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_marginStart="20dp"
-                    android:layout_gravity="center_vertical" />
+                    android:layout_gravity="center_vertical"/>
 
             </com.google.android.material.appbar.MaterialToolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
 
+
+        <!-- RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyler_view_payment"
-            android:layout_width="match_parent"
+            android:id="@+id/rvPropertyList"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_marginTop="10dp"
+            android:padding="8dp"
+            app:layout_constraintTop_toBottomOf="@id/topAppBar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
-
-
-

@@ -18,6 +18,7 @@ import com.example.lda.model.LoginResponse
 import com.example.lda.model.NextHearingResponse
 import com.example.lda.model.NotCaRejoinderFiledResponse
 import com.example.lda.model.RecentInterimOrderCaseDetailByTypeResponse
+import com.example.lda.model.UlbDataResponse
 import com.example.lda.network.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -369,5 +370,9 @@ class LoginViewModel:ViewModel() {
 
         })
     }
+
+
+
+
 
 }
