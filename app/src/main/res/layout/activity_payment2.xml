@@ -102,90 +102,6 @@
                             android:backgroundTint="#F7F9FC"
                             android:paddingVertical="10dp">
 
-                            <!-- Row Reusable Style in All Data Rows -->
-                            <!-- Total ARV -->
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:paddingVertical="8dp">
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="wrap_content"
-                                    android:text="Current House Tax"
-                                    android:textSize="13sp"
-                                    android:textColor="#2C3E50"
-                                    android:fontFamily="@font/poppins_regular" />
-
-                                <TextView
-                                    android:id="@+id/tvTotalArv"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="2344"
-                                    android:textColor="#34495E"
-                                    android:textSize="13sp"
-                                    android:fontFamily="@font/poppins_regular" />
-                            </LinearLayout>
-
-                            <!-- Yearly Tax -->
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:paddingVertical="8dp">
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="wrap_content"
-                                    android:text="House Tax Interest"
-                                    android:textColor="#2C3E50"
-                                    android:textSize="13sp"
-                                    android:fontFamily="@font/poppins_regular" />
-
-                                <TextView
-                                    android:id="@+id/tvYearlyTax"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="352"
-                                    android:textColor="#34495E"
-                                    android:textSize="14sp" />
-                            </LinearLayout>
-
-                            <!-- Divider Line -->
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:background="#E1E6ED"
-                                android:layout_marginVertical="3dp" />
-
-                            <!-- Current Tax -->
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:paddingVertical="8dp">
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="wrap_content"
-                                    android:text="House Tax Arrear"
-                                    android:textColor="#2C3E50"
-                                    android:textSize="13sp"
-                                    android:fontFamily="@font/poppins_regular" />
-
-                                <TextView
-                                    android:id="@+id/tvCurrentTax"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="352"
-                                    android:textColor="#34495E"
-                                    android:textSize="13sp"
-                                    android:fontFamily="@font/poppins_regular" />
-                            </LinearLayout>
 
                             <!-- Arrear -->
                             <LinearLayout
@@ -204,16 +120,41 @@
                                     android:fontFamily="@font/poppins_regular" />
 
                                 <TextView
-                                    android:id="@+id/tvArrear"
+                                    android:id="@+id/tvBillDate"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="1408"
+                                    android:text=""
                                     android:textColor="#34495E"
                                     android:textSize="13sp"
                                     android:fontFamily="@font/poppins_regular" />
                             </LinearLayout>
 
-                            <!-- Interest -->
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingVertical="8dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:text="Bill Number"
+                                    android:textColor="#2C3E50"
+                                    android:textSize="13sp"
+                                    android:fontFamily="@font/poppins_regular" />
+
+                                <TextView
+                                    android:id="@+id/tvBillNumber"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=""
+                                    android:textColor="#34495E"
+                                    android:textSize="13sp"
+                                    android:fontFamily="@font/poppins_regular" />
+                            </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -230,17 +171,26 @@
                                     android:fontFamily="@font/poppins_regular" />
 
                                 <TextView
-                                    android:id="@+id/tvInterest"
+                                    android:id="@+id/tvFinancialYear"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="428"
+                                    android:text=""
                                     android:textColor="#34495E"
                                     android:textSize="13sp"
                                     android:fontFamily="@font/poppins_regular" />
                             </LinearLayout>
 
 
-                            <!-- Interest -->
+                            <!-- Divider Line -->
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="#E1E6ED"
+                                android:layout_marginVertical="3dp" />
+
+
+
+                            <!-- House Tax Net Amount -->
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -251,16 +201,185 @@
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content"
-                                    android:text="House Tax Payable Amout"
+                                    android:text="House Tax Net Amount"
+                                    android:textColor="#2C3E50"
+                                    android:textSize="13sp"
+                                    android:fontFamily="@font/poppins_regular" />
+
+                                <TextView
+                                    android:id="@+id/tvHouseTaxNetAmount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=""
+                                    android:textColor="#34495E"
+                                    android:textSize="13sp"
+                                    android:fontFamily="@font/poppins_regular" />
+                            </LinearLayout>
+
+
+
+
+                            <!-- Water Tax Net Amount -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingVertical="8dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:text="Water Tax Net Amount"
+                                    android:textColor="#2C3E50"
+                                    android:textSize="13sp"
+                                    android:fontFamily="@font/poppins_regular" />
+
+                                <TextView
+                                    android:id="@+id/tvWaterTaxNetAmount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=""
+                                    android:textColor="#34495E"
+                                    android:textSize="13sp"
+                                    android:fontFamily="@font/poppins_regular" />
+                            </LinearLayout>
+
+
+
+                            <!-- Sewer Tax Net Amount -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingVertical="8dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:text="Sewer Tax Net Amount"
+                                    android:textColor="#2C3E50"
+                                    android:textSize="13sp"
+                                    android:fontFamily="@font/poppins_regular" />
+
+                                <TextView
+                                    android:id="@+id/tvSewerTaxNetAmount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=""
+                                    android:textColor="#34495E"
+                                    android:textSize="13sp"
+                                    android:fontFamily="@font/poppins_regular" />
+                            </LinearLayout>
+
+
+
+                            <!-- other Tax Net Amount -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingVertical="8dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:text="Other Tax Net Amount"
+                                    android:textColor="#2C3E50"
+                                    android:textSize="13sp"
+                                    android:fontFamily="@font/poppins_regular" />
+
+                                <TextView
+                                    android:id="@+id/tvOtherTaxNetAmount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=""
+                                    android:textColor="#34495E"
+                                    android:textSize="13sp"
+                                    android:fontFamily="@font/poppins_regular" />
+                            </LinearLayout>
+
+
+
+
+                            <!-- water charge Net Amount -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingVertical="8dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:text="Water Charge Net Amount"
+                                    android:textColor="#2C3E50"
+                                    android:textSize="13sp"
+                                    android:fontFamily="@font/poppins_regular" />
+
+                                <TextView
+                                    android:id="@+id/tvWaterChargeNetAmount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=""
+                                    android:textColor="#34495E"
+                                    android:textSize="13sp"
+                                    android:fontFamily="@font/poppins_regular" />
+                            </LinearLayout>
+
+
+                            <!--  Net demond -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingVertical="8dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:text="Net Demand"
+                                    android:textColor="#2C3E50"
+                                    android:textSize="13sp"
+                                    android:fontFamily="@font/poppins_regular" />
+
+                                <TextView
+                                    android:id="@+id/tvNetDemand"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=""
+                                    android:textColor="#34495E"
+                                    android:textSize="13sp"
+                                    android:fontFamily="@font/poppins_regular" />
+                            </LinearLayout>
+
+
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingVertical="8dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:text="Net Payable"
                                     android:textColor="#2C3E50"
                                     android:textSize="16sp"
                                     android:fontFamily="@font/poppins_medium" />
 
                                 <TextView
-                                    android:id="@+id/tvTotalTaxDue"
+                                    android:id="@+id/tvNetPayable"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="2188"
+                                    android:text=""
                                     android:textColor="#34495E"
                                     android:textSize="16sp"
                                     android:fontFamily="@font/poppins_medium" />

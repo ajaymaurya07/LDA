@@ -1,39 +1,52 @@
 package com.example.lda.houseTax
 
-import android.app.AlertDialog
-import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.pdf.PdfDocument
 import android.os.Bundle
 import android.os.Environment
-import android.os.Handler
-import android.os.Looper
+import android.util.Log
 import android.view.View
+import android.webkit.WebView
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.FileProvider
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import com.example.lda.R
 import com.example.lda.databinding.ActivityPayment2Binding
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
+import com.example.lda.houseTax.data.InitiateTransactionRequest
 import com.example.lda.houseTax.paymentDetails.ArvHistoryActivity
+import com.example.lda.houseTax.utils.PreferenceManager
+import com.example.lda.houseTax.viewmodel.PaymentViewModel
 import com.example.lda.model.Data
+import com.example.lda.utils.LoderHelper
 import com.google.gson.Gson
+import com.payu.base.models.ErrorResponse
+import com.payu.base.models.PayUPaymentParams
+import com.payu.checkoutpro.PayUCheckoutPro
+import com.payu.checkoutpro.utils.PayUCheckoutProConstants
+import com.payu.checkoutpro.utils.PayUCheckoutProConstants.CP_HASH_NAME
+import com.payu.checkoutpro.utils.PayUCheckoutProConstants.CP_HASH_STRING
+import com.payu.ui.model.listeners.PayUCheckoutProListener
+import com.payu.ui.model.listeners.PayUHashGenerationListener
+import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 class PaymentActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPayment2Binding
+    lateinit var viewModel: PaymentViewModel
+    private lateinit var loderHelper: LoderHelper
+    private lateinit var preferenceManager: PreferenceManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +60,11 @@ class PaymentActivity : AppCompatActivity() {
             statusBarColor = getColor(R.color.primary),
             lightStatusBar = true,
         )
+
+
+        viewModel=ViewModelProvider(this)[PaymentViewModel::class.java]
+        loderHelper= LoderHelper(this)
+        preferenceManager = PreferenceManager(this)
 
         val json = intent.getStringExtra("property_data_json")
         val pid = intent.getStringExtra("pid")
@@ -91,50 +109,60 @@ class PaymentActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val ulbId=preferenceManager.getUlbId()
+
+        val billDetails=data?.billDetails
+        val billNo=billDetails?.billNo
+        val financialYear=billDetails?.finYear
+        val houseTax=billDetails?.houseTaxNetAmount
+        val waterTax=billDetails?.waterTaxNetAmount
+        val sewerTax=billDetails?.sewerTaxNetAmount
+        val otherTax=billDetails?.othertaxNetAmount
+        val waterCharge=billDetails?.waterChargeNetAmount
+        val netDemand=billDetails?.netDemand
+        val netPayable=billDetails?.netPayble
+
+        val ownerDetails=data?.ownerDetails
+        val ownerName=ownerDetails?.ownerName
+        val fatherName=ownerDetails?.fatherName
+        val mobileNumber=ownerDetails?.mobileNo
+
+
 
         binding.btnPayTax.setOnClickListener {
 
+            val mobile_id= "MOBTXN${System.currentTimeMillis()}"
 
+            val request = InitiateTransactionRequest(
+                mobile_transaction_id =mobile_id,
+                mobile_transaction_timestamp = getCurrentTime(),
 
+                bill_no = billNo!!,   // payment screen show
+                property_id = pid!!,
+                ulb_id = ulbId!!,      // // property details show
+                financial_year = financialYear!!,
 
-            // 1️⃣ Show loading dialog
-            val dialog = ProgressDialog(this)
-            dialog.setMessage("Processing Payment...\nPlease wait")
-            dialog.setCancelable(false)
-            dialog.show()
+                ownerName = ownerName!!, // save in property details
+                fatherName = fatherName!!,
+                mobileNo = mobileNumber!!,
 
-            Handler(Looper.getMainLooper()).postDelayed({
+                property_tax = houseTax!!,   // payment screen show
+                water_tax = waterTax!!,
+                sewer_tax = sewerTax!!,
+                other_tax = otherTax!!,
+                water_charge = waterCharge!!,
 
-                dialog.setMessage("Confirming Transaction...")
+                net_demand = netDemand!!,
+                net_payable = netPayable!!
+            )
 
-                Handler(Looper.getMainLooper()).postDelayed({
+            preferenceManager.saveMobileTransactionId(mobile_id)
 
-                    dialog.dismiss()
-
-                    // 2️⃣ Generate Transaction ID
-                    val txnId = "TXN" + (100000..999999).random()
-                    val date = SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(Date())
-                    val time = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date())
-
-                    // 3️⃣ Generate Payment Receipt PDF
-                    generatePaymentReceiptPDF(txnId, date, time)
-
-                    // 4️⃣ Show success popup
-                    AlertDialog.Builder(this)
-                        .setTitle("Payment Successful")
-                        .setMessage(
-                            "Your payment has been successfully completed.\n\n" +
-                                    "Transaction ID: $txnId\n" +
-                                    "Date: $date\nTime: $time\n\n" +
-                                    "Receipt has been downloaded."
-                        )
-                        .setPositiveButton("OK") { d, _ -> d.dismiss() }
-                        .show()
-
-                }, 1500)
-
-            }, 2000)
+            viewModel.initiateTransaction(request)
         }
+
+        transactionObserver()
+
 
 
 
@@ -147,13 +175,18 @@ class PaymentActivity : AppCompatActivity() {
 
 
         binding.tvHeader.text="PID: $pid"
-        val billDetails=data?.billDetails
-        binding.tvTotalArv.text= billDetails?.houseCurrentTax
-        binding.tvYearlyTax.text= billDetails?.houseTaxInterest
-        binding.tvCurrentTax.text= billDetails?.houseTaxArrear
-        binding.tvTotalTaxDue.text= billDetails?.houseTaxNetAmount
-        binding.tvInterest.text= billDetails?.finYear
-        binding.tvArrear.text= billDetails?.billDate
+        binding.tvBillDate.text= billDetails?.billDate
+        binding.tvBillNumber.text=billNo
+        binding.tvFinancialYear.text= financialYear
+        binding.tvHouseTaxNetAmount.text=houseTax
+        binding.tvWaterTaxNetAmount.text=waterTax
+        binding.tvSewerTaxNetAmount.text=sewerTax
+        binding.tvOtherTaxNetAmount.text=otherTax
+        binding.tvWaterChargeNetAmount.text=waterCharge
+        binding.tvNetDemand.text=netDemand
+        binding.tvNetPayable.text=netPayable
+
+
 
 
         val propertyDetails=data?.propertyDetails
@@ -168,73 +201,197 @@ class PaymentActivity : AppCompatActivity() {
         binding.tvRoadWidth.text=propertyDetails?.propertyUseAs
         binding.tvYearlyTax2.text=propertyDetails?.chukNo
 
-        val ownerDetails=data?.ownerDetails
-        binding.tvOwnerName.text=ownerDetails?.ownerName
-        binding.tvOwnerMobile.text=ownerDetails?.mobileNo
-        binding.tvOwnerFatherName.text=ownerDetails?.fatherName
+
+        binding.tvOwnerName.text=ownerName
+        binding.tvOwnerMobile.text=mobileNumber
+        binding.tvOwnerFatherName.text=fatherName
 
         
     }
 
-    private fun generatePaymentReceiptPDF(txnId: String, date: String, time: String) {
 
-        val pdfDocument = PdfDocument()
-        val paint = Paint()
 
-        val pageInfo = PdfDocument.PageInfo.Builder(595, 842, 1).create()
-        val page = pdfDocument.startPage(pageInfo)
-        val canvas = page.canvas
+    private fun transactionObserver() {
 
-        paint.textSize = 18f
-        paint.isFakeBoldText = true
-        canvas.drawText("PROPERTY TAX PAYMENT RECEIPT", 130f, 50f, paint)
-
-        paint.textSize = 14f
-        paint.isFakeBoldText = false
-
-        var y = 100
-
-        // Receipt Content
-        canvas.drawText("Receipt Date     : $date", 50f, y.toFloat(), paint)
-        y += 30
-        canvas.drawText("Payment Time     : $time", 50f, y.toFloat(), paint)
-        y += 30
-        canvas.drawText("Transaction ID   : $txnId", 50f, y.toFloat(), paint)
-        y += 30
-        canvas.drawText("Property ID      : ${binding.tvPropertyId.text}", 50f, y.toFloat(), paint)
-        y += 30
-        canvas.drawText("Owner Name       : ${binding.tvOwnerName.text}", 50f, y.toFloat(), paint)
-        y += 30
-        canvas.drawText("Ward/Mohalla     : ${binding.tvWardName.text}", 50f, y.toFloat(), paint)
-        y += 30
-
-        paint.isFakeBoldText = true
-        canvas.drawText("Amount Paid      : ₹${binding.tvTotalTaxDue.text}", 50f, y.toFloat(), paint)
-        y += 40
-
-        paint.textSize = 12f
-        paint.isFakeBoldText = false
-        canvas.drawText("Thank you for paying your property tax.", 50f, y.toFloat(), paint)
-
-        pdfDocument.finishPage(page)
-
-        // Save PDF
-        val directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        val file = File(directory, "PropertyTax_Receipt_${System.currentTimeMillis()}.pdf")
-
-        try {
-            pdfDocument.writeTo(FileOutputStream(file))
-            Toast.makeText(this, "Receipt Downloaded", Toast.LENGTH_LONG).show()
-
-            openPdf(file)
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Toast.makeText(this, "Error generating receipt: ${e.message}", Toast.LENGTH_LONG).show()
+        viewModel.isLoading.observe(this){
+            if (it){
+                loderHelper.startLoadingDialog("Please wait, we’re initiating your payment…")
+            }else{
+                loderHelper.dismissDialog()
+            }
         }
 
-        pdfDocument.close()
+        viewModel.transaction.observe(this) { response ->
+
+            if (response?.status != true) {
+                Toast.makeText(this, response?.message ?: "Payment can’t be processed right now. Please try again later.", Toast.LENGTH_LONG).show()
+                return@observe
+            }
+            val data = response.data ?: return@observe
+            if (
+                data.txnid.isNullOrBlank() ||
+                data.amount.isNullOrBlank() ||
+                data.productinfo.isNullOrBlank() ||
+                data.firstname.isNullOrBlank() ||
+                data.email.isNullOrBlank() ||
+                data.phone.isNullOrBlank() ||
+                data.key.isNullOrBlank() ||
+                data.surl.isNullOrBlank() ||
+                data.furl.isNullOrBlank()
+            ) {
+                Toast.makeText(this, "Payment can’t be processed right now. Please try again later.", Toast.LENGTH_LONG).show()
+                return@observe
+            }
+
+
+            startPayment(
+                txnId = data.txnid,
+                amount = data.amount,
+                productInfo = data.productinfo,
+                name = data.firstname,
+                email = data.email,
+                phone = data.phone,
+                key = data.key,
+                surl = data.surl,
+                furl = data.furl
+            )
+        }
+
+
+
+        viewModel.transactionDetails.observe(this) { response ->
+
+            if (response == null) {
+                Toast.makeText(this, "We’re verifying your payment status. Please check again after some time.", Toast.LENGTH_SHORT).show()
+                return@observe
+            }
+
+            if (response.success == true ) {
+                when (response.data?.paymentStatus) {
+                    "SUCCESS" -> {
+                        Toast.makeText(this, "Payment successful. Your transaction has been completed.", Toast.LENGTH_LONG).show()
+                        preferenceManager.clearMobileTransactionId()
+                    }
+
+                    "FAILED" -> {
+                        Toast.makeText(this, "Payment Failed.", Toast.LENGTH_LONG).show()
+                        preferenceManager.clearMobileTransactionId()
+                    }
+
+                    "PENDING" -> {
+                        Toast.makeText(this, "Payment is under process. Please check the status after some time.", Toast.LENGTH_LONG).show()
+                    }
+                }
+
+            } else {
+                val message= response.message ?: "We couldn’t verify your payment status at this time. Please check again later."
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+            }
+        }
     }
+
+
+
+    private fun getCurrentTime(): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        sdf.timeZone = TimeZone.getDefault()
+        return sdf.format(Date())
+    }
+
+    private fun startPayment(
+        txnId: String,
+        amount: String,
+        productInfo: String,
+        name: String,
+        email: String,
+        phone: String,
+        key: String,
+        surl: String,
+        furl: String
+    ) {
+
+
+        val paymentParams = PayUPaymentParams.Builder()
+            .setAmount(amount)                   // Must be with .00
+            .setIsProduction(false)                // Test environment
+            .setKey(key)                      // PayU Test Merchant Key
+            .setProductInfo(productInfo)
+            .setFirstName(name)
+            .setEmail(email)
+            .setPhone(phone)
+            .setTransactionId(txnId)
+            .setSurl(surl)
+            .setFurl(furl)
+            .setUserCredential(email)
+            .build()
+
+
+        PayUCheckoutPro.open(
+            this, paymentParams,
+            object : PayUCheckoutProListener {
+
+                override fun generateHash(
+                    map: HashMap<String, String?>,
+                    hashGenerationListener: PayUHashGenerationListener
+                ) {
+                    val hashName = map[CP_HASH_NAME] ?: return
+                    val hashString = map[CP_HASH_STRING] ?: return
+
+                    viewModel.hashData(appVersion = 6, hashName = hashName, hashString = hashString){ serverHash ->
+
+                        if (serverHash.isNullOrEmpty()) return@hashData
+
+                        val resultMap = HashMap<String, String?>()
+                        resultMap[hashName] = serverHash
+                        hashGenerationListener.onHashGenerated(resultMap)
+                    }
+                }
+
+                override fun onPaymentSuccess(response: Any) {
+
+                    handlePaymentCallback()
+
+                }
+
+                override fun onPaymentFailure(response: Any) {
+
+                    handlePaymentCallback()
+
+                }
+
+                override fun onPaymentCancel(isTxnInitiated: Boolean) {
+                    Toast.makeText(this@PaymentActivity, "Payment Cancelled", Toast.LENGTH_LONG).show()
+                }
+
+                override fun onError(errorResponse: ErrorResponse) {
+                    val msg = errorResponse.errorMessage ?: "Unknown Error"
+                    Toast.makeText(this@PaymentActivity, msg, Toast.LENGTH_LONG).show()
+
+                }
+                override fun setWebViewProperties(webView: WebView?, bank: Any?) {
+
+                }
+
+            }
+        )
+
+    }
+
+
+    private fun handlePaymentCallback() {
+        val transactionId = preferenceManager.getMobileTransactionId()
+
+        Log.d("TAG", "handlePaymentCallback: $transactionId")
+
+        if (transactionId.isNullOrBlank()) {
+            Toast.makeText(this, "Unable to fetch transaction reference", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        viewModel.transactionDetails(transactionId)
+    }
+
+
 
 
 
@@ -312,27 +469,27 @@ class PaymentActivity : AppCompatActivity() {
         paint.isFakeBoldText = false
         paint.textSize = 16f
 
-        canvas.drawText("Total ARV: ${binding.tvTotalArv.text}", 50f, y.toFloat(), paint)
-        y += 28
-
-        canvas.drawText("Yearly Tax: ${binding.tvYearlyTax.text}", 50f, y.toFloat(), paint)
-        y += 28
-
-        canvas.drawText("Current Tax: ${binding.tvCurrentTax.text}", 50f, y.toFloat(), paint)
-        y += 28
-
-        canvas.drawText("Arrear: ${binding.tvArrear.text}", 50f, y.toFloat(), paint)
-        y += 28
-
-        canvas.drawText("Interest: ${binding.tvInterest.text}", 50f, y.toFloat(), paint)
-        y += 35
+//        canvas.drawText("Total ARV: ${binding.tvTotalArv.text}", 50f, y.toFloat(), paint)
+//        y += 28
+//
+//        canvas.drawText("Yearly Tax: ${binding.tvYearlyTax.text}", 50f, y.toFloat(), paint)
+//        y += 28
+//
+//        canvas.drawText("Current Tax: ${binding.tvCurrentTax.text}", 50f, y.toFloat(), paint)
+//        y += 28
+//
+//        canvas.drawText("Arrear: ${binding.tvArrear.text}", 50f, y.toFloat(), paint)
+//        y += 28
+//
+//        canvas.drawText("Interest: ${binding.tvInterest.text}", 50f, y.toFloat(), paint)
+//        y += 35
 
         // Highlight total
         paint.isFakeBoldText = true
         paint.textSize = 18f
         paint.color = Color.BLUE
 
-        canvas.drawText("Total Tax Due: ${binding.tvTotalTaxDue.text}", 50f, y.toFloat(), paint)
+//        canvas.drawText("Total Tax Due: ${binding.tvTotalTaxDue.text}", 50f, y.toFloat(), paint)
         y += 40
 
         // Finish page

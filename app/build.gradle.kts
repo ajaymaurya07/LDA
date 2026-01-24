@@ -82,4 +82,8 @@ dependencies {
 
 
 
+    // payu for payment integration
+    implementation ("in.payu:payu-checkout-pro:3.0.3")
+
+
 }

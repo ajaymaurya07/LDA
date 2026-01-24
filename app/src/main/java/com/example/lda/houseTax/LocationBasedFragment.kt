@@ -89,15 +89,38 @@ class LocationBasedFragment : Fragment() {
         }
     }
     private fun setupUlbDropdown(list: List<UlbItem>) {
-        val ulbNames = list.map { it.ulbName }
+
+        // Sort list A-Z by ulbName
+        val sortedList = list.sortedBy { it.ulbName?.lowercase() }
+        // Name list
+        val ulbNames = sortedList.map { it.ulbName }
         val adapter = ArrayAdapter(requireContext(), R.layout.simple_list_item_1, ulbNames)
         binding.etUlb.setAdapter(adapter)
-        binding.etUlb.setOnItemClickListener { _, _, position, _ ->
+        binding.etUlb.threshold = 1
+
+        binding.etUlb.setOnItemClickListener { parent, _, position, _ ->
+
             viewModel.clearZoneList()
-            val selectedUlb = list[position]
-            viewModel.setSelectedUlb(selectedUlb)
-            viewModel.zoneData(selectedUlb.ulbId!!)
+
+            val selectedName = parent.getItemAtPosition(position).toString()
+
+            val selectedUlb = sortedList.firstOrNull {
+                it.ulbName == selectedName
+            }
+
+            selectedUlb?.let {
+                Log.d("TAG", "setupUlbDropdown: $it")
+                viewModel.setSelectedUlb(it)
+                viewModel.zoneData(it.ulbId!!)
+            }
         }
+
+//        binding.etUlb.setOnItemClickListener { _, _, position, _ ->
+//            viewModel.clearZoneList()
+//            val selectedUlb = sortedList[position]
+//            viewModel.setSelectedUlb(selectedUlb)
+//            viewModel.zoneData(selectedUlb.ulbId!!)
+//        }
     }
 
 

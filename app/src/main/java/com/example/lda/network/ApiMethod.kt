@@ -1,10 +1,13 @@
 package com.example.lda.network
 
+import com.example.lda.houseTax.data.InitiateTransactionRequest
 import com.example.lda.model.AllCaseDetailsResponse
 import com.example.lda.model.CaseDetailsByCnrResponse
 import com.example.lda.model.CaseStatusCountResponse
+import com.example.lda.model.CreateTransactionResponse
 import com.example.lda.model.FinalOrderCountResponse
 import com.example.lda.model.FinalOrderDetailResponse
+import com.example.lda.model.HashResponse
 import com.example.lda.model.IaCaseDetailsResponse
 import com.example.lda.model.IaDetailsCountResponse
 import com.example.lda.model.InterimOrderCategoryResponse
@@ -15,6 +18,7 @@ import com.example.lda.model.NotCaRejoinderFiledResponse
 import com.example.lda.model.PropertyDetailsResponse
 import com.example.lda.model.PropertySearchResponse
 import com.example.lda.model.RecentInterimOrderCaseDetailByTypeResponse
+import com.example.lda.model.TransactionsDetailsResponse
 import com.example.lda.model.UlbDataResponse
 import com.example.lda.model.WardListResponse
 import com.example.lda.model.ZoneListResponse
@@ -235,6 +239,34 @@ interface ApiMethod {
         @Header("Authorization") authorization: String,
         @Body request: PropertyDetailsRequest
     ): Call<PropertyDetailsResponse>
+
+
+
+
+    @FormUrlEncoded
+    @POST("api/Payment/generate_hash")
+    fun hash(
+        @Header("X-App-Version") appVersion: Int,
+        @Field("hashName") hashName: String,
+        @Field("hashString") hashString: String,
+    ): Call<HashResponse>
+
+
+
+
+    @POST("api/Payment/create_transaction")
+    fun initiateTransaction(
+        @Header("X-App-Version") appVersion: Int,
+        @Body request: InitiateTransactionRequest
+    ): Call<CreateTransactionResponse>
+
+
+    @FormUrlEncoded
+    @POST("api/payment/getTransactionDetails")
+    fun transactionDetails(
+        @Header("X-App-Version") appVersion: Int,
+        @Field("mobile_transaction_id") mobileTransactionId: String,
+    ): Call<TransactionsDetailsResponse>
 
 
 }

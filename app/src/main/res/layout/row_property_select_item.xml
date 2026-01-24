@@ -64,7 +64,7 @@
 
         <!-- Ward + Mohalla -->
         <TextView
-            android:id="@+id/tvWard"
+            android:id="@+id/tvFatherName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ward: Anwar Ganj"
@@ -72,7 +72,7 @@
             android:fontFamily="@font/poppins_regular"/>
 
         <TextView
-            android:id="@+id/tvMohalla"
+            android:id="@+id/tvHouseNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Mohalla: Anwar Ganj"
@@ -81,7 +81,7 @@
 
         <!-- Mobile -->
         <TextView
-            android:id="@+id/tvMobile"
+            android:id="@+id/tvAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Mobile: 983****910"

@@ -14,6 +14,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+
     <application
         android:name=".eCourtUi.MyApplication"
         android:allowBackup="true"
@@ -24,7 +27,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LDA"
-        tools:targetApi="31">
+        tools:targetApi="31"
+        tools:replace="android:theme"
+        >
+
+        <activity
+            android:name=".houseTax.PayActivity"
+            android:exported="false" />
         <activity
             android:name=".houseTax.SelectPropertyActivity"
             android:exported="false" />
@@ -36,7 +45,9 @@
             android:exported="false" />
         <activity
             android:name=".houseTax.LauncherActivity"
-            android:exported="true">
+            android:exported="true"
+            android:process=":main"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

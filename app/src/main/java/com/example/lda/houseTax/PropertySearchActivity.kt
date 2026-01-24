@@ -2,6 +2,7 @@ package com.example.lda.houseTax
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -12,10 +13,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.lda.R
 import com.example.lda.databinding.ActivityPropertySearchBinding
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
+import com.example.lda.houseTax.utils.PreferenceManager
 import com.example.lda.houseTax.viewmodel.SharedViewModel
-import com.example.lda.model.PropertySearchResponse
 import com.example.lda.utils.LoderHelper
-import com.example.lda.viewmodel.LoginViewModel
+import kotlin.math.log
 
 
 class PropertySearchActivity : AppCompatActivity() {
@@ -23,6 +24,7 @@ class PropertySearchActivity : AppCompatActivity() {
     lateinit var binding: ActivityPropertySearchBinding
     lateinit var viewModel: SharedViewModel
     private lateinit var loderHelper: LoderHelper
+    private lateinit var preferanceManager: PreferenceManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +33,7 @@ class PropertySearchActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_property_search)
         viewModel=ViewModelProvider(this)[SharedViewModel::class.java]
         loderHelper= LoderHelper(this)
+        preferanceManager=PreferenceManager(this)
 
         enableEdgeToEdge()
         applySafeAreaInsets(
@@ -85,7 +88,11 @@ class PropertySearchActivity : AppCompatActivity() {
                 return@observe
             }
 
-            // ✅ SAFE navigation (Activity context)
+
+            val ulbId = viewModel.selectedUlb.value?.ulbId.orEmpty()
+            preferanceManager.saveUlbId(ulbId)
+
+            //SAFE navigation (Activity context)
             val intent = Intent(this, SelectPropertyActivity::class.java)
             intent.putParcelableArrayListExtra(
                 "property_list",

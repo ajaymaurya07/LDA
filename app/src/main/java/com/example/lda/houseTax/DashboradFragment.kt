@@ -21,12 +21,11 @@ import com.google.gson.Gson
 class DashboradFragment : Fragment() {
 
     private var _binding: FragmentDashboradBinding? = null
+
     private val binding get() = _binding!!
     lateinit var viewModel : PropertyDetailsViewmodel
     private lateinit var sliderHandler: Handler
     private lateinit var sliderRunnable: Runnable
-
-
 
 
 

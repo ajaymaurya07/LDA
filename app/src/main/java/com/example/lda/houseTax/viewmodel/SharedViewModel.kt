@@ -301,7 +301,6 @@ class SharedViewModel : ViewModel() {
             authorization = Constent.AUTH_TOKEN,
             request = propertySearchRequest)
 
-        Log.d("TAG", "propertySearch: $propertySearchRequest")
         call.enqueue(object : Callback<PropertySearchResponse> {
             override fun onResponse(
                 call: Call<PropertySearchResponse>,

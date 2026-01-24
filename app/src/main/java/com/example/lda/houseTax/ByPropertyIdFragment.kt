@@ -82,14 +82,33 @@ class ByPropertyIdFragment : Fragment() {
         }
     }
     private fun setupUlbDropdown(list: List<UlbItem>) {
-        val ulbNames = list.map { it.ulbName }
+        // Sort list A-Z by ulbName
+        val sortedList = list.sortedBy { it.ulbName?.lowercase() }
+        // Name list
+        val ulbNames = sortedList.map { it.ulbName }
+
         val adapter = ArrayAdapter(requireContext(), R.layout.simple_list_item_1, ulbNames)
         binding.etUlb.setAdapter(adapter)
-        binding.etUlb.setOnItemClickListener { _, _, position, _ ->
-            val selectedUlb = list[position]
-            viewModel.setSelectedUlb(selectedUlb)
 
+        binding.etUlb.threshold = 1
+
+        binding.etUlb.setOnItemClickListener { parent, _, position, _ ->
+            val selectedName = parent.getItemAtPosition(position).toString()
+            val selectedUlb = sortedList.firstOrNull {
+                it.ulbName == selectedName
+            }
+            selectedUlb?.let {
+                Log.d("TAG", "setupUlbDropdown: $it")
+                viewModel.setSelectedUlb(it)
+            }
         }
+
+
+//        binding.etUlb.setOnItemClickListener { _, _, position, _ ->
+//            val selectedUlb = sortedList[position]
+//            viewModel.setSelectedUlb(selectedUlb)
+//
+//        }
     }
 
 

@@ -10,6 +10,8 @@ class PreferenceManager(context: Context) {
     companion object {
         private const val PREF_NAME = "property_pref"
         private const val KEY_PROPERTY_ID = "key_property_id"
+        private const val KEY_MOBILE_TXN_ID = "key_mobile_transaction_id"
+        private const val KEY_ULB_ID = "key_ulb_id"
     }
 
     private val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
@@ -32,4 +34,39 @@ class PreferenceManager(context: Context) {
             .remove(KEY_PROPERTY_ID)
             .apply()
     }
+
+
+    /* ---------------- Payment ---------------- */
+
+    fun saveMobileTransactionId(transactionId: String) {
+        prefs.edit()
+            .putString(KEY_MOBILE_TXN_ID, transactionId)
+            .apply()
+    }
+    fun getMobileTransactionId(): String? {
+        return prefs.getString(KEY_MOBILE_TXN_ID, null)
+    }
+    fun clearMobileTransactionId() {
+        prefs.edit()
+            .remove(KEY_MOBILE_TXN_ID)
+            .apply()
+    }
+
+
+    fun saveUlbId(ulbId: String) {
+        prefs.edit()
+            .putString(KEY_ULB_ID, ulbId)
+            .apply()
+    }
+
+    fun getUlbId(): String? {
+        return prefs.getString(KEY_ULB_ID, null)
+    }
+
+    fun clearUlbId() {
+        prefs.edit()
+            .remove(KEY_ULB_ID)
+            .apply()
+    }
+
 }

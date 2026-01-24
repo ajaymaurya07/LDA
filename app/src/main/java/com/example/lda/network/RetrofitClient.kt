@@ -20,10 +20,20 @@ object RetrofitClient {
             .baseUrl(Constent.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(Gson()))
-
     }
+    private val retrofitClientVdai: Retrofit.Builder by lazy {
+        Retrofit.Builder()
+            .baseUrl(Constent.VDAI_BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create(Gson()))
+    }
+
     val apiCall : ApiMethod by lazy {
         retrofitClient.build().create(ApiMethod::class.java)
+    }
+
+    val vdaiApiCall:ApiMethod by lazy {
+        retrofitClientVdai.build().create(ApiMethod::class.java)
     }
 
 

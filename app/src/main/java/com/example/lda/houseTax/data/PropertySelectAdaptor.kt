@@ -16,9 +16,9 @@ class PropertySelectAdaptor(
     inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val pid = view.findViewById<TextView>(R.id.tvPid)
         val owner = view.findViewById<TextView>(R.id.tvOwnerName)
-        val ward = view.findViewById<TextView>(R.id.tvWard)
-        val mohalla = view.findViewById<TextView>(R.id.tvMohalla)
-        val mobile = view.findViewById<TextView>(R.id.tvMobile)
+        val father = view.findViewById<TextView>(R.id.tvFatherName)
+        val house = view.findViewById<TextView>(R.id.tvHouseNo)
+        val address = view.findViewById<TextView>(R.id.tvAddress)
         val btnViewDetails = view.findViewById<TextView>(R.id.btnViewDetails)
     }
 
@@ -32,9 +32,10 @@ class PropertySelectAdaptor(
         val item = list[position]
 
         holder.pid.text = "PID: ${item.propertyId}"
-        holder.mobile.text = "Owner Name: ${item.ownerName}"
-        holder.ward.text = "House NUmber: ${item.houseNo}"
-        holder.mohalla.text = "Address: ${item.address}"
+        holder.owner.text = "Owner Name: ${item.ownerName}"
+        holder.father.text = "Father/Husband Name: ${item.fatherHusbandName}"
+        holder.house.text = "House NUmber: ${item.houseNo}"
+        holder.address.text = "Address: ${item.address}"
 
         holder.btnViewDetails.setOnClickListener {
             onDetailsClick(item)
