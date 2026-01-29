@@ -101,6 +101,7 @@ class SharedViewModel : ViewModel() {
         _selectedUlb.value = null
     }
 
+
     fun ulbData() {
         incrementLoader()
         val call = RetrofitClient.apiCall.ulbData(Constent.AUTH_TOKEN)

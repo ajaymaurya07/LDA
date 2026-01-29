@@ -12,6 +12,7 @@ class PreferenceManager(context: Context) {
         private const val KEY_PROPERTY_ID = "key_property_id"
         private const val KEY_MOBILE_TXN_ID = "key_mobile_transaction_id"
         private const val KEY_ULB_ID = "key_ulb_id"
+        private const val ARV_VALUE = "arv_value"
     }
 
     private val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
@@ -68,5 +69,19 @@ class PreferenceManager(context: Context) {
             .remove(KEY_ULB_ID)
             .apply()
     }
+
+
+
+    fun saveArvValue(arvValue: String) {
+        prefs.edit()
+            .putString(ARV_VALUE, arvValue)
+            .apply()
+    }
+
+    fun getArvValue(): String? {
+        return prefs.getString(ARV_VALUE, null)
+    }
+
+
 
 }

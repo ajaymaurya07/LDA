@@ -21,5 +21,7 @@ data class InitiateTransactionRequest(
     val water_charge: String,
 
     val net_demand: String,
-    val net_payable: String
+    val net_payable: String,
+
+    val arv_value: String
 )

@@ -21,6 +21,9 @@ import com.example.lda.databinding.ActivityPayment2Binding
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
 import com.example.lda.houseTax.data.InitiateTransactionRequest
 import com.example.lda.houseTax.paymentDetails.ArvHistoryActivity
+import com.example.lda.houseTax.paymentStatus.PaymentFailedActivity
+import com.example.lda.houseTax.paymentStatus.PaymentPendingActivity
+import com.example.lda.houseTax.paymentStatus.PaymentSuccessActivity
 import com.example.lda.houseTax.utils.PreferenceManager
 import com.example.lda.houseTax.viewmodel.PaymentViewModel
 import com.example.lda.model.Data
@@ -29,12 +32,10 @@ import com.google.gson.Gson
 import com.payu.base.models.ErrorResponse
 import com.payu.base.models.PayUPaymentParams
 import com.payu.checkoutpro.PayUCheckoutPro
-import com.payu.checkoutpro.utils.PayUCheckoutProConstants
 import com.payu.checkoutpro.utils.PayUCheckoutProConstants.CP_HASH_NAME
 import com.payu.checkoutpro.utils.PayUCheckoutProConstants.CP_HASH_STRING
 import com.payu.ui.model.listeners.PayUCheckoutProListener
 import com.payu.ui.model.listeners.PayUHashGenerationListener
-import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -110,6 +111,7 @@ class PaymentActivity : AppCompatActivity() {
         }
 
         val ulbId=preferenceManager.getUlbId()
+        val arvValue=preferenceManager.getArvValue()
 
         val billDetails=data?.billDetails
         val billNo=billDetails?.billNo
@@ -133,6 +135,7 @@ class PaymentActivity : AppCompatActivity() {
 
             val mobile_id= "MOBTXN${System.currentTimeMillis()}"
 
+
             val request = InitiateTransactionRequest(
                 mobile_transaction_id =mobile_id,
                 mobile_transaction_timestamp = getCurrentTime(),
@@ -153,7 +156,9 @@ class PaymentActivity : AppCompatActivity() {
                 water_charge = waterCharge!!,
 
                 net_demand = netDemand!!,
-                net_payable = netPayable!!
+                net_payable = netPayable!!,
+
+                arv_value = arvValue!!
             )
 
             preferenceManager.saveMobileTransactionId(mobile_id)
@@ -178,6 +183,7 @@ class PaymentActivity : AppCompatActivity() {
         binding.tvBillDate.text= billDetails?.billDate
         binding.tvBillNumber.text=billNo
         binding.tvFinancialYear.text= financialYear
+        binding.tvTotalArv.text= arvValue
         binding.tvHouseTaxNetAmount.text=houseTax
         binding.tvWaterTaxNetAmount.text=waterTax
         binding.tvSewerTaxNetAmount.text=sewerTax
@@ -185,8 +191,6 @@ class PaymentActivity : AppCompatActivity() {
         binding.tvWaterChargeNetAmount.text=waterCharge
         binding.tvNetDemand.text=netDemand
         binding.tvNetPayable.text=netPayable
-
-
 
 
         val propertyDetails=data?.propertyDetails
@@ -201,10 +205,10 @@ class PaymentActivity : AppCompatActivity() {
         binding.tvRoadWidth.text=propertyDetails?.propertyUseAs
         binding.tvYearlyTax2.text=propertyDetails?.chukNo
 
-
         binding.tvOwnerName.text=ownerName
         binding.tvOwnerMobile.text=mobileNumber
         binding.tvOwnerFatherName.text=fatherName
+
 
         
     }
@@ -222,6 +226,9 @@ class PaymentActivity : AppCompatActivity() {
         }
 
         viewModel.transaction.observe(this) { response ->
+
+
+            Log.d("TAG", "transactionObserver: $response")
 
             if (response?.status != true) {
                 Toast.makeText(this, response?.message ?: "Payment can’t be processed right now. Please try again later.", Toast.LENGTH_LONG).show()
@@ -266,20 +273,26 @@ class PaymentActivity : AppCompatActivity() {
                 return@observe
             }
 
-            if (response.success == true ) {
+            val amount = response.data?.netPayable ?: ""
+            val txnId = response.data?.txnid ?: ""
+            val dateTime = response.data?.mobileTransactionTimestamp ?: ""
+            val paymentMode = response.data?.paymentMode.toString()
+
+
+            if (response.status == true ) {
                 when (response.data?.paymentStatus) {
                     "SUCCESS" -> {
-                        Toast.makeText(this, "Payment successful. Your transaction has been completed.", Toast.LENGTH_LONG).show()
+                        openPaymentStatusScreen("SUCCESS", amount, txnId, dateTime, paymentMode)
                         preferenceManager.clearMobileTransactionId()
                     }
 
                     "FAILED" -> {
-                        Toast.makeText(this, "Payment Failed.", Toast.LENGTH_LONG).show()
+                        openPaymentStatusScreen("FAILED", amount, txnId, dateTime, paymentMode)
                         preferenceManager.clearMobileTransactionId()
                     }
 
                     "PENDING" -> {
-                        Toast.makeText(this, "Payment is under process. Please check the status after some time.", Toast.LENGTH_LONG).show()
+                        openPaymentStatusScreen("PENDING", amount, txnId, dateTime, paymentMode)
                     }
                 }
 
@@ -288,6 +301,30 @@ class PaymentActivity : AppCompatActivity() {
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+
+    private fun openPaymentStatusScreen(
+        status: String,
+        amount: String,
+        txnId: String,
+        dateTime: String,
+        paymentMode: String
+    ) {
+        val intent = when (status) {
+            "SUCCESS" -> Intent(this, PaymentSuccessActivity::class.java)
+            "FAILED" -> Intent(this, PaymentFailedActivity::class.java)
+            else -> Intent(this, PaymentPendingActivity::class.java)
+        }
+
+        intent.putExtra("amount", amount)
+        intent.putExtra("txnId", txnId)
+        intent.putExtra("dateTime", dateTime)
+        intent.putExtra("paymentMode", paymentMode)
+        intent.putExtra("status", status)
+
+        startActivity(intent)
+        finish()
     }
 
 
@@ -348,15 +385,12 @@ class PaymentActivity : AppCompatActivity() {
                 }
 
                 override fun onPaymentSuccess(response: Any) {
-
                     handlePaymentCallback()
-
                 }
 
+
                 override fun onPaymentFailure(response: Any) {
-
                     handlePaymentCallback()
-
                 }
 
                 override fun onPaymentCancel(isTxnInitiated: Boolean) {
@@ -381,7 +415,6 @@ class PaymentActivity : AppCompatActivity() {
     private fun handlePaymentCallback() {
         val transactionId = preferenceManager.getMobileTransactionId()
 
-        Log.d("TAG", "handlePaymentCallback: $transactionId")
 
         if (transactionId.isNullOrBlank()) {
             Toast.makeText(this, "Unable to fetch transaction reference", Toast.LENGTH_LONG).show()
@@ -469,9 +502,9 @@ class PaymentActivity : AppCompatActivity() {
         paint.isFakeBoldText = false
         paint.textSize = 16f
 
-//        canvas.drawText("Total ARV: ${binding.tvTotalArv.text}", 50f, y.toFloat(), paint)
-//        y += 28
-//
+        canvas.drawText("Total ARV: ${binding.tvTotalArv.text}", 50f, y.toFloat(), paint)
+        y += 28
+
 //        canvas.drawText("Yearly Tax: ${binding.tvYearlyTax.text}", 50f, y.toFloat(), paint)
 //        y += 28
 //

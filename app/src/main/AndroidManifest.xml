@@ -13,9 +13,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".eCourtUi.MyApplication"
@@ -27,10 +25,35 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LDA"
-        tools:targetApi="31"
         tools:replace="android:theme"
-        >
+        tools:targetApi="31">
+        <activity
+            android:name=".houseTax.paymentStatus.PaymentPendingActivity"
+            android:exported="true" >
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+        <activity
+            android:name=".houseTax.paymentStatus.PaymentFailedActivity"
+            android:exported="true" >
+<!--                        <intent-filter>-->
+<!--                            <action android:name="android.intent.action.MAIN" />-->
+
+<!--                            <category android:name="android.intent.category.LAUNCHER" />-->
+<!--                        </intent-filter>-->
+        </activity>
+        <activity
+            android:name=".houseTax.paymentStatus.PaymentSuccessActivity"
+            android:exported="true">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
         <activity
             android:name=".houseTax.PayActivity"
             android:exported="false" />
@@ -43,16 +66,16 @@
         <activity
             android:name=".houseTax.RegisterMobileNumberActivity"
             android:exported="false" />
+<!--        android:launchMode="singleTask"-->
+<!--        android:process=":main"-->
         <activity
             android:name=".houseTax.LauncherActivity"
             android:exported="true"
-            android:process=":main"
-            android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            >
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
+             <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
         </activity>
         <activity
             android:name=".houseTax.propertTaxAssessment.calculationScreenActivity"

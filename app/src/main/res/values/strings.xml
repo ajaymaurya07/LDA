@@ -101,6 +101,8 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="pay_track"><![CDATA[Pay & Track]]></string>
+    <string name="date_time"><![CDATA[Date & Time]]></string>
+    <string name="go_to_dashboard">Go To Dashboard</string>
 
 
 </resources>

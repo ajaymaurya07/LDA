@@ -36,9 +36,7 @@ class NotificationFragment : Fragment() {
         return binding.root
     }
 
-    // ================================
-    // 📄 GENERATE PDF
-    // ================================
+
     private fun generateReceiptPdf() {
 
         val pdfDocument = PdfDocument()
@@ -99,7 +97,7 @@ class NotificationFragment : Fragment() {
     }
 
     // ================================
-    // 📂 OPEN PDF
+    // OPEN PDF
     // ================================
     private fun openPdf(file: File) {
         val uri = FileProvider.getUriForFile(

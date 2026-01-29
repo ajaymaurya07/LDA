@@ -1,6 +1,7 @@
 package com.example.lda.houseTax.viewmodel
 
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,7 +22,7 @@ class PaymentViewModel:ViewModel() {
         hashString: String,
         onResult: (String?) -> Unit
     ) {
-        val call = RetrofitClient.vdaiApiCall.hash(
+        val call = RetrofitClient.apiCall.hash(
             appVersion = appVersion,
             hashName = hashName,
             hashString = hashString
@@ -63,8 +64,10 @@ class PaymentViewModel:ViewModel() {
 
     fun initiateTransaction(request: InitiateTransactionRequest) {
 
+        Log.d("TAG", "request: $request")
+
         incrementLoader()
-        val call = RetrofitClient.vdaiApiCall.initiateTransaction(
+        val call = RetrofitClient.apiCall.initiateTransaction(
             appVersion = 6,
             request = request
         )
@@ -99,7 +102,7 @@ class PaymentViewModel:ViewModel() {
     fun transactionDetails(transactionId: String) {
 
         incrementLoader()
-        val call = RetrofitClient.vdaiApiCall.transactionDetails(
+        val call = RetrofitClient.apiCall.transactionDetails(
             appVersion = 6,
             mobileTransactionId = transactionId
         )
@@ -109,6 +112,7 @@ class PaymentViewModel:ViewModel() {
                 response: Response<TransactionsDetailsResponse>
             ) {
 
+                Log.d("TAG", "transactionDetails: ${response.body()}")
                 decrementLoader()
                 _transactionDetails.value= response.body()
             }
@@ -118,7 +122,7 @@ class PaymentViewModel:ViewModel() {
                 _transactionDetails.value= TransactionsDetailsResponse(
                     data = null,
                     message = "error",
-                    success = false
+                    status = false
                 )
             }
         })

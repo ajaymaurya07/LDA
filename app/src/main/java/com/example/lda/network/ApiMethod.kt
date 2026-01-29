@@ -192,29 +192,29 @@ interface ApiMethod {
 
 
 
-    @GET("apis/ulbdata")
+    @GET("api/House_tax/ulbdata")
     fun ulbData(
-        @Header("Authorization") authorization:String,
+        @Header("X-App-Version") authorization:Int,
         ):Call<UlbDataResponse>
 
 
-    @GET("apis/zonedata/{ulbId}")
+    @GET("api/House_tax/zonedata/{ulbId}")
     fun zoneList(
-        @Header("Authorization") authorization: String,
+        @Header("X-App-Version") authorization: Int,
         @Path("ulbId") ulbId: String
     ): Call<ZoneListResponse>
 
 
-    @GET("apis/warddata/{ulbId}/{zoneId}")
+    @GET("api/House_tax/warddata/{ulbId}/{zoneId}")
     fun wardList(
-        @Header("Authorization") authorization: String,
+        @Header("X-App-Version") authorization: Int,
         @Path("ulbId") ulbId: String,
         @Path("zoneId") zoneId: String
     ): Call<WardListResponse>
 
-    @GET("apis/mohalladata/{ulbId}/{zoneId}/{wardId}")
+    @GET("api/House_tax/mohalladata/{ulbId}/{zoneId}/{wardId}")
     fun mohallaList(
-        @Header("Authorization") authorization: String,
+        @Header("X-App-Version") authorization: Int,
         @Path("ulbId") ulbId: String,
         @Path("zoneId") zoneId: String,
         @Path("wardId") wardId: String
@@ -224,9 +224,9 @@ interface ApiMethod {
     @Headers(
         "Content-Type: application/json",
         "Accept: application/json")
-    @POST("apis/propertysearch")
+    @POST("api/House_tax/propertysearch")
     fun propertySearch(
-        @Header("Authorization") authorization: String,
+        @Header("X-App-Version") authorization: Int,
         @Body request: PropertySearchRequest
     ): Call<PropertySearchResponse>
 
@@ -234,9 +234,9 @@ interface ApiMethod {
     @Headers(
         "Content-Type: application/json",
         "Accept: application/json")
-    @POST("apis/propertydetails")
+    @POST("api/House_tax/propertydetails")
     fun propertyDetails(
-        @Header("Authorization") authorization: String,
+        @Header("X-App-Version") authorization: Int,
         @Body request: PropertyDetailsRequest
     ): Call<PropertyDetailsResponse>
 

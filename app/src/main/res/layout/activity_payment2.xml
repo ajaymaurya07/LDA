@@ -181,6 +181,31 @@
                             </LinearLayout>
 
 
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingVertical="8dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:text="Total Arv"
+                                    android:textColor="#2C3E50"
+                                    android:textSize="13sp"
+                                    android:fontFamily="@font/poppins_regular" />
+
+                                <TextView
+                                    android:id="@+id/tvTotalArv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=""
+                                    android:textColor="#34495E"
+                                    android:textSize="13sp"
+                                    android:fontFamily="@font/poppins_regular" />
+                            </LinearLayout>
+
                             <!-- Divider Line -->
                             <View
                                 android:layout_width="match_parent"

@@ -88,16 +88,13 @@ class PropertySearchActivity : AppCompatActivity() {
                 return@observe
             }
 
-
             val ulbId = viewModel.selectedUlb.value?.ulbId.orEmpty()
             preferanceManager.saveUlbId(ulbId)
+            val arvValue= list[0].totalArv
+            preferanceManager.saveArvValue(arvValue.toString())
 
-            //SAFE navigation (Activity context)
             val intent = Intent(this, SelectPropertyActivity::class.java)
-            intent.putParcelableArrayListExtra(
-                "property_list",
-                ArrayList(list)
-            )
+            intent.putParcelableArrayListExtra("property_list", ArrayList(list))
             startActivity(intent)
 
         }

@@ -13,4 +13,7 @@
     <color name="gray">#a9a9a9 </color>
     <color name="statusbarcolor">#F7F8FC</color>
     <color name="blue">#002E6E</color>
+    <color name="green">#2ECC71</color>
+    <color name="red">#E74C3C</color>
+    <color name="pending">#F39C12</color>
 </resources>
