@@ -158,7 +158,7 @@ class PaymentActivity : AppCompatActivity() {
                 net_demand = netDemand!!,
                 net_payable = netPayable!!,
 
-                arv_value = arvValue!!
+                totalArv = arvValue!!
             )
 
             preferenceManager.saveMobileTransactionId(mobile_id)
@@ -374,7 +374,7 @@ class PaymentActivity : AppCompatActivity() {
                     val hashName = map[CP_HASH_NAME] ?: return
                     val hashString = map[CP_HASH_STRING] ?: return
 
-                    viewModel.hashData(appVersion = 6, hashName = hashName, hashString = hashString){ serverHash ->
+                    viewModel.hashData(appVersion = 1, hashName = hashName, hashString = hashString){ serverHash ->
 
                         if (serverHash.isNullOrEmpty()) return@hashData
 

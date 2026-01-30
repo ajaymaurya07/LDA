@@ -68,7 +68,7 @@ class PaymentViewModel:ViewModel() {
 
         incrementLoader()
         val call = RetrofitClient.apiCall.initiateTransaction(
-            appVersion = 6,
+            appVersion = 1,
             request = request
         )
         call.enqueue(object : Callback<CreateTransactionResponse> {
@@ -103,7 +103,7 @@ class PaymentViewModel:ViewModel() {
 
         incrementLoader()
         val call = RetrofitClient.apiCall.transactionDetails(
-            appVersion = 6,
+            appVersion = 1,
             mobileTransactionId = transactionId
         )
         call.enqueue(object : Callback<TransactionsDetailsResponse> {
