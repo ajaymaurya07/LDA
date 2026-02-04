@@ -40,7 +40,7 @@ class PropertyDetailsViewmodel:ViewModel() {
     fun propertyDetailsData() {
         incrementLoader()
         val call = RetrofitClient.apiCall.propertyDetails(
-            authorization = Constent.AUTH_TOKEN,
+            authorization = Constent.APP_VERSION,
             request = propertyDetailsRequest)
         call.enqueue(object : Callback<PropertyDetailsResponse> {
             override fun onResponse(
@@ -49,9 +49,6 @@ class PropertyDetailsViewmodel:ViewModel() {
             ) {
                 decrementLoader()
                 _dataList.value= response.body()
-
-                Log.d("TAG", "onResponse: ${response.body()}")
-
             }
 
             override fun onFailure(call: Call<PropertyDetailsResponse>, t: Throwable) {

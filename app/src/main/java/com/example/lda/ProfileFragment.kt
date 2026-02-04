@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.example.lda.databinding.FragmentProfileBinding
-import com.example.lda.houseTax.PropertySearchActivity
+import com.example.lda.houseTax.LauncherActivity
 import com.example.lda.houseTax.utils.PreferenceManager
 import com.example.lda.houseTax.viewmodel.PropertyDetailsViewmodel
 
@@ -46,7 +46,8 @@ class ProfileFragment : Fragment() {
 
         binding.logout.setOnClickListener {
             preferanceManager.clearPropertyId()
-            val intent = Intent(requireActivity(), PropertySearchActivity::class.java).apply {
+            preferanceManager.login(false)
+            val intent = Intent(requireActivity(), LauncherActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or
                         Intent.FLAG_ACTIVITY_CLEAR_TASK
             }

@@ -6,13 +6,13 @@ import android.os.Handler
 import android.os.Looper
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.example.lda.MainMenu
 import com.example.lda.R
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
+import com.example.lda.houseTax.loginDetails.SignInActivity
 import com.example.lda.houseTax.utils.PreferenceManager
 
 class LauncherActivity : AppCompatActivity() {
-    lateinit var preferenceManager: PreferenceManager
+    private lateinit var preferenceManager: PreferenceManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -27,28 +27,28 @@ class LauncherActivity : AppCompatActivity() {
 
         preferenceManager= PreferenceManager(this)
 
-        val pid= preferenceManager.getPropertyId()
-        if (pid!=null){
-            navigateToDashBoardScreen()
+        val loginFlag= preferenceManager.isLogin()
+
+        if (loginFlag){
+            navigateToPropertySearchScreen()
         }else{
-            navigateToMainScreen()
+            navigateToLoginScreen()
         }
 
     }
 
 
-    private fun navigateToDashBoardScreen() {
+    private fun navigateToLoginScreen() {
         Handler(Looper.getMainLooper()).postDelayed({
 
-            val intent = Intent(this, MainMenu::class.java)
+            val intent = Intent(this, SignInActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
 
-            finish() // splash ko back stack se hata de
-
-        }, 3000) // ⏱ 3 seconds
+        }, 3000) // seconds
     }
 
-    private fun navigateToMainScreen() {
+    private fun navigateToPropertySearchScreen() {
         Handler(Looper.getMainLooper()).postDelayed({
 
             val intent = Intent(this, PropertySearchActivity::class.java)
@@ -56,7 +56,7 @@ class LauncherActivity : AppCompatActivity() {
 
             finish() // splash ko back stack se hata de
 
-        }, 3000) // ⏱ 3 seconds
+        }, 3000) // 3 seconds
     }
 
 }

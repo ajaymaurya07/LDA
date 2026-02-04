@@ -1,6 +1,11 @@
 package com.example.lda.network
 
 import com.example.lda.houseTax.data.InitiateTransactionRequest
+import com.example.lda.houseTax.data.SendOtpRequest
+import com.example.lda.houseTax.data.SignInRequest
+import com.example.lda.houseTax.data.SignUpRequest
+import com.example.lda.houseTax.data.VerifyOtpMailRequest
+import com.example.lda.houseTax.data.VerifyOtpRequest
 import com.example.lda.model.AllCaseDetailsResponse
 import com.example.lda.model.CaseDetailsByCnrResponse
 import com.example.lda.model.CaseStatusCountResponse
@@ -15,11 +20,16 @@ import com.example.lda.model.LoginResponse
 import com.example.lda.model.MohallaListResponse
 import com.example.lda.model.NextHearingResponse
 import com.example.lda.model.NotCaRejoinderFiledResponse
+import com.example.lda.model.OtpVerificationResponse
 import com.example.lda.model.PropertyDetailsResponse
 import com.example.lda.model.PropertySearchResponse
 import com.example.lda.model.RecentInterimOrderCaseDetailByTypeResponse
+import com.example.lda.model.SendOtpResponse
+import com.example.lda.model.SignInResponse
+import com.example.lda.model.SignUpResponse
 import com.example.lda.model.TransactionsDetailsResponse
 import com.example.lda.model.UlbDataResponse
+import com.example.lda.model.VerifyOtpMailResponse
 import com.example.lda.model.WardListResponse
 import com.example.lda.model.ZoneListResponse
 import com.example.lda.utils.dataClass.PropertyDetailsRequest
@@ -268,6 +278,41 @@ interface ApiMethod {
         @Header("X-App-Version") appVersion: Int,
         @Field("mobile_transaction_id") mobileTransactionId: String,
     ): Call<TransactionsDetailsResponse>
+
+
+    @POST("api/house_tax/sendOtp")
+    fun sendOtp(
+        @Header("X-App-Version") appVersion: Int,
+        @Body request: SendOtpRequest
+    ): Call<SendOtpResponse>
+
+    @POST("api/house_tax/verifyOtp")
+    fun otpVerification(
+        @Header("X-App-Version") appVersion: Int,
+        @Body request: VerifyOtpRequest
+    ): Call<OtpVerificationResponse>
+
+
+    @POST("api/house_tax/signup")
+    fun signUp(
+        @Header("X-App-Version") appVersion: Int,
+        @Body request: SignUpRequest
+    ): Call<SignUpResponse>
+
+
+    @POST("api/house_tax/verifyOtpEmail")
+    fun otpVerificationMail(
+        @Header("X-App-Version") appVersion: Int,
+        @Body request: VerifyOtpMailRequest
+    ): Call<VerifyOtpMailResponse>
+
+
+    @POST("api/house_tax/login")
+    fun signIn(
+        @Header("X-App-Version") appVersion: Int,
+        @Body request: SignInRequest
+    ): Call<SignInResponse>
+
 
 
 }

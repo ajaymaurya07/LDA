@@ -104,7 +104,7 @@ class SharedViewModel : ViewModel() {
 
     fun ulbData() {
         incrementLoader()
-        val call = RetrofitClient.apiCall.ulbData(Constent.AUTH_TOKEN)
+        val call = RetrofitClient.apiCall.ulbData(Constent.APP_VERSION)
         call.enqueue(object : Callback<UlbDataResponse> {
             override fun onResponse(
                 call: Call<UlbDataResponse>,
@@ -156,7 +156,7 @@ class SharedViewModel : ViewModel() {
     }
     fun zoneData(ulbId: String) {
         incrementLoader()
-        val call = RetrofitClient.apiCall.zoneList(Constent.AUTH_TOKEN, ulbId)
+        val call = RetrofitClient.apiCall.zoneList(Constent.APP_VERSION, ulbId)
         call.enqueue(object : Callback<ZoneListResponse> {
             override fun onResponse(
                 call: Call<ZoneListResponse>,
@@ -206,7 +206,7 @@ class SharedViewModel : ViewModel() {
 
     fun wardData(ulbId: String,zoneId:String) {
         incrementLoader()
-        val call = RetrofitClient.apiCall.wardList(Constent.AUTH_TOKEN, ulbId,zoneId)
+        val call = RetrofitClient.apiCall.wardList(Constent.APP_VERSION, ulbId,zoneId)
         call.enqueue(object : Callback<WardListResponse> {
             override fun onResponse(
                 call: Call<WardListResponse>,
@@ -259,7 +259,7 @@ class SharedViewModel : ViewModel() {
 
     fun mohallaData(ulbId: String,zoneId:String,wardId:String) {
         incrementLoader()
-        val call = RetrofitClient.apiCall.mohallaList(Constent.AUTH_TOKEN, ulbId,zoneId,wardId)
+        val call = RetrofitClient.apiCall.mohallaList(Constent.APP_VERSION, ulbId,zoneId,wardId)
         call.enqueue(object : Callback<MohallaListResponse> {
             override fun onResponse(
                 call: Call<MohallaListResponse>,
@@ -299,7 +299,7 @@ class SharedViewModel : ViewModel() {
     fun propertySearch(){
         incrementLoader()
         val call = RetrofitClient.apiCall.propertySearch(
-            authorization = Constent.AUTH_TOKEN,
+            authorization = Constent.APP_VERSION,
             request = propertySearchRequest)
 
         call.enqueue(object : Callback<PropertySearchResponse> {
@@ -308,7 +308,6 @@ class SharedViewModel : ViewModel() {
                 response: Response<PropertySearchResponse>
             ) {
 
-                Log.d("TAG", "onResponse: $response")
                 decrementLoader()
                 if (response.isSuccessful && response.body()?.success == true) {
                     _propertyList.value = response.body()?.data?.filterNotNull() ?: emptyList()

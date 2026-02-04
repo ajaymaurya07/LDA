@@ -23,5 +23,39 @@ data class InitiateTransactionRequest(
     val net_demand: String,
     val net_payable: String,
 
-    val totalArv: String
+    val totalArv: String,
+    val user_id: String
 )
+
+
+data class SendOtpRequest(
+    val mobileNo: String,
+    val propertyId:String
+)
+
+
+data class VerifyOtpRequest(
+    val mobileNo: String,
+    val otp: String
+)
+
+data class SignUpRequest(
+    val name: String,
+    val mobile_no: String,
+    val email: String,
+    val password: String
+)
+
+
+data class VerifyOtpMailRequest(
+    val email: String,
+    val otp: String
+)
+
+
+
+data class SignInRequest(
+    val username: String,
+    val password: String
+)
+

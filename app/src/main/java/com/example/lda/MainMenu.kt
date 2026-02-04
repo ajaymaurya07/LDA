@@ -70,9 +70,7 @@ class MainMenu : AppCompatActivity() {
 
         val pid=preferenceManager.getPropertyId()
         viewModel.pid.value=pid
-        viewModel.propertyDetailsRequest= PropertyDetailsRequest(
-            propertyId = pid!!
-        )
+        viewModel.propertyDetailsRequest= PropertyDetailsRequest(propertyId = pid!!)
         viewModel.propertyDetailsData()
 
     }

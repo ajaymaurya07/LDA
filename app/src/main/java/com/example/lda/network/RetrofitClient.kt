@@ -22,9 +22,11 @@ object RetrofitClient {
             .addConverterFactory(GsonConverterFactory.create(Gson()))
     }
 
+
     val apiCall : ApiMethod by lazy {
         retrofitClient.build().create(ApiMethod::class.java)
     }
+
 
 
 

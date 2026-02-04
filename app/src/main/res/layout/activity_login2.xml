@@ -1,20 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/main"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_login_gradient"
+        android:background="@drawable/bg_with_opacity"
         tools:context="com.example.lda.houseTax.LoginActivity">
+
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolBar"
+                style="@style/Widget.MaterialComponents.Toolbar.Surface"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:contentInsetStartWithNavigation="0dp">
+
+                <!-- Back Icon -->
+                <ImageView
+                    android:id="@+id/navBack"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginStart="12dp"
+                    android:padding="4dp"
+                    android:src="@drawable/left_icon" />
+
+                <!-- Title placed manually -->
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:text="Verify Property Register Mobile Number"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </com.google.android.material.appbar.MaterialToolbar>
+        </com.google.android.material.appbar.AppBarLayout>
 
         <!-- Logo -->
         <ImageView
             android:id="@+id/ivLogo"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:src="@drawable/urban_logo"
+            android:src="@drawable/e_nagar_seva_logo"
             android:contentDescription="@string/app_name"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,26 +68,15 @@
             android:id="@+id/tvWelcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Welcome, Citizen!"
-            android:textSize="20sp"
+            android:text="Verify Property Register Mobile Number"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
             app:layout_constraintTop_toBottomOf="@id/ivLogo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Mobile Number Label -->
-        <TextView
-            android:id="@+id/tvMobileLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:layout_marginStart="32dp"
-            android:text="Mobile Number"
-            android:textSize="14sp"
-            android:textColor="@android:color/black"
-            app:layout_constraintTop_toBottomOf="@id/tvWelcome"
-            app:layout_constraintStart_toStartOf="parent" />
+
 
         <!-- Mobile Number Input -->
         <com.google.android.material.textfield.TextInputLayout
@@ -55,12 +85,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="15dp"
             app:boxCornerRadiusTopStart="8dp"
             app:boxCornerRadiusTopEnd="8dp"
             app:boxCornerRadiusBottomStart="8dp"
             app:boxCornerRadiusBottomEnd="8dp"
-            app:layout_constraintTop_toBottomOf="@id/tvMobileLabel"
+            app:layout_constraintTop_toBottomOf="@id/tvWelcome"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -70,7 +100,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="phone"
                 android:maxLength="10"
-                android:hint="Enter 10 digit mobile number" />
+                android:hint="Property registered mobile number"
+                android:enabled="false"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Send OTP Button -->

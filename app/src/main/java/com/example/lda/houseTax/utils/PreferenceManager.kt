@@ -13,6 +13,8 @@ class PreferenceManager(context: Context) {
         private const val KEY_MOBILE_TXN_ID = "key_mobile_transaction_id"
         private const val KEY_ULB_ID = "key_ulb_id"
         private const val ARV_VALUE = "arv_value"
+        private const val USER_ID = "user_id"
+        private const val IS_LOGIN = "is_login"
     }
 
     private val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
@@ -37,7 +39,6 @@ class PreferenceManager(context: Context) {
     }
 
 
-    /* ---------------- Payment ---------------- */
 
     fun saveMobileTransactionId(transactionId: String) {
         prefs.edit()
@@ -64,13 +65,6 @@ class PreferenceManager(context: Context) {
         return prefs.getString(KEY_ULB_ID, null)
     }
 
-    fun clearUlbId() {
-        prefs.edit()
-            .remove(KEY_ULB_ID)
-            .apply()
-    }
-
-
 
     fun saveArvValue(arvValue: String) {
         prefs.edit()
@@ -80,6 +74,27 @@ class PreferenceManager(context: Context) {
 
     fun getArvValue(): String? {
         return prefs.getString(ARV_VALUE, null)
+    }
+
+
+    fun saveUserId(userId: String) {
+        prefs.edit()
+            .putString(USER_ID, userId)
+            .apply()
+    }
+
+    fun getUserId(): String? {
+        return prefs.getString(USER_ID, null)
+    }
+
+    fun login(loginFlag: Boolean) {
+        prefs.edit()
+            .putBoolean(IS_LOGIN, loginFlag)
+            .apply()
+    }
+
+    fun isLogin(): Boolean {
+        return prefs.getBoolean(IS_LOGIN, false)
     }
 
 

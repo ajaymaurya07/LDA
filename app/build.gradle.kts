@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.play.services.maps)
+    implementation(libs.play.services.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -78,9 +79,6 @@ dependencies {
     implementation ("androidx.room:room-runtime:2.8.2")
     ksp ("androidx.room:room-compiler:2.8.2")
     implementation ("androidx.room:room-ktx:2.6.1")
-
-
-
 
     // payu for payment integration
     implementation ("in.payu:payu-checkout-pro:3.0.3")

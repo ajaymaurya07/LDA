@@ -9,6 +9,7 @@ import android.os.Environment
 import android.util.Log
 import android.view.View
 import android.webkit.WebView
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -17,10 +18,12 @@ import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.lda.R
+import com.example.lda.constent.Constent
 import com.example.lda.databinding.ActivityPayment2Binding
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
 import com.example.lda.houseTax.data.InitiateTransactionRequest
 import com.example.lda.houseTax.paymentDetails.ArvHistoryActivity
+import com.example.lda.houseTax.paymentModeActivity.SbiTestActivity
 import com.example.lda.houseTax.paymentStatus.PaymentFailedActivity
 import com.example.lda.houseTax.paymentStatus.PaymentPendingActivity
 import com.example.lda.houseTax.paymentStatus.PaymentSuccessActivity
@@ -28,6 +31,8 @@ import com.example.lda.houseTax.utils.PreferenceManager
 import com.example.lda.houseTax.viewmodel.PaymentViewModel
 import com.example.lda.model.Data
 import com.example.lda.utils.LoderHelper
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.payu.base.models.ErrorResponse
 import com.payu.base.models.PayUPaymentParams
@@ -158,12 +163,14 @@ class PaymentActivity : AppCompatActivity() {
                 net_demand = netDemand!!,
                 net_payable = netPayable!!,
 
-                totalArv = arvValue!!
+                totalArv = arvValue!!,
+
+                user_id = preferenceManager.getUserId().toString()
+
             )
 
-            preferenceManager.saveMobileTransactionId(mobile_id)
+            openPaymentBottomSheet(request)
 
-            viewModel.initiateTransaction(request)
         }
 
         transactionObserver()
@@ -211,6 +218,59 @@ class PaymentActivity : AppCompatActivity() {
 
 
         
+    }
+
+
+    private fun startPayUPayment(request: InitiateTransactionRequest){
+            preferenceManager.saveMobileTransactionId(request.mobile_transaction_id)
+            viewModel.initiateTransaction(request)
+    }
+
+
+    private fun startSbiPayment(request: InitiateTransactionRequest){
+        val intent = Intent(this, SbiTestActivity::class.java)
+        startActivity(intent)
+    }
+
+
+
+    private fun openPaymentBottomSheet( request: InitiateTransactionRequest) {
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottom_sheet_payment_diaog, null)
+        dialog.setContentView(view)
+
+
+        val payuLayout = view.findViewById<View>(R.id.btnPayPayu)
+        payuLayout.setOnClickListener {
+            dialog.dismiss()
+            startPayUPayment(request)
+        }
+
+        val sbiLayout=view.findViewById<View>(R.id.btnPaySbi)
+        sbiLayout.setOnClickListener {
+            dialog.dismiss()
+            startSbiPayment(request)
+        }
+
+
+
+
+        dialog.setOnShowListener {
+            val bottomSheet = dialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+
+            bottomSheet?.let {
+                val layoutParams = it.layoutParams
+                layoutParams.height = (resources.displayMetrics.heightPixels * 0.65).toInt()
+                it.layoutParams = layoutParams
+
+                val behavior = BottomSheetBehavior.from(it)
+                behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                behavior.skipCollapsed = true
+            }
+        }
+
+        dialog.show()
     }
 
 
@@ -374,7 +434,7 @@ class PaymentActivity : AppCompatActivity() {
                     val hashName = map[CP_HASH_NAME] ?: return
                     val hashString = map[CP_HASH_STRING] ?: return
 
-                    viewModel.hashData(appVersion = 1, hashName = hashName, hashString = hashString){ serverHash ->
+                    viewModel.hashData(appVersion = Constent.APP_VERSION, hashName = hashName, hashString = hashString){ serverHash ->
 
                         if (serverHash.isNullOrEmpty()) return@hashData
 
