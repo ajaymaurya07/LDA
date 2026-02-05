@@ -124,7 +124,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun openOtpBottomSheet() {
 
-        dialog = BottomSheetDialog(this)
+        dialog = BottomSheetDialog(this, R.style.BottomSheetTheme)
         val view = layoutInflater.inflate(R.layout.bottom_sheet_otp, null)
         dialog.setContentView(view)
 
