@@ -54,7 +54,6 @@ class LoginActivity : AppCompatActivity() {
 
 
         phoneNumber = intent.getStringExtra("phone_no").toString()
-//        phoneNumber = "7394961470"
         binding.etMobile.setText(maskMobileNumber(phoneNumber))
 
         binding.btnSendOtp.setOnClickListener {
