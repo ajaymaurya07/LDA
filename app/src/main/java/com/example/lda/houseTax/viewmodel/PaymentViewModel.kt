@@ -238,7 +238,6 @@ class PaymentViewModel:ViewModel() {
                 call: Call<SignUpResponse>, t: Throwable) {
                 decrementLoader()
                 _signUpData.value = SignUpResponse(
-                    data = null,
                     message = "error",
                     status = false,
                     responseCode = 0

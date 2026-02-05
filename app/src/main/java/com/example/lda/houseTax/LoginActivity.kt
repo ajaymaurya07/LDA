@@ -55,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
 
         phoneNumber = intent.getStringExtra("phone_no").toString()
 //        phoneNumber = "7394961470"
-        binding.etMobile.setText(phoneNumber)
+        binding.etMobile.setText(maskMobileNumber(phoneNumber))
 
         binding.btnSendOtp.setOnClickListener {
             if (phoneNumber.isBlank()) {
@@ -75,6 +75,16 @@ class LoginActivity : AppCompatActivity() {
             viewmodel.sendOtp(request)
         }
         observeViewModel()
+    }
+
+
+
+    private fun maskMobileNumber(mobile: String): String {
+        return if (mobile.length >= 4) {
+            "******" + mobile.takeLast(4)
+        } else {
+            mobile
+        }
     }
 
     private fun observeViewModel(){
@@ -109,7 +119,6 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
-
 
 
 

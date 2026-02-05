@@ -159,12 +159,16 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
+
+    //                it.data?.email?.let {
+//                    it1 ->
+//                }
+
     private fun observeViewModel() {
         viewModel.signUpData.observe(this){
             if (it.status==true){
-                it.data?.email?.let {
-                    it1 -> openOtpBottomSheet(it1)
-                }
+                openOtpBottomSheet(binding.etEmail.text.toString())
+
                 Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
             }
             else{
@@ -258,7 +262,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun openOtpBottomSheet(email: String) {
 
-        dialog = BottomSheetDialog(this)
+        dialog = BottomSheetDialog(this,R.style.BottomSheetTheme)
         val view = layoutInflater.inflate(R.layout.bottom_sheet_email_otp, null)
         dialog.setContentView(view)
 

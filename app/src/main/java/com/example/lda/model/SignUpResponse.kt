@@ -4,8 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 data class SignUpResponse(
 
-	@field:SerializedName("data")
-	val data: Sign? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,
@@ -17,8 +15,8 @@ data class SignUpResponse(
 	val responseCode: Int? = null
 )
 
-data class Sign(
-
-	@field:SerializedName("email")
-	val email: String? = null
-)
+//data class Sign(
+//
+//	@field:SerializedName("email")
+//	val email: String? = null
+//)
