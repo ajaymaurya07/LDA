@@ -19,11 +19,11 @@ class PaymentHistoryAdaptor(
         val receiptDate = view.findViewById<TextView>(R.id.receiptDate)
         val paymentMode = view.findViewById<TextView>(R.id.paymentMode)
         val paymentDate = view.findViewById<TextView>(R.id.paymentDate)
-        val challanId = view.findViewById<TextView>(R.id.challanId)
-        val chequeNo = view.findViewById<TextView>(R.id.chequeNo)
-        val propertyTaxAmount = view.findViewById<TextView>(R.id.propertyTaxNetAmount)
         val propertyTaxPaidAmount = view.findViewById<TextView>(R.id.propertyTaxPaidAmount)
-        val propertyTaxDiscount = view.findViewById<TextView>(R.id.propertyTaxDiscount)
+        val waterTaxPaidAmount = view.findViewById<TextView>(R.id.waterTaxPaidAmount)
+        val sewerTaxPaidAmount = view.findViewById<TextView>(R.id.sewerTaxPaidAmount)
+        val otherTaxPaidAmount = view.findViewById<TextView>(R.id.otherTaxPaidAmount)
+        val waterChargePaidAmount = view.findViewById<TextView>(R.id.waterChargePaidAmount)
         val btnDownloadReceipt = view.findViewById<TextView>(R.id.btnDownloadReceipt)
         val status = view.findViewById<TextView>(R.id.tvStatus)
     }
@@ -40,17 +40,16 @@ class PaymentHistoryAdaptor(
         if (item.propertyTaxPaidAmount=="-"){
             holder.status.text="UNPAID"
         }
-
         holder.receiptNo.text = "Receipt Number: ${item.receiptNo}"
         holder.billNo.text = "Bill Number: ${item.billNo}"
         holder.receiptDate.text = "Receipt Date: ${item.receiptDate}"
         holder.paymentMode.text = "Payment Mode: ${item.paymentMode}"
         holder.paymentDate.text = "Payment Date: ${item.paymentDate}"
-        holder.challanId.text = "Challan Id: ${item.challanId}"
-        holder.chequeNo.text = "Cheque No: ${item.chequeNo}"
-        holder.propertyTaxAmount.text = "Property Tax Net Amount: ${item.propertyTaxNetAmount}"
-        holder.propertyTaxDiscount.text = "Property Tax Net Discount: ${item.propertyTaxDiscount}"
         holder.propertyTaxPaidAmount.text = "Property Tax Paid Amount: ${item.propertyTaxPaidAmount}"
+        holder.waterTaxPaidAmount.text = "Water Tax Paid Amount: ${item.waterTaxPaidAmount}"
+        holder.sewerTaxPaidAmount.text = "Sewer Tax Paid Amount: ${item.sewerTaxPaidAmount}"
+        holder.otherTaxPaidAmount.text = "Other Tax Paid Amount: ${item.otherTaxPaidAmount}"
+        holder.waterChargePaidAmount.text = "Water Charge Paid Amount: ${item.waterChargePaidAmount}"
 
         holder.btnDownloadReceipt.setOnClickListener {
             onDetailsClick(item)

@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.example.lda.MainMenu
 import com.example.lda.R
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
 import com.example.lda.houseTax.loginDetails.SignInActivity
@@ -28,14 +29,19 @@ class LauncherActivity : AppCompatActivity() {
         preferenceManager= PreferenceManager(this)
 
         val loginFlag= preferenceManager.isLogin()
+        val propertyIdFlag= preferenceManager.getPropertyId()
 
-        if (loginFlag){
+        if (!propertyIdFlag.isNullOrEmpty()){
+            navigateToDash()
+        }
+        else if (loginFlag){
             navigateToPropertySearchScreen()
         }else{
             navigateToLoginScreen()
         }
 
     }
+
 
 
     private fun navigateToLoginScreen() {
@@ -52,6 +58,18 @@ class LauncherActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
 
             val intent = Intent(this, PropertySearchActivity::class.java)
+            startActivity(intent)
+
+            finish() // splash ko back stack se hata de
+
+        }, 3000) // 3 seconds
+    }
+
+
+    private fun navigateToDash() {
+        Handler(Looper.getMainLooper()).postDelayed({
+
+            val intent = Intent(this, MainMenu::class.java)
             startActivity(intent)
 
             finish() // splash ko back stack se hata de

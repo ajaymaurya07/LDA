@@ -83,31 +83,36 @@
                 android:text="Payment Date : 09/22/2020"
                 style="@style/ReceiptItemStyle"/>
 
-            <TextView
-                android:id="@+id/challanId"
-                android:text="Challan ID : -"
-                style="@style/ReceiptItemStyle"/>
-
-            <TextView
-                android:id="@+id/chequeNo"
-                android:text="Cheque No : -"
-                style="@style/ReceiptItemStyle"/>
-
-            <TextView
-                android:id="@+id/propertyTaxNetAmount"
-                android:text="Net Amount : ₹ 1,250"
-                style="@style/ReceiptItemStyle"/>
-
-            <TextView
-                android:visibility="gone"
-                android:id="@+id/propertyTaxDiscount"
-                android:text="Tax Discount : -"
-                style="@style/ReceiptItemStyle"/>
 
             <TextView
                 android:id="@+id/propertyTaxPaidAmount"
-                android:text="Paid Amount : ₹ 1,250"
+                android:text="propertyTaxPaidAmount : ₹ 1,250"
                 style="@style/ReceiptItemStyle"/>
+
+            <TextView
+                android:id="@+id/waterTaxPaidAmount"
+                android:text="waterTaxPaidAmount : ₹ 1,250"
+                style="@style/ReceiptItemStyle"/>
+
+
+            <TextView
+                android:id="@+id/sewerTaxPaidAmount"
+                android:text="sewerTaxPaidAmount : ₹ 1,250"
+                style="@style/ReceiptItemStyle"/>
+
+            <TextView
+                android:id="@+id/otherTaxPaidAmount"
+                android:text="otherTaxPaidAmount : ₹ 1,250"
+                style="@style/ReceiptItemStyle"/>
+
+
+            <TextView
+                android:id="@+id/waterChargePaidAmount"
+                android:text="waterChargePaidAmount : ₹ 1,250"
+                style="@style/ReceiptItemStyle"/>
+
+
+
         </LinearLayout>
 
         <!-- DOWNLOAD BUTTON -->

@@ -93,7 +93,6 @@ class PaymentHistoryActivity : AppCompatActivity() {
         }
         rv.adapter = paymentHistoryAdaptor
 
-
     }
 
     private fun generateReceiptPdf() {
