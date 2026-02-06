@@ -236,7 +236,7 @@ class PaymentActivity : AppCompatActivity() {
 
     private fun openPaymentBottomSheet( request: InitiateTransactionRequest) {
 
-        val dialog = BottomSheetDialog(this)
+        val dialog = BottomSheetDialog(this, R.style.BottomSheetTheme)
         val view = layoutInflater.inflate(R.layout.bottom_sheet_payment_diaog, null)
         dialog.setContentView(view)
 
