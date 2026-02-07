@@ -61,7 +61,7 @@ class MainMenu : AppCompatActivity() {
 
             when (it.itemId) {
                 R.id.home ->setCurrentFragment(dashBoardFragment)
-                R.id.nav_notifications->setCurrentFragment(notificationFragment)
+//                R.id.nav_notifications->setCurrentFragment(notificationFragment)
                 R.id.profile -> setCurrentFragment(profileFragment)
             }
             true

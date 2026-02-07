@@ -10,18 +10,23 @@ import android.util.Log
 import android.view.View
 import android.webkit.WebView
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.lda.MainMenu
 import com.example.lda.R
 import com.example.lda.constent.Constent
 import com.example.lda.databinding.ActivityPayment2Binding
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
 import com.example.lda.houseTax.data.InitiateTransactionRequest
+import com.example.lda.houseTax.data.SendOtpRequest
+import com.example.lda.houseTax.data.VerifyOtpRequest
 import com.example.lda.houseTax.paymentDetails.ArvHistoryActivity
 import com.example.lda.houseTax.paymentModeActivity.SbiTestActivity
 import com.example.lda.houseTax.paymentStatus.PaymentFailedActivity
@@ -53,6 +58,12 @@ class PaymentActivity : AppCompatActivity() {
     lateinit var viewModel: PaymentViewModel
     private lateinit var loderHelper: LoderHelper
     private lateinit var preferenceManager: PreferenceManager
+    private var isPropertyVerificationIsDone=false
+    private lateinit var otpMobileNo: String
+    private lateinit var verifyOtpDialog:BottomSheetDialog
+    private var initiateRequest: InitiateTransactionRequest? = null
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -135,13 +146,15 @@ class PaymentActivity : AppCompatActivity() {
         val mobileNumber=ownerDetails?.mobileNo
 
 
+        otpMobileNo=ownerDetails?.mobileNo.toString()
+//        otpMobileNo="7394961470"
+
+
 
         binding.btnPayTax.setOnClickListener {
 
             val mobile_id= "MOBTXN${System.currentTimeMillis()}"
-
-
-            val request = InitiateTransactionRequest(
+            initiateRequest = InitiateTransactionRequest(
                 mobile_transaction_id =mobile_id,
                 mobile_transaction_timestamp = getCurrentTime(),
 
@@ -169,7 +182,13 @@ class PaymentActivity : AppCompatActivity() {
 
             )
 
-            openPaymentBottomSheet(request)
+
+            if (!isPropertyVerificationIsDone){
+                openPropertySendOtpBottomSheet()
+                return@setOnClickListener
+            }
+
+            openPaymentBottomSheet(initiateRequest!!)
 
         }
 
@@ -233,6 +252,104 @@ class PaymentActivity : AppCompatActivity() {
     }
 
 
+    private fun openPropertySendOtpBottomSheet() {
+
+        val sendOtpDialog = BottomSheetDialog(this, R.style.BottomSheetTheme)
+        val view = layoutInflater.inflate(R.layout.bottom_sheet_property_otp_diaog, null)
+        sendOtpDialog.setContentView(view)
+
+        val sendOtpButton=view.findViewById<View>(R.id.sendOtp)
+        val mobileNumber = view.findViewById<TextView>(R.id.et_mobile_number)
+        mobileNumber.text=maskMobileNumber(otpMobileNo)
+
+        sendOtpButton.setOnClickListener {
+
+            if (otpMobileNo.isBlank()) {
+                Toast.makeText(this, "Phone number not available.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val propertyId = preferenceManager.getPropertyId()
+            if (propertyId.isNullOrEmpty()) {
+                Toast.makeText(this, "Property ID missing", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val request = SendOtpRequest(
+                mobileNo = otpMobileNo,
+                propertyId = propertyId
+            )
+
+            sendOtpDialog.dismiss()
+            viewModel.sendOtp(request)
+
+        }
+
+
+        sendOtpDialog.setOnShowListener {
+            val bottomSheet = sendOtpDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+
+            bottomSheet?.let {
+                val layoutParams = it.layoutParams
+                layoutParams.height = (resources.displayMetrics.heightPixels * 0.65).toInt()
+                it.layoutParams = layoutParams
+
+                val behavior = BottomSheetBehavior.from(it)
+                behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                behavior.skipCollapsed = true
+            }
+        }
+
+        sendOtpDialog.show()
+    }
+
+
+
+
+
+
+
+    private fun openPropertyVerifyOtpBottomSheet() {
+
+        verifyOtpDialog = BottomSheetDialog(this, R.style.BottomSheetTheme)
+        val view = layoutInflater.inflate(R.layout.bottom_sheet_otp, null)
+        verifyOtpDialog.setContentView(view)
+
+        val verifyOtpButton = view.findViewById<View>(R.id.btnVerifyOtp)
+        val etOtp = view.findViewById<EditText>(R.id.etOtp)
+
+        verifyOtpButton.setOnClickListener {
+            val otp = etOtp.text.toString().trim()
+            if (otp.isEmpty()) {
+                Toast.makeText(this, "Enter OTP first", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+            val request = VerifyOtpRequest(
+                mobileNo = otpMobileNo,
+                otp = otp
+            )
+            viewModel.otpVerification(request)
+        }
+
+
+        verifyOtpDialog.setOnShowListener {
+            val bottomSheet = verifyOtpDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+
+            bottomSheet?.let {
+                val layoutParams = it.layoutParams
+                layoutParams.height = (resources.displayMetrics.heightPixels * 0.65).toInt()
+                it.layoutParams = layoutParams
+
+                val behavior = BottomSheetBehavior.from(it)
+                behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                behavior.skipCollapsed = true
+            }
+        }
+
+        verifyOtpDialog.show()
+    }
+
+
 
     private fun openPaymentBottomSheet( request: InitiateTransactionRequest) {
 
@@ -252,8 +369,6 @@ class PaymentActivity : AppCompatActivity() {
             dialog.dismiss()
             startSbiPayment(request)
         }
-
-
 
 
         dialog.setOnShowListener {
@@ -286,9 +401,6 @@ class PaymentActivity : AppCompatActivity() {
         }
 
         viewModel.transaction.observe(this) { response ->
-
-
-            Log.d("TAG", "transactionObserver: $response")
 
             if (response?.status != true) {
                 Toast.makeText(this, response?.message ?: "Payment can’t be processed right now. Please try again later.", Toast.LENGTH_LONG).show()
@@ -361,6 +473,32 @@ class PaymentActivity : AppCompatActivity() {
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show()
             }
         }
+
+
+
+        viewModel.sendOtp.observe(this){
+            if (it.success==true){
+                openPropertyVerifyOtpBottomSheet()
+                Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+            }
+        }
+
+        viewModel.otpVerification.observe(this){
+            if (it.success==true){
+                isPropertyVerificationIsDone=true
+                Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
+                verifyOtpDialog.dismiss()
+                preferenceManager.saveUserId(it.userId.toString())
+                openPaymentBottomSheet(initiateRequest!!)
+            }
+            else{
+                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+            }
+        }
+
     }
 
 
@@ -469,6 +607,15 @@ class PaymentActivity : AppCompatActivity() {
             }
         )
 
+    }
+
+
+    private fun maskMobileNumber(mobile: String): String {
+        return if (mobile.length >= 4) {
+            "******" + mobile.takeLast(4)
+        } else {
+            mobile
+        }
     }
 
 

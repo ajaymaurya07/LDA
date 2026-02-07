@@ -71,15 +71,15 @@ class DashboradFragment : Fragment() {
         }
 
         binding.trackGrivanceCard.cardPropertyGrivance.setOnClickListener {
-            startActivity(Intent(requireActivity(), TrackGrivanceActivity::class.java))
+//            startActivity(Intent(requireActivity(), TrackGrivanceActivity::class.java))
         }
 
         binding.paymentHistoryCard.cardPaymentHistory.setOnClickListener {
-            startActivity(Intent(requireActivity(), PaymentHistoryActivity::class.java))
+//            startActivity(Intent(requireActivity(), PaymentHistoryActivity::class.java))
         }
 
         binding.arvHistoryCard.cardArvHistory.setOnClickListener {
-            startActivity(Intent(requireActivity(), ArvHistoryActivity::class.java))
+//            startActivity(Intent(requireActivity(), ArvHistoryActivity::class.java))
         }
     }
 
