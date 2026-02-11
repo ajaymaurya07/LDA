@@ -73,16 +73,6 @@
                 android:text="Receipt Date : 08/07/2002"
                 style="@style/ReceiptItemStyle"/>
 
-            <TextView
-                android:id="@+id/paymentMode"
-                android:text="Payment Mode : UPI"
-                style="@style/ReceiptItemStyle"/>
-
-            <TextView
-                android:id="@+id/paymentDate"
-                android:text="Payment Date : 09/22/2020"
-                style="@style/ReceiptItemStyle"/>
-
 
             <TextView
                 android:id="@+id/propertyTaxPaidAmount"

@@ -6,10 +6,8 @@ import android.graphics.Paint
 import android.graphics.pdf.PdfDocument
 import android.os.Bundle
 import android.os.Environment
-import android.util.Log
 import android.view.View
 import android.webkit.WebView
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -116,8 +114,8 @@ class PaymentActivity : AppCompatActivity() {
 
 
         binding.btnArvHistory.setOnClickListener {
-            val intent = Intent(this, ArvHistoryActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(this, ArvHistoryActivity::class.java)
+//            startActivity(intent)
         }
 
         binding.btnPaymentHistory.setOnClickListener {
@@ -140,6 +138,15 @@ class PaymentActivity : AppCompatActivity() {
         val netDemand=billDetails?.netDemand
         val netPayable=billDetails?.netPayble
 
+        val houseTaxAdvance = billDetails?.houseTaxAdvance?.toDoubleOrNull() ?: 0.0
+        val waterTaxAdvance = billDetails?.waterTaxAdvance?.toDoubleOrNull() ?: 0.0
+        val sewerTaxAdvance = billDetails?.sewerTaxAdvance?.toDoubleOrNull() ?: 0.0
+        val otherTaxAdvance = billDetails?.otherTaxAdvance?.toDoubleOrNull() ?: 0.0
+        val waterChargeAdvance = billDetails?.waterChargeAdvance?.toDoubleOrNull() ?: 0.0
+
+        val totalAdvancePay = "${ houseTaxAdvance + waterTaxAdvance + sewerTaxAdvance + otherTaxAdvance + waterChargeAdvance }"
+
+
         val ownerDetails=data?.ownerDetails
         val ownerName=ownerDetails?.ownerName
         val fatherName=ownerDetails?.fatherName
@@ -147,8 +154,6 @@ class PaymentActivity : AppCompatActivity() {
 
 
         otpMobileNo=ownerDetails?.mobileNo.toString()
-//        otpMobileNo="7394961470"
-
 
 
         binding.btnPayTax.setOnClickListener {
@@ -218,6 +223,9 @@ class PaymentActivity : AppCompatActivity() {
         binding.tvNetDemand.text=netDemand
         binding.tvNetPayable.text=netPayable
 
+        binding.tvAdvancePay.text = totalAdvancePay
+
+
 
         val propertyDetails=data?.propertyDetails
         binding.tvPropertyId.text=pid
@@ -261,6 +269,7 @@ class PaymentActivity : AppCompatActivity() {
         val sendOtpButton=view.findViewById<View>(R.id.sendOtp)
         val mobileNumber = view.findViewById<TextView>(R.id.et_mobile_number)
         mobileNumber.text=maskMobileNumber(otpMobileNo)
+//        mobileNumber.text="7394961470"
 
         sendOtpButton.setOnClickListener {
 
@@ -366,8 +375,8 @@ class PaymentActivity : AppCompatActivity() {
 
         val sbiLayout=view.findViewById<View>(R.id.btnPaySbi)
         sbiLayout.setOnClickListener {
-            dialog.dismiss()
-            startSbiPayment(request)
+//            dialog.dismiss()
+//            startSbiPayment(request)
         }
 
 

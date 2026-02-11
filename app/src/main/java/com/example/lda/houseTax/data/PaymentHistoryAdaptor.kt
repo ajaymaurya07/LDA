@@ -17,8 +17,6 @@ class PaymentHistoryAdaptor(
         val receiptNo = view.findViewById<TextView>(R.id.tvReceiptNo)
         val billNo = view.findViewById<TextView>(R.id.billNo)
         val receiptDate = view.findViewById<TextView>(R.id.receiptDate)
-        val paymentMode = view.findViewById<TextView>(R.id.paymentMode)
-        val paymentDate = view.findViewById<TextView>(R.id.paymentDate)
         val propertyTaxPaidAmount = view.findViewById<TextView>(R.id.propertyTaxPaidAmount)
         val waterTaxPaidAmount = view.findViewById<TextView>(R.id.waterTaxPaidAmount)
         val sewerTaxPaidAmount = view.findViewById<TextView>(R.id.sewerTaxPaidAmount)
@@ -43,8 +41,6 @@ class PaymentHistoryAdaptor(
         holder.receiptNo.text = "Receipt Number: ${item.receiptNo}"
         holder.billNo.text = "Bill Number: ${item.billNo}"
         holder.receiptDate.text = "Receipt Date: ${item.receiptDate}"
-        holder.paymentMode.text = "Payment Mode: ${item.paymentMode}"
-        holder.paymentDate.text = "Payment Date: ${item.paymentDate}"
         holder.propertyTaxPaidAmount.text = "Property Tax Paid Amount: ${item.propertyTaxPaidAmount}"
         holder.waterTaxPaidAmount.text = "Water Tax Paid Amount: ${item.waterTaxPaidAmount}"
         holder.sewerTaxPaidAmount.text = "Sewer Tax Paid Amount: ${item.sewerTaxPaidAmount}"
