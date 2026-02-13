@@ -141,6 +141,7 @@ class LocationBasedFragment : Fragment() {
         val zoneNames = list.map { it.zoneName }
         val adapter = ArrayAdapter(requireContext(), R.layout.simple_list_item_1, zoneNames)
         binding.etZone.setAdapter(adapter)
+        binding.etZone.threshold = 1
         binding.etZone.setOnItemClickListener { _, _, position, _ ->
             viewModel.clearWardList()
             val selectedZone = list[position]
@@ -168,6 +169,7 @@ class LocationBasedFragment : Fragment() {
         val wardNames = list.map { it.wardName }
         val adapter = ArrayAdapter(requireContext(), R.layout.simple_list_item_1, wardNames)
         binding.etWard.setAdapter(adapter)
+        binding.etWard.threshold = 1
         binding.etWard.setOnItemClickListener { _, _, position, _ ->
             viewModel.clearMohallaList()
             val selectedWard = list[position]
@@ -194,6 +196,7 @@ class LocationBasedFragment : Fragment() {
         val mohallaNames = list.map { it.mohallaName }
         val adapter = ArrayAdapter(requireContext(), R.layout.simple_list_item_1, mohallaNames)
         binding.etMohalla.setAdapter(adapter)
+        binding.etMohalla.threshold = 1
         binding.etMohalla.setOnItemClickListener { _, _, position, _ ->
             val selectedMohalla = list[position]
             viewModel.setSelectedMohalla(selectedMohalla)

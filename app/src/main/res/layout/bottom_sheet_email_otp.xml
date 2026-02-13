@@ -12,7 +12,7 @@
         android:layout_marginBottom="16dp"/>
 
     <TextView
-        android:text="Opt Send Entered Email Address"
+        android:text="OTP sent on the entered email address"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_width="wrap_content"

@@ -16,7 +16,6 @@ import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
 import com.example.lda.houseTax.utils.PreferenceManager
 import com.example.lda.houseTax.viewmodel.SharedViewModel
 import com.example.lda.utils.LoderHelper
-import kotlin.math.log
 
 
 class PropertySearchActivity : AppCompatActivity() {

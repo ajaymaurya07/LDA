@@ -59,7 +59,6 @@ class SelectPropertyActivity : AppCompatActivity() {
         rv.layoutManager = LinearLayoutManager(this)
 
 
-
         adapter = PropertySelectAdaptor(list) { selected ->
             selected.propertyId?.let {
                 preferenceManager.savePropertyId(it)

@@ -2,8 +2,11 @@ package com.example.lda.houseTax.loginDetails
 
 import android.accounts.AccountManager
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.telephony.SubscriptionManager
 import android.util.Log
 import android.view.View
 import android.widget.EditText
@@ -13,6 +16,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.lda.R
 import com.example.lda.databinding.ActivitySignUpBinding
@@ -20,20 +24,24 @@ import com.example.lda.houseTax.data.SignUpRequest
 import com.example.lda.houseTax.data.VerifyOtpMailRequest
 import com.example.lda.houseTax.viewmodel.PaymentViewModel
 import com.example.lda.utils.LoderHelper
-import com.google.android.gms.auth.api.identity.GetPhoneNumberHintIntentRequest
-import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.common.AccountPicker
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-
+import android.Manifest
+import android.app.AlertDialog
+import android.net.Uri
+import android.os.Build
+import android.provider.Settings
+import android.text.InputType
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
     private lateinit var dialog: BottomSheetDialog
     private lateinit var viewModel: PaymentViewModel
     private lateinit var loderHelper: LoderHelper
-    private lateinit var phoneNumberHintLauncher: ActivityResultLauncher<IntentSenderRequest>
     private lateinit var emailPickerLauncher: ActivityResultLauncher<Intent>
+    private val PERMISSION_REQUEST_CODE = 100
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +57,6 @@ class SignUpActivity : AppCompatActivity() {
 
 
         binding.btnSignUp.setOnClickListener {
-            Log.d("TAG", "onCreate: ${binding.etMobileNumber.text}")
             if (validateInput()) {
                 val name = binding.etUserName.text.toString().trim()
                 val mobile = binding.etMobileNumber.text.toString().trim()
@@ -70,33 +77,12 @@ class SignUpActivity : AppCompatActivity() {
 
 
         binding.etMobileNumber.setOnClickListener {
-            fetchPhoneNumberFromDevice()
+            getNumber()
         }
 
         binding.etEmail.setOnClickListener {
             fetchEmailFromDevice()
         }
-
-
-
-        phoneNumberHintLauncher =
-            registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
-                if (result.resultCode == Activity.RESULT_OK) {
-
-                    val phoneNumber = Identity.getSignInClient(this)
-                            .getPhoneNumberFromIntent(result.data)
-
-                    phoneNumber.let {
-                        val cleanNumber = it
-                            .replace(Regex("[^0-9]"), "")
-                            .takeLast(10)
-
-                        binding.etMobileNumber.setText(cleanNumber)
-                    }
-                }
-            }
-
-
 
         emailPickerLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -134,35 +120,162 @@ class SignUpActivity : AppCompatActivity() {
 
 
 
-    private fun fetchPhoneNumberFromDevice() {
-        val request = GetPhoneNumberHintIntentRequest.builder().build()
-        Identity.getSignInClient(this)
-            .getPhoneNumberHintIntent(request)
-            .addOnSuccessListener { intentSender ->
-                phoneNumberHintLauncher.launch(
-                    IntentSenderRequest.Builder(intentSender).build()
-                )
-            }
-            .addOnFailureListener {
-            }
-    }
-
-
-
-
-
-    private fun maskMobileNumber(mobile: String): String {
-        return if (mobile.length >= 4) {
-            "******" + mobile.takeLast(4)
+    private fun getNumber() {
+        if (hasPermissions()) {
+            showNumberList()
         } else {
-            mobile
+            requestPermission()
         }
     }
 
 
-    //                it.data?.email?.let {
-//                    it1 ->
-//                }
+
+
+
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(
+                Manifest.permission.READ_PHONE_NUMBERS,
+                Manifest.permission.READ_PHONE_STATE
+            ),
+            PERMISSION_REQUEST_CODE
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == PERMISSION_REQUEST_CODE &&
+            grantResults.all { it == PackageManager.PERMISSION_GRANTED }
+        ) {
+            showNumberList()
+        } else {
+            val deniedPermissions = permissions.filterIndexed { index, _ ->
+                grantResults[index] != PackageManager.PERMISSION_GRANTED
+            }
+
+            handlePermissionDenial(deniedPermissions)
+        }
+    }
+
+
+    private fun handlePermissionDenial(deniedPermissions: List<String>) {
+
+        val permanentlyDenied = deniedPermissions.filter {
+            !ActivityCompat.shouldShowRequestPermissionRationale(this, it)
+        }
+
+        if (permanentlyDenied.isNotEmpty()) {
+            showGoToSettingsDialog()
+        } else {
+            showRationaleDialog()
+        }
+    }
+
+
+    private fun showRationaleDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Permission Required")
+            .setMessage("Phone permission is required to detect your number.")
+            .setPositiveButton("Allow") { _, _ ->
+                requestPermission()
+            }
+            .setNegativeButton("Cancel", null)
+            .setCancelable(false)
+            .show()
+    }
+    private fun showGoToSettingsDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Permission Required")
+            .setMessage("Please enable permission from App Settings.")
+            .setPositiveButton("Open Settings") { _, _ ->
+
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                intent.data = Uri.fromParts("package", packageName, null)
+                startActivity(intent)
+            }
+            .setNegativeButton("Cancel", null)
+            .setCancelable(false)
+            .show()
+    }
+
+
+    private fun showNumberList() {
+
+        val subscriptionManager = getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE) as SubscriptionManager
+
+        val subscriptionList = subscriptionManager.activeSubscriptionInfoList
+
+        if (subscriptionList.isNullOrEmpty()) {
+            Toast.makeText(this, "No SIM found", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val numberList = mutableListOf<String>()
+
+        for (info in subscriptionList) {
+            val number = info.number
+            if (!number.isNullOrEmpty()) {
+                numberList.add("${info.carrierName} - $number")
+            }
+        }
+
+        if (numberList.isEmpty()) {
+            binding.showWorking.visibility=View.VISIBLE
+            binding.etMobileNumber.apply {
+                isFocusable = true
+                isFocusableInTouchMode = true
+                isClickable = true
+                isCursorVisible = true
+                inputType = InputType.TYPE_CLASS_PHONE
+                requestFocus()
+            }
+            return
+        }
+
+        // Show dialog with numbers
+        AlertDialog.Builder(this)
+            .setTitle("Select Phone Number")
+            .setItems(numberList.toTypedArray()) { _, which ->
+                val selected = numberList[which]
+                val cleanNumber = selected.substringAfter("-").trim().takeLast(10)
+                binding.etMobileNumber.setText(cleanNumber)
+            }
+            .show()
+    }
+
+
+
+    private fun hasPermissions(): Boolean {
+
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_PHONE_NUMBERS
+            ) == PackageManager.PERMISSION_GRANTED &&
+
+                    ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.READ_PHONE_STATE
+                    ) == PackageManager.PERMISSION_GRANTED
+
+        } else {
+
+            ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_PHONE_STATE
+            ) == PackageManager.PERMISSION_GRANTED
+        }
+    }
+
+
+
 
     private fun observeViewModel() {
         viewModel.signUpData.observe(this){

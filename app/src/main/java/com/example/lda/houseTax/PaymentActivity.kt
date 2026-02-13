@@ -500,7 +500,7 @@ class PaymentActivity : AppCompatActivity() {
                 isPropertyVerificationIsDone=true
                 Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
                 verifyOtpDialog.dismiss()
-                preferenceManager.saveUserId(it.userId.toString())
+//                preferenceManager.saveUserId(it.userId.toString())
                 openPaymentBottomSheet(initiateRequest!!)
             }
             else{

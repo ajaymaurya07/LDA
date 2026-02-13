@@ -29,9 +29,10 @@ class LauncherActivity : AppCompatActivity() {
         preferenceManager= PreferenceManager(this)
 
         val loginFlag= preferenceManager.isLogin()
-        val propertyIdFlag= preferenceManager.getPropertyId()
+//        val propertyIdFlag= preferenceManager.getPropertyId()
+        val userID= preferenceManager.getUserId()
 
-        if (!propertyIdFlag.isNullOrEmpty()){
+        if (!userID.isNullOrEmpty()){
             navigateToDash()
         }
         else if (loginFlag){
