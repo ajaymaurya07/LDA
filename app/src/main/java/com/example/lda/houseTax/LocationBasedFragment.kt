@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Filter
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.lda.databinding.FragmentLocationBasedBinding
@@ -51,7 +52,8 @@ class LocationBasedFragment : Fragment() {
             val mohallaId = viewModel.selectedMohalla.value?.wardId.orEmpty()
             val houseNo = binding.etHouseNo.text.toString().trim()
 
-            Log.d("TAG", "onViewCreated: $ulbId ,$zoneId ,$wardId ,$mohallaId ,$houseNo")
+//            Log.d("TAG", "onViewCreated: $ulbId ,$zoneId ,$wardId ,$mohallaId ,$houseNo")
+//            Log.d("TAG", "onViewCreated: ${viewModel.selectedUlb.value} ,${viewModel.selectedZone.value} ,${viewModel.selectedWard.value} ,${viewModel.selectedMohalla.value} ,$houseNo")
 
             if (ulbId.isEmpty() || zoneId.isEmpty() || wardId.isEmpty() || mohallaId.isEmpty() || houseNo.isEmpty()) {
                 Toast.makeText(
@@ -88,13 +90,45 @@ class LocationBasedFragment : Fragment() {
             }
         }
     }
-    private fun setupUlbDropdown(list: List<UlbItem>) {
 
+    private fun setupUlbDropdown(list: List<UlbItem>) {
         // Sort list A-Z by ulbName
         val sortedList = list.sortedBy { it.ulbName?.lowercase() }
-        // Name list
-        val ulbNames = sortedList.map { it.ulbName }
-        val adapter = ArrayAdapter(requireContext(), R.layout.simple_list_item_1, ulbNames)
+        val adapter = object : ArrayAdapter<UlbItem>(
+            requireContext(),
+            R.layout.simple_list_item_1,
+            sortedList.toMutableList()
+        ) {
+
+            override fun getFilter(): Filter {
+                return object : Filter() {
+
+                    override fun performFiltering(constraint: CharSequence?): FilterResults {
+                        val results = FilterResults()
+
+                        val filteredList = if (constraint.isNullOrEmpty()) {
+                            sortedList
+                        } else {
+                            sortedList.filter {
+                                it.ulbName
+                                    ?.lowercase()
+                                    ?.contains(constraint.toString().lowercase()) ?: false
+                            }
+                        }
+
+                        results.values = filteredList
+                        results.count = filteredList.size
+                        return results
+                    }
+
+                    override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                        clear()
+                        addAll(results?.values as List<UlbItem>)
+                        notifyDataSetChanged()
+                    }
+                }
+            }
+        }
         binding.etUlb.setAdapter(adapter)
         binding.etUlb.threshold = 1
 
@@ -102,25 +136,15 @@ class LocationBasedFragment : Fragment() {
 
             viewModel.clearZoneList()
 
-            val selectedName = parent.getItemAtPosition(position).toString()
+            val selectedUlb = parent.getItemAtPosition(position) as UlbItem
 
-            val selectedUlb = sortedList.firstOrNull {
-                it.ulbName == selectedName
-            }
+            viewModel.setSelectedUlb(selectedUlb)
 
-            selectedUlb?.let {
-                Log.d("TAG", "setupUlbDropdown: $it")
-                viewModel.setSelectedUlb(it)
-                viewModel.zoneData(it.ulbId!!)
+            selectedUlb.ulbId?.let {
+                viewModel.zoneData(it)
             }
         }
 
-//        binding.etUlb.setOnItemClickListener { _, _, position, _ ->
-//            viewModel.clearZoneList()
-//            val selectedUlb = sortedList[position]
-//            viewModel.setSelectedUlb(selectedUlb)
-//            viewModel.zoneData(selectedUlb.ulbId!!)
-//        }
     }
 
 
@@ -132,21 +156,90 @@ class LocationBasedFragment : Fragment() {
             setupZoneDropdown(list)
         }
     }
+//    private fun setupZoneDropdown(list: List<ZoneItem>) {
+//        if (list.isEmpty()) {
+//            binding.etZone.setText("", false)
+//            binding.etZone.setAdapter(null)
+//            return
+//        }
+//        val zoneNames = list.map { it.zoneName }
+//        val adapter = ArrayAdapter(requireContext(), R.layout.simple_list_item_1, zoneNames)
+//        binding.etZone.setAdapter(adapter)
+//        binding.etZone.threshold = 1
+//        binding.etZone.setOnItemClickListener { _, _, position, _ ->
+//            viewModel.clearWardList()
+//            val selectedZone = list[position]
+//            viewModel.setSelectedZone(selectedZone)
+//            viewModel.wardData(viewModel.selectedUlb.value?.ulbId!!,selectedZone.zoneId!!)
+//        }
+//    }
+
+
+
+
     private fun setupZoneDropdown(list: List<ZoneItem>) {
+
         if (list.isEmpty()) {
             binding.etZone.setText("", false)
             binding.etZone.setAdapter(null)
             return
         }
-        val zoneNames = list.map { it.zoneName }
-        val adapter = ArrayAdapter(requireContext(), R.layout.simple_list_item_1, zoneNames)
+
+        val sortedList = list.sortedBy { it.zoneName?.lowercase() }
+
+        val adapter = object : ArrayAdapter<ZoneItem>(
+            requireContext(),
+            R.layout.simple_list_item_1,
+            sortedList.toMutableList()
+        ) {
+
+            override fun getFilter(): Filter {
+                return object : Filter() {
+
+                    override fun performFiltering(constraint: CharSequence?): FilterResults {
+                        val results = FilterResults()
+
+                        val filteredList = if (constraint.isNullOrEmpty()) {
+                            sortedList
+                        } else {
+                            sortedList.filter {
+                                it.zoneName
+                                    ?.lowercase()
+                                    ?.contains(constraint.toString().lowercase()) ?: false
+                            }
+                        }
+
+                        results.values = filteredList
+                        results.count = filteredList.size
+                        return results
+                    }
+
+                    override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                        clear()
+                        addAll(results?.values as List<ZoneItem>)
+                        notifyDataSetChanged()
+                    }
+                }
+            }
+        }
+
         binding.etZone.setAdapter(adapter)
         binding.etZone.threshold = 1
-        binding.etZone.setOnItemClickListener { _, _, position, _ ->
+
+        binding.etZone.setOnItemClickListener { parent, _, position, _ ->
+
             viewModel.clearWardList()
-            val selectedZone = list[position]
+
+            val selectedZone = parent.getItemAtPosition(position) as ZoneItem
+
             viewModel.setSelectedZone(selectedZone)
-            viewModel.wardData(viewModel.selectedUlb.value?.ulbId!!,selectedZone.zoneId!!)
+
+            val ulbId = viewModel.selectedUlb.value?.ulbId
+            val zoneId = selectedZone.zoneId
+
+            if (ulbId != null && zoneId != null) {
+                viewModel.wardData(ulbId, zoneId)
+            }
         }
     }
 
@@ -166,18 +259,53 @@ class LocationBasedFragment : Fragment() {
             binding.etWard.setAdapter(null)
             return
         }
-        val wardNames = list.map { it.wardName }
-        val adapter = ArrayAdapter(requireContext(), R.layout.simple_list_item_1, wardNames)
+        val sortedList = list.sortedBy { it.wardName?.lowercase() }
+
+        val adapter = object : ArrayAdapter<WardItem>(
+            requireContext(),
+            R.layout.simple_list_item_1,
+            sortedList.toMutableList()
+        ) {
+
+            override fun getFilter(): Filter {
+                return object : Filter() {
+
+                    override fun performFiltering(constraint: CharSequence?): FilterResults {
+                        val results = FilterResults()
+
+                        val filteredList = if (constraint.isNullOrEmpty()) {
+                            sortedList
+                        } else {
+                            sortedList.filter {
+                                it.wardName
+                                    ?.lowercase()
+                                    ?.contains(constraint.toString().lowercase()) ?: false
+                            }
+                        }
+
+                        results.values = filteredList
+                        results.count = filteredList.size
+                        return results
+                    }
+
+                    override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                        clear()
+                        addAll(results?.values as List<WardItem>)
+                        notifyDataSetChanged()
+                    }
+                }
+            }
+        }
+
         binding.etWard.setAdapter(adapter)
         binding.etWard.threshold = 1
-        binding.etWard.setOnItemClickListener { _, _, position, _ ->
+        binding.etWard.setOnItemClickListener { parent, _, position, _ ->
             viewModel.clearMohallaList()
-            val selectedWard = list[position]
+            val selectedWard = parent.getItemAtPosition(position) as WardItem
             viewModel.setSelectedWard(selectedWard)
             viewModel.mohallaData(viewModel.selectedUlb.value?.ulbId!!,viewModel.selectedZone.value?.zoneId!!,selectedWard.wardId!!)
         }
     }
-
 
 
 
@@ -188,20 +316,62 @@ class LocationBasedFragment : Fragment() {
         }
     }
     private fun setupMohallaDropdown(list: List<MohallaItem>) {
+
         if (list.isEmpty()) {
             binding.etMohalla.setText("", false)
             binding.etMohalla.setAdapter(null)
             return
         }
-        val mohallaNames = list.map { it.mohallaName }
-        val adapter = ArrayAdapter(requireContext(), R.layout.simple_list_item_1, mohallaNames)
+
+        val sortedList = list.sortedBy { it.mohallaName?.lowercase() ?: "" }
+
+        val adapter = object : ArrayAdapter<MohallaItem>(
+            requireContext(),
+            R.layout.simple_list_item_1,
+            sortedList.toMutableList()
+        ) {
+
+            override fun getFilter(): Filter {
+                return object : Filter() {
+
+                    override fun performFiltering(constraint: CharSequence?): FilterResults {
+                        val results = FilterResults()
+
+                        val filteredList = if (constraint.isNullOrEmpty()) {
+                            sortedList
+                        } else {
+                            sortedList.filter {
+                                it.mohallaName
+                                    ?.lowercase()
+                                    ?.contains(constraint.toString().lowercase()) ?: false
+                            }
+                        }
+
+                        results.values = filteredList
+                        results.count = filteredList.size
+                        return results
+                    }
+
+                    override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                        clear()
+                        addAll(results?.values as List<MohallaItem>)
+                        notifyDataSetChanged()
+                    }
+                }
+            }
+        }
+
         binding.etMohalla.setAdapter(adapter)
         binding.etMohalla.threshold = 1
-        binding.etMohalla.setOnItemClickListener { _, _, position, _ ->
-            val selectedMohalla = list[position]
+
+        binding.etMohalla.setOnItemClickListener { parent, _, position, _ ->
+
+            val selectedMohalla = parent.getItemAtPosition(position) as MohallaItem
+
             viewModel.setSelectedMohalla(selectedMohalla)
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

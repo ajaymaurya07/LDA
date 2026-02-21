@@ -86,6 +86,10 @@ class PreferenceManager(context: Context) {
     fun getUserId(): String? {
         return prefs.getString(USER_ID, null)
     }
+    fun clearUserId() {
+        prefs.edit().remove(USER_ID).apply()
+    }
+
 
     fun login(loginFlag: Boolean) {
         prefs.edit()

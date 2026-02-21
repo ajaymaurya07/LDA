@@ -33,4 +33,9 @@ data class MohallaItem(
 
 	@field:SerializedName("mohallaName")
 	val mohallaName: String? = null
-)
+){
+	override fun toString(): String {
+		return mohallaName ?: ""
+	}
+
+}

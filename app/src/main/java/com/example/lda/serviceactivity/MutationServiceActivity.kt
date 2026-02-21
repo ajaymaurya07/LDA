@@ -9,11 +9,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import com.example.lda.R
+import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
 import com.example.lda.formfragment.interfacePart.FragmentChangeLister
 import com.example.lda.formfragment.mutation.MutationReasonFragment
 import com.example.lda.formfragment.mutation.PropertyDetailsMutation
 import com.example.lda.formfragment.mutation.SupportingDocument
-import com.example.lda.utils.ImagePickerHandler
 
 class MutationServiceActivity : AppCompatActivity(), FragmentChangeLister {
 
@@ -42,9 +42,16 @@ class MutationServiceActivity : AppCompatActivity(), FragmentChangeLister {
     }
 
     private fun setupBackButton() {
-        findViewById<ImageView>(R.id.back_button).setOnClickListener {
+        val toolbar = findViewById<ImageView>(R.id.navBack)
+        toolbar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
+
+        applySafeAreaInsets(
+            rootView = findViewById(R.id.root),
+            statusBarColor = getColor(R.color.primary),
+            lightStatusBar = true,
+        )
     }
 
     private fun observeFragmentChanges() {

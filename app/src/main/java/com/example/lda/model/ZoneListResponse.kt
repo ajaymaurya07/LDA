@@ -27,4 +27,9 @@ data class ZoneItem(
 
 	@field:SerializedName("zoneName")
 	val zoneName: String? = null
-)
+){
+	override fun toString(): String {
+		return zoneName ?: ""
+	}
+
+}

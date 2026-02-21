@@ -15,7 +15,12 @@ data class WardItem(
 
 	@field:SerializedName("wardId")
 	val wardId: String? = null
-)
+){
+	override fun toString(): String {
+		return wardName ?: ""
+	}
+
+}
 
 data class WardListResponse(
 

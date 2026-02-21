@@ -56,36 +56,41 @@ object SystemBarsHelper {
         lightStatusBar: Boolean = true,
         statusBarColor: Int = Color.WHITE,
     ) {
-        // If both toolbar and bottomBar are present, use primary color for status bar
-        val finalStatusBarColor = if (toolbar != null && bottomBar != null) {
-            getColor(com.example.lda.R.color.primary) // Replace with your primary color
-        } else {
-            statusBarColor
-        }
 
-        window.statusBarColor = finalStatusBarColor
-        WindowInsetsControllerCompat(window, rootView).isAppearanceLightStatusBars = lightStatusBar
+        window.statusBarColor = statusBarColor
+        WindowInsetsControllerCompat(window, rootView)
+            .isAppearanceLightStatusBars = lightStatusBar
 
-        // Insets listener
         ViewCompat.setOnApplyWindowInsetsListener(rootView) { view, insets ->
+
+            // System bars (status + nav bar + cutout)
             val systemBars = insets.getInsets(
                 WindowInsetsCompat.Type.systemBars() or
                         WindowInsetsCompat.Type.displayCutout()
             )
 
-            // Root padding
+            // Keyboard (IME)
+            val imeInsets = insets.getInsets(
+                WindowInsetsCompat.Type.ime()
+            )
+
+            // Bottom padding should be whichever is bigger
+            val bottomPadding = maxOf(systemBars.bottom, imeInsets.bottom)
+
             view.updatePadding(
                 left = systemBars.left,
                 right = systemBars.right,
                 top = if (toolbar == null) systemBars.top else view.paddingTop,
-                bottom = if (bottomBar == null) systemBars.bottom else view.paddingBottom
+                bottom = if (bottomBar == null) bottomPadding else view.paddingBottom
             )
 
-            // Toolbar and BottomBar padding
             toolbar?.updatePadding(top = systemBars.top)
-            bottomBar?.updatePadding(bottom = systemBars.bottom)
+            bottomBar?.updatePadding(bottom = bottomPadding)
 
             insets
         }
+
+        ViewCompat.requestApplyInsets(rootView)
     }
 }
+

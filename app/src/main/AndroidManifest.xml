@@ -37,7 +37,10 @@
             android:exported="false" />
         <activity
             android:name=".houseTax.loginDetails.SignUpActivity"
-            android:exported="true"/>
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize"
+
+            />
         <activity
             android:name=".houseTax.paymentModeActivity.SbiTestActivity"
             android:exported="false" />
@@ -123,7 +126,8 @@
         <activity
             android:name=".houseTax.PropertySearchActivity"
             android:exported="true"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            >
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->

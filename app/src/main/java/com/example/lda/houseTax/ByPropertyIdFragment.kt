@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Filter
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.lda.databinding.FragmentByPropertyIdBinding
@@ -81,37 +82,56 @@ class ByPropertyIdFragment : Fragment() {
             }
         }
     }
+
     private fun setupUlbDropdown(list: List<UlbItem>) {
-        // Sort list A-Z by ulbName
+
         val sortedList = list.sortedBy { it.ulbName?.lowercase() }
-        // Name list
-        val ulbNames = sortedList.map { it.ulbName }
 
-        val adapter = ArrayAdapter(requireContext(), R.layout.simple_list_item_1, ulbNames)
-        binding.etUlb.setAdapter(adapter)
+        val adapter = object : ArrayAdapter<UlbItem>(
+            requireContext(),
+            R.layout.simple_list_item_1,
+            sortedList.toMutableList()
+        ) {
 
-        binding.etUlb.threshold = 1
+            override fun getFilter(): Filter {
+                return object : Filter() {
 
-        binding.etUlb.setOnItemClickListener { parent, _, position, _ ->
-            val selectedName = parent.getItemAtPosition(position).toString()
-            val selectedUlb = sortedList.firstOrNull {
-                it.ulbName == selectedName
-            }
-            selectedUlb?.let {
-                Log.d("TAG", "setupUlbDropdown: $it")
-                viewModel.setSelectedUlb(it)
+                    override fun performFiltering(constraint: CharSequence?): FilterResults {
+                        val results = FilterResults()
+
+                        val filteredList = if (constraint.isNullOrEmpty()) {
+                            sortedList
+                        } else {
+                            sortedList.filter {
+                                it.ulbName
+                                    ?.lowercase()
+                                    ?.contains(constraint.toString().lowercase()) ?: false
+                            }
+                        }
+
+                        results.values = filteredList
+                        results.count = filteredList.size
+                        return results
+                    }
+
+                    override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                        clear()
+                        addAll(results?.values as List<UlbItem>)
+                        notifyDataSetChanged()
+                    }
+                }
             }
         }
 
+        binding.etUlb.setAdapter(adapter)
+        binding.etUlb.threshold = 1
 
-//        binding.etUlb.setOnItemClickListener { _, _, position, _ ->
-//            val selectedUlb = sortedList[position]
-//            viewModel.setSelectedUlb(selectedUlb)
-//
-//        }
+        binding.etUlb.setOnItemClickListener { parent, _, position, _ ->
+            val selectedUlb = parent.getItemAtPosition(position) as UlbItem
+            Log.d("TAG", "setupUlbDropdown: ${selectedUlb.ulbId}")
+            viewModel.setSelectedUlb(selectedUlb)
+        }
     }
-
-
 
 
 

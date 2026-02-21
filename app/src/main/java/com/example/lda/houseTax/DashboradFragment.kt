@@ -16,6 +16,7 @@ import com.example.lda.houseTax.data.SliderAdapter
 import com.example.lda.houseTax.data.SliderItem
 import com.example.lda.houseTax.paymentDetails.ArvHistoryActivity
 import com.example.lda.houseTax.viewmodel.PropertyDetailsViewmodel
+import com.example.lda.serviceactivity.MutationService
 import com.google.gson.Gson
 
 class DashboradFragment : Fragment() {
@@ -80,6 +81,10 @@ class DashboradFragment : Fragment() {
 
         binding.arvHistoryCard.cardArvHistory.setOnClickListener {
 //            startActivity(Intent(requireActivity(), ArvHistoryActivity::class.java))
+        }
+
+        binding.mutationCard.cardMutation.setOnClickListener {
+            startActivity(Intent(requireActivity(), MutationService::class.java).putExtra("text","Name Transfer/Mutation"))
         }
     }
 

@@ -34,7 +34,7 @@ class PropertySearchActivity : AppCompatActivity() {
         loderHelper= LoderHelper(this)
         preferanceManager=PreferenceManager(this)
 
-        enableEdgeToEdge()
+//        enableEdgeToEdge()
         applySafeAreaInsets(
             rootView = findViewById(R.id.root),
             statusBarColor = getColor(R.color.primary),
@@ -78,6 +78,8 @@ class PropertySearchActivity : AppCompatActivity() {
 
         viewModel.propertyList.observe(this) { list ->
 
+            Log.d("TAG", "observePropertyResult: $list")
+
             if (list.isNullOrEmpty()) {
                 Toast.makeText(
                     this,
@@ -98,6 +100,7 @@ class PropertySearchActivity : AppCompatActivity() {
 
         }
     }
+
 
 
 

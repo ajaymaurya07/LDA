@@ -33,4 +33,8 @@ data class UlbItem(
 
 	@field:SerializedName("ulbName")
 	val ulbName: String? = null
-)
+){
+	override fun toString(): String {
+		return "${ulbName ?: ""} (${ulbType ?: ""})"
+	}
+}

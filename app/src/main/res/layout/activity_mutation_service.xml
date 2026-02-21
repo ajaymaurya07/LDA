@@ -1,64 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout
+<layout>
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    >
-
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/main"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".serviceactivity.MutationService"
-    android:background="@drawable/last_01"
+    android:background="@drawable/bg_with_opacity"
     >
 
-    <View
-        android:id="@+id/white_overlay"
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/topAppBar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#80FFFFFF"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/nav_bar"
-        >
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            style="@style/Widget.MaterialComponents.Toolbar.Surface"
+            app:contentInsetStartWithNavigation="0dp">
 
-        <TextView
-            android:id="@+id/nav_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" Name Transfer/Mutation"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:textSize="18sp"
-            android:fontFamily="@font/montserrat_bold"
-            android:textColor="@color/primary"
-            />
+            <!-- Back Icon -->
+            <ImageView
+                android:id="@+id/navBack"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/left_icon"
+                android:layout_marginStart="12dp"
+                android:layout_gravity="start|center_vertical"
+                android:padding="4dp"/>
 
-        <ImageView
-            android:id="@+id/back_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/left_icon"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="10dp"/>
+            <!-- Title placed manually -->
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name Transfer / Mutation"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginStart="20dp"
+                android:layout_gravity="center_vertical"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -66,7 +57,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nav_bar">
+        app:layout_constraintTop_toBottomOf="@id/topAppBar">
 
         <LinearLayout
             android:id="@+id/apply_now"
@@ -114,8 +105,8 @@
             </LinearLayout>
 
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginStart="50dp"
                 android:src="@drawable/arrow_icon"
 
@@ -170,8 +161,8 @@
             </LinearLayout>
 
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginStart="20dp"
                 android:src="@drawable/arrow_icon"
 

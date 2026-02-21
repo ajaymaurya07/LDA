@@ -42,104 +42,110 @@ class SupportingDocument : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val container1 = view.findViewById<View>(R.id.img_01)
-        val container2 = view.findViewById<View>(R.id.img_02)
-        val container3 = view.findViewById<View>(R.id.img_03)
-
-        fileText1 = container1.findViewById(R.id.image_text)
-        fileText2 = container2.findViewById(R.id.image_text)
-        fileText3 = container3.findViewById(R.id.image_text)
-
-        button01 = container1.findViewById(R.id.button)
-        button02 = container2.findViewById(R.id.button)
-        button03 = container3.findViewById(R.id.button)
-
-        val checkBox = view.findViewById<CheckBox>(R.id.checkbox)
-
-        // Register camera and gallery launchers
-        cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
-            if (success) {
-                imagePickerHandler.handleCameraResult()
-            }
-        }
-
-        galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-            uri?.let {
-                imagePickerHandler.handleGalleryResult(it)
-            }
-        }
-
-        // Initialize ImagePickerHandler
-        imagePickerHandler = ImagePickerHandler(this) { index ->
-            when (index) {
-                1 -> fileText1
-                2 -> fileText2
-                3 -> fileText3
-                else -> fileText1
-            }
-        }
-
-        // Setup image button click listeners
-        imagePickerHandler.setUpImageButtonClicks(
-            button01 to 1,
-            button02 to 2,
-            button03 to 3
-        )
-
-        // Assign launchers
-        imagePickerHandler.setLaunchers(cameraLauncher, galleryLauncher)
-
 
         val submitButton = view.findViewById<Button>(R.id.mutation_btn)
         submitButton.setOnClickListener {
-            if (fileText1.text.isNullOrEmpty() && fileText2.text.isNullOrEmpty() && fileText3.text.isNullOrEmpty() ){
-                AlertDialogHelper.showAlertDialog(
-                    requireContext(),
-                    "Alert Message",
-                    "Plz Select Minimum One Image!",
-                    "Ok", { dialog, which ->
-                        dialog.dismiss()
-                    },
-                    "Cancel", { dialog, which ->
-                        dialog.dismiss() // Close the dialog
-                    }
-                )
-                return@setOnClickListener
-            }
-            else if (!checkBox.isChecked){
-                AlertDialogHelper.showAlertDialog(
-                    requireContext(),
-                    "Alert Message",
-                    "Plz Select Check Box!",
-                    "Ok", { dialog, which ->
-                        dialog.dismiss()
-                    },
-                    "Cancel", { dialog, which ->
-                        dialog.dismiss()
-                    }
-                )
-                return@setOnClickListener
-            }
-
-            AlertDialogHelper.showAlertDialog(
-                requireContext(),
-                "Alert Message",
-                "Saved Successfully!!",
-                "Ok", { dialog, which ->
-                    dialog.dismiss()
-                    // Go back 3 fragments
-                    val fm = requireActivity().supportFragmentManager
-                    if (fm.backStackEntryCount >= 3) {
-                        repeat(3) { fm.popBackStack() }
-                    } else {
-                        requireActivity().finish() // If less than 3 in stack, just finish
-                    }
-                },
-                "Cancel", { dialog, which ->
-                    dialog.dismiss()
-                }
-            )
 
         }
+
+//        val container1 = view.findViewById<View>(R.id.img_01)
+//        val container2 = view.findViewById<View>(R.id.img_02)
+//        val container3 = view.findViewById<View>(R.id.img_03)
+//
+//        fileText1 = container1.findViewById(R.id.image_text)
+//        fileText2 = container2.findViewById(R.id.image_text)
+//        fileText3 = container3.findViewById(R.id.image_text)
+//
+//        button01 = container1.findViewById(R.id.button)
+//        button02 = container2.findViewById(R.id.button)
+//        button03 = container3.findViewById(R.id.button)
+//
+//        val checkBox = view.findViewById<CheckBox>(R.id.checkbox)
+
+        // Register camera and gallery launchers
+//        cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+//            if (success) {
+//                imagePickerHandler.handleCameraResult()
+//            }
+//        }
+//
+//        galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+//            uri?.let {
+//                imagePickerHandler.handleGalleryResult(it)
+//            }
+//        }
+//
+//        // Initialize ImagePickerHandler
+//        imagePickerHandler = ImagePickerHandler(this) { index ->
+//            when (index) {
+//                1 -> fileText1
+//                2 -> fileText2
+//                3 -> fileText3
+//                else -> fileText1
+//            }
+//        }
+//
+//        // Setup image button click listeners
+//        imagePickerHandler.setUpImageButtonClicks(
+//            button01 to 1,
+//            button02 to 2,
+//            button03 to 3
+//        )
+//
+//        // Assign launchers
+//        imagePickerHandler.setLaunchers(cameraLauncher, galleryLauncher)
+
+
+//        val submitButton = view.findViewById<Button>(R.id.mutation_btn)
+//        submitButton.setOnClickListener {
+//            if (fileText1.text.isNullOrEmpty() && fileText2.text.isNullOrEmpty() && fileText3.text.isNullOrEmpty() ){
+//                AlertDialogHelper.showAlertDialog(
+//                    requireContext(),
+//                    "Alert Message",
+//                    "Plz Select Minimum One Image!",
+//                    "Ok", { dialog, which ->
+//                        dialog.dismiss()
+//                    },
+//                    "Cancel", { dialog, which ->
+//                        dialog.dismiss() // Close the dialog
+//                    }
+//                )
+//                return@setOnClickListener
+//            }
+//            else if (!checkBox.isChecked){
+//                AlertDialogHelper.showAlertDialog(
+//                    requireContext(),
+//                    "Alert Message",
+//                    "Plz Select Check Box!",
+//                    "Ok", { dialog, which ->
+//                        dialog.dismiss()
+//                    },
+//                    "Cancel", { dialog, which ->
+//                        dialog.dismiss()
+//                    }
+//                )
+//                return@setOnClickListener
+//            }
+//
+//            AlertDialogHelper.showAlertDialog(
+//                requireContext(),
+//                "Alert Message",
+//                "Saved Successfully!!",
+//                "Ok", { dialog, which ->
+//                    dialog.dismiss()
+//                    // Go back 3 fragments
+//                    val fm = requireActivity().supportFragmentManager
+//                    if (fm.backStackEntryCount >= 3) {
+//                        repeat(3) { fm.popBackStack() }
+//                    } else {
+//                        requireActivity().finish() // If less than 3 in stack, just finish
+//                    }
+//                },
+//                "Cancel", { dialog, which ->
+//                    dialog.dismiss()
+//                }
+//            )
+//
+//        }
     }
 }

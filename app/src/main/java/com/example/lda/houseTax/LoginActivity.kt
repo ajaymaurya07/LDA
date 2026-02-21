@@ -2,6 +2,7 @@ package com.example.lda.houseTax
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
@@ -80,6 +81,7 @@ class LoginActivity : AppCompatActivity() {
 
 
     private fun maskMobileNumber(mobile: String): String {
+        Log.d("TAG", "maskMobileNumber: $mobile")
         return if (mobile.length >= 4) {
             "******" + mobile.takeLast(4)
         } else {

@@ -2,11 +2,14 @@ package com.example.lda.serviceactivity
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.lda.NoStatusFoundActivity
 import com.example.lda.R
 import com.example.lda.databinding.ActivityMutationServiceBinding
+import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
 
 class MutationService : AppCompatActivity() {
     lateinit var binding:ActivityMutationServiceBinding
@@ -16,10 +19,16 @@ class MutationService : AppCompatActivity() {
         supportActionBar?.hide()
 
         val navText=intent.getStringExtra("text")
-        binding.navText.text=navText
 
-        binding.backButton.setOnClickListener {
-            finish()
+//        enableEdgeToEdge()
+        applySafeAreaInsets(
+            rootView = findViewById(R.id.root),
+            statusBarColor = getColor(R.color.primary),
+            lightStatusBar = true,
+        )
+        val toolbar = findViewById<ImageView>(R.id.navBack)
+        toolbar.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
         }
 
         binding.applyNow.setOnClickListener {
@@ -39,13 +48,11 @@ class MutationService : AppCompatActivity() {
                 intent.putExtra("text","Martgage")
                 startActivity(intent)
             }
-
-
         }
 
         binding.trackStatus.setOnClickListener {
-            val intent= Intent(this,NoStatusFoundActivity::class.java)
-            startActivity(intent)
+//            val intent= Intent(this,NoStatusFoundActivity::class.java)
+//            startActivity(intent)
         }
 
     }

@@ -2,21 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/last_01"
+    android:background="@drawable/bg_with_opacity"
     tools:context=".serviceactivity.MutationServiceActivity">
 
-    <View
-        android:id="@+id/white_overlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#80FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -28,48 +19,53 @@
         app:layout_constraintEnd_toEndOf="parent"
         >
 
-<!--         Top Navbar -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/nav_bar"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolBar"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                >
+                android:layout_height="?attr/actionBarSize"
+                style="@style/Widget.MaterialComponents.Toolbar.Surface"
+                app:contentInsetStartWithNavigation="0dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/name_transfer_mutation"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:textSize="18sp"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:textColor="@color/primary" />
-
+                <!-- Back Icon -->
                 <ImageView
-                    android:id="@+id/back_button"
+                    android:id="@+id/navBack"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/left_icon"
+                    android:layout_marginStart="12dp"
+                    android:layout_gravity="start|center_vertical"
+                    android:padding="4dp"/>
+
+                <!-- Title placed manually -->
+                <TextView
+                    android:id="@+id/tvTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/left_icon"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="10dp"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:text="Name Transfer / Mutation"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="20dp"
+                    android:layout_gravity="center_vertical"/>
+
+            </com.google.android.material.appbar.MaterialToolbar>
+        </com.google.android.material.appbar.AppBarLayout>
 
             <!-- Card Container -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/nav_bar"
+                app:layout_constraintTop_toBottomOf="@id/topAppBar"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="5dp"
+                android:layout_marginVertical="10dp"
                 app:layout_constraintHorizontal_chainStyle="spread">
 
                 <!-- Card 1 -->
@@ -89,9 +85,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="@string/mutation_reason"
+                        android:text="Owner/House Details"
                         android:textSize="12sp"
-                        android:textColor="@color/primary"
                         android:fontFamily="@font/montserrat_bold"
                         android:padding="10dp" />
                 </androidx.cardview.widget.CardView>
@@ -113,9 +108,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Property Dettails"
+                        android:text="Property Mutation Form"
                         android:textSize="12sp"
-                        android:textColor="@color/primary"
                         android:fontFamily="@font/montserrat_bold"
                         android:padding="10dp" />
                 </androidx.cardview.widget.CardView>
@@ -136,9 +130,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Supporting Documents"
+                        android:text="New Owner Details"
                         android:textSize="12sp"
-                        android:textColor="@color/primary"
                         android:fontFamily="@font/montserrat_bold"
                         android:padding="10dp" />
                 </androidx.cardview.widget.CardView>

@@ -1,686 +1,464 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".formfragment.freehold.">
+    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <!-- Scrollable Form -->
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_margin="10dp">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/save_next_btn">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="DA Property Code:"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textColor="@color/primary"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/da_property_code"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:inputType="number"
-                        android:maxLength="10"/>
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Allottee Prefix:*"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textColor="@color/primary"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp" />
-
-                <com.google.android.material.textfield.TextInputLayout
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Select"
-                    app:endIconMode="dropdown_menu"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/allottee_prefix"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:inputType="none"
-                        android:focusable="false"
-                        android:paddingStart="10dp" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Allottee Name:*"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textColor="@color/primary"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/allotteeNameLayout"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:hint="Enter"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        app:endIconMode="custom"
-                        app:endIconDrawable="@null">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/allottee_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:inputType="text"
-                            android:maxLength="30"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-                    <ProgressBar
-                        android:id="@+id/alloteeLoader"
-                        style="?android:attr/progressBarStyleSmall"
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        android:visibility="gone"/>
-
-                </LinearLayout>
-
-
-
-                <TextView
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Father / Spouse Name:*"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textColor="@color/primary"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp" />
-
-<!--                <com.google.android.material.textfield.TextInputLayout-->
-
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:hint="Enter"-->
-<!--                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">-->
-
-<!--                    <com.google.android.material.textfield.TextInputEditText-->
-<!--                        android:id="@+id/father_spouse_name"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:maxLength="30"/>-->
-<!--                </com.google.android.material.textfield.TextInputLayout>-->
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/fatherNameLayout"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:hint="Enter"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        app:endIconMode="custom"
-                        app:endIconDrawable="@null">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/father_spouse_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:inputType="text"
-                            android:maxLength="30"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-                    <ProgressBar
-                        android:id="@+id/fatherLoader"
-                        style="?android:attr/progressBarStyleSmall"
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        android:visibility="gone"/>
-
-                </LinearLayout>
-
-                <TextView
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Mobile No*"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textColor="@color/primary"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp" />
-
-<!--                <com.google.android.material.textfield.TextInputLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
-<!--                    >-->
-
-<!--                    <com.google.android.material.textfield.TextInputEditText-->
-<!--                        -->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:inputType="phone"-->
-<!--                        android:maxLength="10" />-->
-<!--                </com.google.android.material.textfield.TextInputLayout>-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/phoneIdLayout"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        app:prefixText="+91 "
-                        android:hint="Add 10 digit phone number"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        app:endIconMode="custom"
-                        app:endIconDrawable="@null">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/phone_number"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:inputType="phone"
-                            android:maxLength="10"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-                    <ProgressBar
-                        android:id="@+id/phoneLoader"
-                        style="?android:attr/progressBarStyleSmall"
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        android:visibility="gone"/>
-
-                </LinearLayout>
-
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Email Id*:"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textColor="@color/primary"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp" />
-
-<!--                <com.google.android.material.textfield.TextInputLayout-->
-
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:hint="Enter"-->
-<!--                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">-->
-
-<!--                    <com.google.android.material.textfield.TextInputEditText-->
-<!--                        android:id="@+id/email_id"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:inputType="textEmailAddress"/>-->
-<!--                </com.google.android.material.textfield.TextInputLayout>-->
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/emailIdLayout"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:hint="Enter"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        app:endIconMode="custom"
-                        app:endIconDrawable="@null">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/email_id"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:inputType="text"
-                            android:maxLength="30"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-                    <ProgressBar
-                        android:id="@+id/emailLoader"
-                        style="?android:attr/progressBarStyleSmall"
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        android:visibility="gone"/>
-
-                </LinearLayout>
-
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Final Registry Date:"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textColor="@color/primary"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp" />
-
-                <com.google.android.material.textfield.TextInputLayout
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="DD/MM/YYYY"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/final_registary_date"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Total Cost"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textColor="@color/primary"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:prefixText="₹ ">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/total_cost"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:inputType="number"
-                        android:maxLength="12"/>
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Property No*"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textColor="@color/primary"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp" />
-
-                <com.google.android.material.textfield.TextInputLayout
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/property_no"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:inputType="number"
-                        android:maxLength="12"/>
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Sector/Block"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textColor="@color/primary"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp" />
-
-<!--                <com.google.android.material.textfield.TextInputLayout-->
-
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:hint="Enter"-->
-<!--                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">-->
-
-<!--                    <com.google.android.material.textfield.TextInputEditText-->
-<!--                        android:id="@+id/sector_block"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:maxLength="20"/>-->
-<!--                </com.google.android.material.textfield.TextInputLayout>-->
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Select"
-                    app:endIconMode="dropdown_menu"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/sector_block"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:inputType="none"
-                        android:focusable="false"
-                        android:paddingStart="10dp" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Scheme Name*"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textColor="@color/primary"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp" />
-
-                <com.google.android.material.textfield.TextInputLayout
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Select"
-                    app:endIconMode="dropdown_menu"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/scheme_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:inputType="none"
-                        android:focusable="false"
-                        android:paddingStart="10dp" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Land Use*"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textColor="@color/primary"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Select"
-                    app:endIconMode="dropdown_menu"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/land_use"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:inputType="none"
-                        android:focusable="false"
-                        android:paddingStart="10dp" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Postal Address"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textColor="@color/primary"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp" />
-
-
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/postalIdLayout"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:hint="Enter"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        app:endIconMode="custom"
-                        app:endIconDrawable="@null">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/postal_address"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:minLines="3"
-                            android:gravity="top|start"
-                            />
-                    </com.google.android.material.textfield.TextInputLayout>
-                    <ProgressBar
-                        android:id="@+id/postalLoader"
-                        style="?android:attr/progressBarStyleSmall"
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        android:visibility="gone"/>
-
-                </LinearLayout>
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Area Of Property SQM*"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textColor="@color/primary"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp" />
-
-                <com.google.android.material.textfield.TextInputLayout
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-
-                    >
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/area_of_property"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:inputType="number"
-                        android:maxLength="12"/>
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Covered Area SQM*"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textColor="@color/primary"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp" />
-
-                <com.google.android.material.textfield.TextInputLayout
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    >
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/covered_area_sqm"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:inputType="number"
-                        android:maxLength="12"/>
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Floor*"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textColor="@color/primary"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp"
-                    />
-
-                <com.google.android.material.textfield.TextInputLayout
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/floor"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:maxLength="3"
-                        android:inputType="number"/>
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Current Property Value as per DM Circle Rate/Registry, whichever is higher: *"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textColor="@color/primary"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp" />
-
-                <com.google.android.material.textfield.TextInputLayout
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:prefixText="₹ ">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/current_property_value"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:inputType="number"
-                        android:maxLength="12"/>
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Outstanding amount on Property (if any):*"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textColor="@color/primary"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp" />
-
-                <com.google.android.material.textfield.TextInputLayout
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:prefixText="₹ ">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/outstanding_amount"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:inputType="number"
-                        android:maxLength="12"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="No. of Intermediate Sales Without Mutation excluding orignal.(If Any):*"
-                    android:fontFamily="@font/poppins_regular"
-                    android:textColor="@color/primary"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp" />
-
-                <com.google.android.material.textfield.TextInputLayout
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/no_of_intermediate_sales"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:inputType="number"
-                        android:maxLength="10"/>
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
-        </ScrollView>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/save_next_btn"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save and Next"
-            android:backgroundTint="@color/secondary"
-            android:paddingVertical="16dp"
-            android:textAllCaps="false"
-            android:fontFamily="@font/montserrat_bold"
-            app:layout_constraintBottom_toBottomOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</FrameLayout>
+            android:fillViewport="true">
+
+
+            <TextView
+                android:id="@+id/property_occupied_by"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mutation_reason_text"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/select_property_occupied_by"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Select"
+                app:endIconMode="dropdown_menu"
+                app:layout_constraintTop_toBottomOf="@id/property_occupied_by"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:paddingStart="10dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/property_cost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Property Cost(As Per Registry in Rs.)*"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/select_property_occupied_by" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/et_property_cost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:layout_constraintTop_toBottomOf="@+id/property_cost">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Enter Property Cost" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/registry_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Registry Date(As Per Registry)/court Order Date/Death Date(in case of death of owner)*"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/et_property_cost" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/et_registry_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:layout_constraintTop_toBottomOf="@+id/registry_date">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Registry Date" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/mutation_cause"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select Mutation Cause*"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_registry_date"
+                android:layout_marginTop="10dp" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/select_mutation_cause"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Select"
+                app:endIconMode="dropdown_menu"
+                app:layout_constraintTop_toBottomOf="@id/mutation_cause"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:paddingStart="10dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/fees"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Fees(in Rs.)"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/select_mutation_cause"
+                android:layout_marginTop="10dp" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ll_fees"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:layout_constraintTop_toBottomOf="@+id/fees">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Enter Fees" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/evidence"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Evidence"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_fees"
+                android:layout_marginTop="10dp" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ll_evidence"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:layout_constraintTop_toBottomOf="@+id/evidence">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Evidence" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/id_proof_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ID Proof Type*(Only One ID Proof needed)"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_evidence"
+                android:layout_marginTop="10dp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/select_id_proof"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Select"
+                app:endIconMode="dropdown_menu"
+                app:layout_constraintTop_toBottomOf="@id/id_proof_type"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <AutoCompleteTextView
+                    android:id="@+id/auto_select_id_proof"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:paddingStart="10dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <!-- ================= Copy of ID Proof ================= -->
+
+            <TextView
+                android:id="@+id/tv_copy_of_id_proof"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add Copy of ID Proof*"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@id/select_id_proof" />
+
+            <LinearLayout
+                android:id="@+id/ll_copy_of_id_proof"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_copy_of_id_proof">
+
+                <include
+                    android:id="@+id/include_id_proof"
+                    layout="@layout/image_upload" />
+            </LinearLayout>
+
+
+            <!-- ================= Copy of Affidavit ================= -->
+
+            <TextView
+                android:id="@+id/tv_copy_of_id_affidavit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Copy Of Affidavit*"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@id/ll_copy_of_id_proof" />
+
+            <LinearLayout
+                android:id="@+id/ll_copy_of_id_affidavit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_copy_of_id_affidavit">
+
+                <include
+                    android:id="@+id/include_affidavit"
+                    layout="@layout/image_upload" />
+            </LinearLayout>
+
+
+            <!-- ================= Occupier Photo ================= -->
+
+            <TextView
+                android:id="@+id/tv_occupier_photo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select Occupier Photo*"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@id/ll_copy_of_id_affidavit" />
+
+            <LinearLayout
+                android:id="@+id/ll_occupier_photo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_occupier_photo">
+
+                <include
+                    android:id="@+id/include_occupier_photo"
+                    layout="@layout/image_upload" />
+            </LinearLayout>
+
+
+            <!-- ================= Registry Section ================= -->
+
+            <TextView
+                android:id="@+id/tv_first_page_registry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="First Page Of Registry (Vendor/Purchase Details)*"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@id/ll_occupier_photo" />
+
+
+            <!-- Front Page -->
+
+            <TextView
+                android:id="@+id/tv_registry_front"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Front Page:"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_first_page_registry" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_registry_front"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_registry_front">
+
+                <include layout="@layout/image_upload" />
+            </LinearLayout>
+
+
+            <!-- Last Page -->
+
+            <TextView
+                android:id="@+id/tv_registry_last"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Last Page:"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/ll_registry_front" />
+
+            <LinearLayout
+                android:id="@+id/ll_registry_last"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_registry_last">
+
+                <include layout="@layout/image_upload" />
+            </LinearLayout>
+
+
+            <!-- Front Page -->
+
+
+            <TextView
+                android:id="@+id/tv_last_page_registry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Last Page Of Registry (Bahi/Jild Sankhya details)*"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@id/ll_registry_last" />
+
+            <TextView
+                android:id="@+id/tv_registry_last_front"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Front Page:"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_last_page_registry" />
+
+            <LinearLayout
+                android:id="@+id/ll_registry_last_front"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_registry_last_front">
+
+                <include layout="@layout/image_upload" />
+            </LinearLayout>
+
+
+            <!-- Last Page -->
+
+            <TextView
+                android:id="@+id/tv_registry_last_last"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Last Page:"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/ll_registry_last_front" />
+
+            <LinearLayout
+                android:id="@+id/ll_registry_last_last"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_registry_last_last">
+
+                <include layout="@layout/image_upload" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_copy_of_court_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Death Certificate/NOC/Copy Of Court Order:"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/ll_registry_last_last" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_copy_of_court_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_copy_of_court_order">
+
+                <include layout="@layout/image_upload" />
+            </LinearLayout>
+
+
+
+            <!-- Fixed Bottom Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mutation_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Save and Next"
+                android:backgroundTint="@color/secondary"
+                android:paddingVertical="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_copy_of_court_order"
+                android:layout_marginTop="20dp"/>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

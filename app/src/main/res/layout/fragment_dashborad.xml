@@ -126,6 +126,15 @@
                 android:layout_columnWeight="1"
                 android:layout_margin="8dp"/>
 
+
+            <include
+                android:id="@+id/mutation_card"
+                layout="@layout/item_mutation"
+                android:layout_width="0dp"
+                android:layout_height="180dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"/>
+
         </GridLayout>
 
     </ScrollView>
