@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.devtools.ksp") version "2.0.0-1.0.24"
     id("kotlin-parcelize")
+    alias(libs.plugins.google.gms.google.services)
 }
 // ecourt project
 android {

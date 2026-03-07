@@ -75,6 +75,17 @@ class MainMenu : AppCompatActivity() {
         viewModel.propertyDetailsRequest= PropertyDetailsRequest(propertyId = pid!!)
         viewModel.propertyDetailsData(preferenceManager.getLoginMobileNumber().toString())
 
+
+//        FirebaseMessaging.getInstance().token  // get token for more reliable update fcm token but jajuri nhi h
+//            .addOnCompleteListener { task ->
+//                if (!task.isSuccessful) {
+//                    Log.d("TAG", "Fetching token failed")
+//                    return@addOnCompleteListener
+//                }
+//                val token = task.result
+//                Log.d("TAG", "Token: $token")
+//            }
+
     }
 
 
