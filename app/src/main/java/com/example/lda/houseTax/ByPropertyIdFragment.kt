@@ -13,6 +13,7 @@ import android.widget.Filter
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.lda.databinding.FragmentByPropertyIdBinding
+import com.example.lda.houseTax.utils.PreferenceManager
 import com.example.lda.houseTax.viewmodel.SharedViewModel
 import com.example.lda.model.UlbItem
 import com.example.lda.utils.dataClass.PropertySearchRequest
@@ -22,6 +23,7 @@ class ByPropertyIdFragment : Fragment() {
     private var _binding: FragmentByPropertyIdBinding? = null
     private val binding get() = _binding!!
     lateinit var viewModel: SharedViewModel
+    private lateinit var preferenceManager: PreferenceManager
 
 
     override fun onCreateView(
@@ -30,6 +32,7 @@ class ByPropertyIdFragment : Fragment() {
     ): View {
         _binding = FragmentByPropertyIdBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+        preferenceManager = PreferenceManager(requireContext())
         return binding.root
     }
 
@@ -66,7 +69,7 @@ class ByPropertyIdFragment : Fragment() {
                 ulbId = ulbId,
                 searchType = "PROPERTY"
             )
-            viewModel.propertySearch()
+            viewModel.propertySearch(preferenceManager.getLoginMobileNumber().toString())
 
         }
 

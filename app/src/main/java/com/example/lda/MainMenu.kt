@@ -1,6 +1,7 @@
 package com.example.lda
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -17,13 +18,16 @@ import com.example.lda.model.OwnerDetails
 import com.example.lda.model.PropertyDetails
 import com.example.lda.utils.LoderHelper
 import com.example.lda.utils.dataClass.PropertyDetailsRequest
+import com.example.lda.utils.permission.NotificationPermissionHandler
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.messaging.FirebaseMessaging
 
 class MainMenu : AppCompatActivity() {
     lateinit var binding: ActivityMainMenuBinding
     lateinit var viewModel:PropertyDetailsViewmodel
     private lateinit var loderHelper: LoderHelper
     lateinit var preferenceManager: PreferenceManager
+    private lateinit var notificationPermissionHandler: NotificationPermissionHandler
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,8 +50,6 @@ class MainMenu : AppCompatActivity() {
 
         observerLoader()
 
-
-
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
 
 
@@ -61,7 +63,7 @@ class MainMenu : AppCompatActivity() {
 
             when (it.itemId) {
                 R.id.home ->setCurrentFragment(dashBoardFragment)
-//                R.id.nav_notifications->setCurrentFragment(notificationFragment)
+                R.id.nav_notifications->setCurrentFragment(notificationFragment)
                 R.id.profile -> setCurrentFragment(profileFragment)
             }
             true
@@ -71,12 +73,31 @@ class MainMenu : AppCompatActivity() {
         val pid=preferenceManager.getPropertyId()
         viewModel.pid.value=pid
         viewModel.propertyDetailsRequest= PropertyDetailsRequest(propertyId = pid!!)
-        viewModel.propertyDetailsData()
+        viewModel.propertyDetailsData(preferenceManager.getLoginMobileNumber().toString())
 
     }
 
 
+    override fun onStart() {
+        super.onStart()
+        notificationPermissionHandler = NotificationPermissionHandler(this)
+        notificationPermissionHandler.checkPermission()
+    }
 
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        notificationPermissionHandler.handlePermissionResult(
+            requestCode,
+            permissions,
+            grantResults
+        )
+    }
 
     private fun observerLoader(){
         viewModel.isLoading.observe(this){

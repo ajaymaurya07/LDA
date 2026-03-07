@@ -1,119 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".eCourtUi.NotificationFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    >
 
-    <com.google.android.material.card.MaterialCardView
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/topAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="1dp"
-        app:cardCornerRadius="14dp"
-        app:cardElevation="4dp"
-        app:strokeWidth="1dp"
-        app:strokeColor="#E0E0E0"
-        app:cardUseCompatPadding="true">
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
-        <LinearLayout
-            android:orientation="vertical"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp">
+            android:layout_height="?attr/actionBarSize"
+            style="@style/Widget.MaterialComponents.Toolbar.Surface"
+            app:contentInsetStartWithNavigation="0dp">
 
-            <!-- TOP ROW : Receipt Number + Status -->
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical">
+            <!-- Back Icon -->
+            <ImageView
+                android:id="@+id/navBack"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/left_icon"
+                android:layout_marginStart="12dp"
+                android:layout_gravity="start|center_vertical"
+                android:padding="4dp"
+                android:visibility="gone"/>
 
-                <TextView
-                    android:id="@+id/tvReceiptNo"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Receipt No: RCPT1023409"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:textColor="#000"/>
-
-                <!-- Status Badge -->
-                <TextView
-                    android:id="@+id/tvStatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="PAID"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:padding="6dp"
-                    android:background="@drawable/status_pending_bg"
-                    android:textColor="#FFFFFF"/>
-            </LinearLayout>
-
-            <!-- Divider -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#EAEAEA"
-                android:layout_marginVertical="10dp"/>
-
-            <!-- Date -->
+            <!-- Title placed manually -->
             <TextView
-                android:id="@+id/tvDate"
+                android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date: 10 Dec 2025, 04:45 PM"
-                android:textSize="14sp"
-                android:textColor="#444"/>
-
-            <!-- Amount -->
-            <TextView
-                android:id="@+id/tvAmount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Amount Paid: ₹ 2188"
-                android:textSize="15sp"
+                android:text="Payment History"
+                android:textColor="@color/black"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                android:layout_marginTop="4dp"
-                android:textColor="#1565C0"/>
+                android:layout_marginStart="20dp"
+                android:layout_gravity="center_vertical" />
 
-            <!-- Property ID -->
-            <TextView
-                android:id="@+id/tvPropertyId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Property ID: 104007700642001"
-                android:textSize="14sp"
-                android:textColor="#555"
-                android:layout_marginTop="4dp"/>
+        </com.google.android.material.appbar.MaterialToolbar>
 
-            <!-- Mode -->
-            <TextView
-                android:id="@+id/tvMode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Payment Mode: UPI"
-                android:textSize="14sp"
-                android:textColor="#555"
-                android:layout_marginTop="2dp"/>
+    </com.google.android.material.appbar.AppBarLayout>
 
-            <!-- DOWNLOAD BUTTON -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnDownloadReceipt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Download Receipt"
-                android:textColor="@android:color/white"
-                android:layout_marginTop="14dp"
-                app:backgroundTint="@color/primary"
-                app:iconTint="@android:color/white"
-                app:cornerRadius="10dp"
-                android:textAllCaps="false"/>
-        </LinearLayout>
 
-    </com.google.android.material.card.MaterialCardView>
-
-</FrameLayout>
-</layout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTransactions"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:clipToPadding="false"
+        android:paddingTop="10dp"
+        android:background="@color/white"/>
+</LinearLayout>

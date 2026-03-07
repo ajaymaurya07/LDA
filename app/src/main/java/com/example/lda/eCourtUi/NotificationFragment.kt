@@ -1,116 +1,141 @@
 package com.example.lda.eCourtUi
 
 import android.content.Intent
-import android.graphics.Paint
-import android.graphics.pdf.PdfDocument
 import android.os.Bundle
-import android.os.Environment
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.lda.adaptor.CaseAdaptor
 import com.example.lda.databinding.FragmentNotificationBinding
-import com.example.lda.utils.dataClass.CaseItem
-import java.io.File
-import java.io.FileOutputStream
-
+import com.example.lda.houseTax.data.TransactionAdapter
+import com.example.lda.houseTax.transationHistory.DetailTransactionHistoryActivity
+import com.example.lda.utils.dataClass.TransactionItem
 class NotificationFragment : Fragment() {
 
-    lateinit var binding: FragmentNotificationBinding
+    private lateinit var binding: FragmentNotificationBinding
+    private lateinit var adapter: TransactionAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentNotificationBinding.inflate(inflater, container, false)
-
-        // Download Receipt click
-        binding.btnDownloadReceipt.setOnClickListener {
-            generateReceiptPdf()
-        }
-
         return binding.root
     }
 
-
-    private fun generateReceiptPdf() {
-
-        val pdfDocument = PdfDocument()
-        val pageInfo = PdfDocument.PageInfo.Builder(595, 842, 1).create()
-        val page = pdfDocument.startPage(pageInfo)
-        val canvas = page.canvas
-
-        val titlePaint = Paint().apply {
-            textSize = 18f
-            isFakeBoldText = true
-        }
-
-        val textPaint = Paint().apply {
-            textSize = 14f
-        }
-
-        var y = 60
-
-        // ===== TITLE =====
-        canvas.drawText("PAYMENT RECEIPT", 200f, y.toFloat(), titlePaint)
-        y += 40
-
-        // ===== DUMMY DETAILS =====
-        canvas.drawText("Receipt No: RCPT1023409", 40f, y.toFloat(), textPaint)
-        y += 30
-
-        canvas.drawText("Date: 10 Dec 2025, 04:45 PM", 40f, y.toFloat(), textPaint)
-        y += 30
-
-        canvas.drawText("Property ID: 104007700642001", 40f, y.toFloat(), textPaint)
-        y += 30
-
-        canvas.drawText("Payment Mode: UPI", 40f, y.toFloat(), textPaint)
-        y += 30
-
-        canvas.drawText("Amount Paid: ₹ 2188", 40f, y.toFloat(), textPaint)
-        y += 30
-
-        canvas.drawText("Status: PAID", 40f, y.toFloat(), textPaint)
-
-        pdfDocument.finishPage(page)
-
-        // ===== SAVE TO DOWNLOADS =====
-        val fileName = "Payment_Receipt_${System.currentTimeMillis()}.pdf"
-        val downloadsDir =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        val file = File(downloadsDir, fileName)
-
-        try {
-            pdfDocument.writeTo(FileOutputStream(file))
-            Toast.makeText(requireContext(), "Receipt downloaded", Toast.LENGTH_SHORT).show()
-            openPdf(file)
-        } catch (e: Exception) {
-            Toast.makeText(requireContext(), "Error: ${e.message}", Toast.LENGTH_LONG).show()
-        } finally {
-            pdfDocument.close()
-        }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
     }
 
-    // ================================
-    // OPEN PDF
-    // ================================
-    private fun openPdf(file: File) {
-        val uri = FileProvider.getUriForFile(
-            requireContext(),
-            "${requireContext().packageName}.provider",
-            file
+    private fun setupRecyclerView() {
+
+        val list = listOf(
+
+            TransactionItem(
+                title = "Tax Payment",
+                amount = "₹300.00",
+                status = "SUCCESS",
+                billNo = "E9972526746394",
+                propertyId = "0999705005000018M",
+                txnId = "TXN202601241835299017",
+                date = "24 Jan 2026, 6:35 PM",
+                financialYear = "2024-2025",
+                bankRefNo = "921970026078975000",
+                paymentMode = "UPI"
+            ),
+
+            TransactionItem(
+                title = "Tax Payment",
+                amount = "₹450.00",
+                status = "FAILED",
+                billNo = "E1234567890",
+                propertyId = "12345000000001M",
+                txnId = "TXN202601251200111222",
+                date = "25 Jan 2026, 12:00 PM",
+                financialYear = "2024-2025",
+                bankRefNo = "921970026078975000",
+                paymentMode = "Debit Card"
+            ),
+
+            TransactionItem(
+                title = "Tax Payment",
+                amount = "₹1,200.00",
+                status = "PENDING",
+                billNo = "E7788990011",
+                propertyId = "567890123400001M",
+                txnId = "TXN202601260910334455",
+                date = "26 Jan 2026, 9:10 AM",
+                financialYear = "2024-2025",
+                bankRefNo = "921970026078975000",
+                paymentMode = "Debit Card"
+            ),
+
+            TransactionItem(
+                title = "Tax Payment",
+                amount = "₹980.00",
+                status = "SUCCESS",
+                billNo = "E4455667788",
+                propertyId = "223344556677889M",
+                txnId = "TXN202601261430556677",
+                date = "26 Jan 2026, 2:30 PM",
+                financialYear = "2024-2025",
+                bankRefNo = "921970026078975000",
+                paymentMode = "Debit Card"
+            ),
+
+            TransactionItem(
+                title = "Tax Payment",
+                amount = "₹210.00",
+                status = "FAILED",
+                billNo = "E1112223334",
+                propertyId = "111222333444555M",
+                txnId = "TXN202601270845112233",
+                date = "27 Jan 2026, 8:45 AM",
+                financialYear = "2024-2025",
+                bankRefNo = "921970026078975000",
+                paymentMode = "Debit Card"
+
+            ),
+
+            TransactionItem(
+                title = "Tax Payment",
+                amount = "₹2,500.00",
+                status = "SUCCESS",
+                billNo = "E9998887776",
+                propertyId = "998877665544332M",
+                txnId = "TXN202601271200998877",
+                date = "27 Jan 2026, 12:00 PM",
+                financialYear = "2024-2025",
+                bankRefNo = "921970026078975000",
+                paymentMode = "Debit Card"
+            ),
+
+            TransactionItem(
+                title = "Tax Payment",
+                amount = "₹150.00",
+                status = "PENDING",
+                billNo = "E5566778899",
+                propertyId = "445566778899001M",
+                txnId = "TXN202601280930665544",
+                date = "28 Jan 2026, 9:30 AM",
+                financialYear = "2024-2025",
+                bankRefNo = "921970026078975000",
+                paymentMode = "Debit Card"
+            ),
+
+
         )
 
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            setDataAndType(uri, "application/pdf")
-            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+        adapter = TransactionAdapter(list){
+            val intent= Intent(requireContext(),DetailTransactionHistoryActivity::class.java)
+            intent.putExtra("data",it)
+            startActivity(intent)
         }
 
-        startActivity(Intent.createChooser(intent, "Open Receipt"))
+        binding.rvTransactions.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvTransactions.adapter = adapter
     }
 }

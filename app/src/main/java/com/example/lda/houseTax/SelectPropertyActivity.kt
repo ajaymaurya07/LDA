@@ -63,7 +63,7 @@ class SelectPropertyActivity : AppCompatActivity() {
             selected.propertyId?.let {
                 preferenceManager.savePropertyId(it)
                 propertyDetailsViewmodel.propertyDetailsRequest= PropertyDetailsRequest(propertyId = it)
-                propertyDetailsViewmodel.propertyDetailsData()
+                propertyDetailsViewmodel.propertyDetailsData(preferenceManager.getLoginMobileNumber().toString())
             }
         }
 

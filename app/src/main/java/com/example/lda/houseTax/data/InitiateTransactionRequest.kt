@@ -59,3 +59,9 @@ data class SignInRequest(
     val password: String
 )
 
+data class PaymentAlert(
+    val title: String,
+    val message: String,
+    val color: Int
+)
+

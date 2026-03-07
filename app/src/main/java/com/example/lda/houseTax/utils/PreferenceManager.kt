@@ -15,6 +15,7 @@ class PreferenceManager(context: Context) {
         private const val ARV_VALUE = "arv_value"
         private const val USER_ID = "user_id"
         private const val IS_LOGIN = "is_login"
+        private const val LOGIN_MOBILE_NUMBER = "login_mobile_number"
     }
 
     private val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
@@ -99,6 +100,17 @@ class PreferenceManager(context: Context) {
 
     fun isLogin(): Boolean {
         return prefs.getBoolean(IS_LOGIN, false)
+    }
+
+
+    fun saveLoginMobileNumber(loginMobileNumber: String) {
+        prefs.edit()
+            .putString(LOGIN_MOBILE_NUMBER, loginMobileNumber)
+            .apply()
+    }
+
+    fun getLoginMobileNumber(): String? {
+        return prefs.getString(LOGIN_MOBILE_NUMBER, null)
     }
 
 

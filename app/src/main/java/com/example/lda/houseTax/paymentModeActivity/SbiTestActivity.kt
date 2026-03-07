@@ -45,7 +45,7 @@ class SbiTestActivity : AppCompatActivity() {
                 val url = request.url.toString()
                 Log.d("SBI_WEBVIEW", "Intercept URL = $url")
 
-                // 🔔 SBI return / response URL detect
+                // SBI return / response URL detect
                 if (
                     url.contains("/api/sbi/return") ||      // aapka backend return url
                     url.contains("PaymentResponse") ||      // SBI hosted response
@@ -67,11 +67,9 @@ class SbiTestActivity : AppCompatActivity() {
 
     private fun loadSbiPayment() {
 
-        val postUrl =
-            "https://merchant.sbiuat.bank.in/merchant/merchantprelogin.htm"
+        val postUrl = "https://merchant.sbiuat.bank.in/merchant/merchantprelogin.htm"
 
-        val postData =
-            "encdata=YiFYlLjMqUlu0Se+AB3tmIosZvsKsqUnQCHjSder0e1T3+5DMe76tvdAZJWtc7VIyUPcpq" +
+        val postData = "encdata=YiFYlLjMqUlu0Se+AB3tmIosZvsKsqUnQCHjSder0e1T3+5DMe76tvdAZJWtc7VIyUPcpq" +
                     "ODD1p6/sHHKSAR6q0RX1k8syl9MCyfoxotm+ItGIgidfboWftiqnGtsS9ijGyTzqscsBKBsLPbQIKdsT" +
                     "P90oGPkrHMm2viBBiuRNZnf4vohSXmKu3H3ag9mzPLUh0nEDdOPf/m8ls8aDkP78BYF8iNNLEW" +
                     "CT91FcszOhRIvj0vnrlFIYFfJVV3YKgv636+MXYZNKbQTnvxLp8AaFYDFTH8ZG0V6m//II19D32CkE" +
@@ -87,10 +85,10 @@ class SbiTestActivity : AppCompatActivity() {
     }
 
     private fun handlePaymentFinished() {
-        // 🔴 WebView band karo
+        // WebView band karo
         webView.stopLoading()
 
-        // 🔴 Yahin backend ko double verification call karna hai
+        // Yahin backend ko double verification call karna hai
         // callBackendVerifyApi()
 
         // Abhi test ke liye bas close

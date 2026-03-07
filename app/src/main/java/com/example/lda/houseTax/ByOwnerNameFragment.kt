@@ -16,7 +16,7 @@ import com.example.lda.houseTax.viewmodel.SharedViewModel
 import com.example.lda.model.UlbItem
 import com.example.lda.utils.dataClass.PropertySearchRequest
 import android.widget.Filter
-
+import com.example.lda.houseTax.utils.PreferenceManager
 
 
 class ByOwnerNameFragment : Fragment() {
@@ -24,6 +24,7 @@ class ByOwnerNameFragment : Fragment() {
     private var _binding: FragmentByOwnerNameBinding? = null
     private val binding get() = _binding!!
     lateinit var viewModel: SharedViewModel
+    private lateinit var preferenceManager: PreferenceManager
 
 
 
@@ -33,6 +34,7 @@ class ByOwnerNameFragment : Fragment() {
     ): View {
         _binding = FragmentByOwnerNameBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+        preferenceManager = PreferenceManager(requireContext())
         return binding.root
     }
 
@@ -48,10 +50,10 @@ class ByOwnerNameFragment : Fragment() {
             val ownerName = binding.etOwnerName.text.toString().trim()
             val fatherName = binding.etFatherName.text.toString().trim()
 
-            if (ulbId.isEmpty() || (ownerName.isEmpty() && fatherName.isEmpty())) {
+            if (ulbId.isEmpty() || (ownerName.length<3 && fatherName.length<3)) {
                 Toast.makeText(
                     requireContext(),
-                    "Please select a ULB and enter the owner's name or father's name.",
+                    "Please select a ULB and enter at least 3 characters in Owner or Father Name.",
                     Toast.LENGTH_LONG
                 ).show()
                 return@setOnClickListener
@@ -72,7 +74,7 @@ class ByOwnerNameFragment : Fragment() {
             )
 
             Log.d("TAG", "ulb: $ulbId")
-            viewModel.propertySearch()
+            viewModel.propertySearch(preferenceManager.getLoginMobileNumber().toString())
 
         }
 

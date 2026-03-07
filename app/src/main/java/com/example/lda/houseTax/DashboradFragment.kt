@@ -1,9 +1,11 @@
 package com.example.lda.houseTax
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,10 +16,16 @@ import com.example.lda.R
 import com.example.lda.databinding.FragmentDashboradBinding
 import com.example.lda.houseTax.data.SliderAdapter
 import com.example.lda.houseTax.data.SliderItem
-import com.example.lda.houseTax.paymentDetails.ArvHistoryActivity
+import com.example.lda.houseTax.data.database.AppDatabase
+import com.example.lda.houseTax.data.database.entity.BillEntity
+import com.example.lda.houseTax.utils.AlertDate
 import com.example.lda.houseTax.viewmodel.PropertyDetailsViewmodel
 import com.example.lda.serviceactivity.MutationService
 import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlin.math.log
 
 class DashboradFragment : Fragment() {
 
@@ -90,18 +98,35 @@ class DashboradFragment : Fragment() {
 
     private fun setupSlider() {
 
-        val sliderList = listOf(
-            SliderItem(
-                R.drawable.ic_alert,
-                "Last Date Reminder",
-                "The last date to pay House Tax is 31 March 2025."
-            ),
-            SliderItem(
-                R.drawable.ic_alert,
-                "Fast Online Payment",
-                "Make instant payments using UPI or Debit Card."
-            )
-        )
+        val billDate = viewModel.dataList.value?.data?.billDetails?.billDate // bill date "dd-mm-yyyy"
+        val paymentDate= viewModel.dataList.value?.data?.currReceiptDetails?.getOrNull(0)?.paymentDate  // current receipt details payment date "-" or "dd-mm-yyyy"
+        val financialYear= viewModel.dataList.value?.data?.billDetails?.finYear // current financial year
+
+        Log.d("TAG", "setupSlider: $billDate")
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val dao = AppDatabase.getDatabase(requireContext()).billDao()
+            val count = dao.getCount()
+            if (count == 0 && !billDate.isNullOrBlank() && !paymentDate.isNullOrBlank() && !financialYear.isNullOrBlank()) {
+                dao.insertBill(
+                    BillEntity(
+                        financialYear = financialYear,
+                        billDate = billDate,
+                        paymentDate = paymentDate
+                    )
+                )
+            }
+        }
+
+        val sliderList = mutableListOf<SliderItem>()
+        if (paymentDate=="-") {
+            val alertData = AlertDate.getPaymentMessage(billDate)
+            if (alertData != null) {
+                sliderList.add(SliderItem(R.drawable.ic_alert, alertData.title, alertData.message, alertData.color))
+            }
+        }
+        sliderList.add(SliderItem(R.drawable.ic_alert, "Fast Online Payment", "Make instant payments using UPI or Debit Card.", Color.parseColor("#3F51B5")))
+
 
         binding.sliderViewPager.adapter = SliderAdapter(sliderList)
 
@@ -110,18 +135,14 @@ class DashboradFragment : Fragment() {
         sliderRunnable = object : Runnable {
             override fun run() {
                 if (_binding == null) return
-
-                val next =
-                    (binding.sliderViewPager.currentItem + 1) % sliderList.size
+                val next = (binding.sliderViewPager.currentItem + 1) % sliderList.size
                 binding.sliderViewPager.setCurrentItem(next, true)
 
                 sliderHandler.postDelayed(this, 10000)
             }
         }
-
         sliderHandler.postDelayed(sliderRunnable, 3000)
     }
-
 
 
     override fun onDestroyView() {

@@ -46,7 +46,7 @@ class PropertySearchActivity : AppCompatActivity() {
         setupCardClicks()
 
 
-        viewModel.ulbData()
+        viewModel.ulbData(preferanceManager.getLoginMobileNumber().toString())
         observerErrorMessage()
         observerLoader()
         observePropertyResult()

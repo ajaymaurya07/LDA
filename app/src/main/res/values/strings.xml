@@ -72,6 +72,9 @@
     <string name="date_time"><![CDATA[Date & Time]]></string>
     <string name="go_to_dashboard">Go To Dashboard</string>
     <string name="required_number">Enter the mobile number currently active on this device. OTP verification will be completed on this number, and it cannot be changed once submitted.</string>
+    <string name="share_receipt">Share Receipt</string>
+    <string name="download_receipt">Download Receipt</string>
+    <string name="financial_year">Financial year</string>
 
 
 </resources>

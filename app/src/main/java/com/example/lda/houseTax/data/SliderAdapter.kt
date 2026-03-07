@@ -30,5 +30,6 @@ class SliderAdapter(private val list: List<SliderItem>) :
         holder.icon.setImageResource(item.icon)
         holder.title.text = item.title
         holder.subtitle.text = item.subtitle
+        holder.title.setTextColor(item.colorCode)
     }
 }

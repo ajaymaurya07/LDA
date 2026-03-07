@@ -41,7 +41,8 @@ class SignInActivity : AppCompatActivity() {
             if (userId.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Phone Number Or Email ID and Password Required", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
-            }else{
+            }
+            else{
                 val request= SignInRequest(
                     username = userId,
                     password = password
@@ -75,6 +76,7 @@ class SignInActivity : AppCompatActivity() {
         viewModel.signIn.observe(this){
             if (it.status==true){
                 preferenceManager.login(true)
+                preferenceManager.saveLoginMobileNumber(binding.etPhoneOrEmailId.text.toString().trim())
                 Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
                 val intent = Intent(this, PropertySearchActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

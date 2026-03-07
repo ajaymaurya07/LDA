@@ -73,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
                 mobileNo = phoneNumber,
                 propertyId = propertyId
             )
-            viewmodel.sendOtp(request)
+            viewmodel.sendOtp(request,sharedPreferences.getLoginMobileNumber().toString())
         }
         observeViewModel()
     }
@@ -143,7 +143,7 @@ class LoginActivity : AppCompatActivity() {
                 mobileNo = phoneNumber,
                 otp = otp
             )
-            viewmodel.otpVerification(request)
+            viewmodel.otpVerification(request,sharedPreferences.getLoginMobileNumber().toString())
         }
 
         dialog.setOnShowListener {

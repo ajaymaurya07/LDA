@@ -145,7 +145,13 @@ class PaymentViewModel:ViewModel() {
     private val _sendOtp = MutableLiveData<SendOtpResponse>()
     val sendOtp: LiveData<SendOtpResponse> = _sendOtp
 
-    fun sendOtp(request: SendOtpRequest) {
+    fun sendOtp(request: SendOtpRequest,loginMobileNumber:String) {
+
+        if (loginMobileNumber==Constent.TEST_MOBILE_NUMBER){
+            _sendOtp.value=dummyResponse()
+            return
+        }
+
         incrementLoader()
 
         val call = RetrofitClient.apiCall.sendOtp(
@@ -173,18 +179,28 @@ class PaymentViewModel:ViewModel() {
     }
 
 
-
+    private fun dummyResponse():SendOtpResponse{
+        return SendOtpResponse(
+            data = null,
+            message = "Otp send Successfully",
+            success = true,
+            userId = 123456,
+            responseCode = 1
+        )
+    }
 
 
     private val _otpVerification = MutableLiveData<OtpVerificationResponse>()
     val otpVerification: LiveData<OtpVerificationResponse> = _otpVerification
 
-    fun otpVerification(request: VerifyOtpRequest) {
+    fun otpVerification(request: VerifyOtpRequest,loginMobileNumber: String) {
+
+        if (loginMobileNumber==Constent.TEST_MOBILE_NUMBER){
+            _otpVerification.value=dummyOtpVerificationResponse()
+            return
+        }
+
         incrementLoader()
-
-
-        Log.d("TAG", "request: ${request}")
-
         val call = RetrofitClient.apiCall.otpVerification(
             appVersion = Constent.APP_VERSION,
             request = request
@@ -194,7 +210,6 @@ class PaymentViewModel:ViewModel() {
                 call: Call<OtpVerificationResponse>,
                 response: Response<OtpVerificationResponse>
             ) {
-                Log.d("TAG", "onResponse: ${response.body()}")
                 decrementLoader()
                 _otpVerification.value= response.body()
 
@@ -202,7 +217,6 @@ class PaymentViewModel:ViewModel() {
             override fun onFailure(
                 call: Call<OtpVerificationResponse>, t: Throwable) {
                 decrementLoader()
-                Log.d("TAG", "onResponse: ${t}")
                 _otpVerification.value= OtpVerificationResponse(
                     data = null,
                     message = "error",
@@ -210,6 +224,17 @@ class PaymentViewModel:ViewModel() {
                 )
             }
         })
+    }
+
+
+    private fun dummyOtpVerificationResponse():OtpVerificationResponse{
+        return OtpVerificationResponse(
+            data = null,
+            message = "Otp send Successfully",
+            success = true,
+            responseCode = 1,
+            userId = 123456
+        )
     }
 
 
@@ -286,6 +311,17 @@ class PaymentViewModel:ViewModel() {
     val signIn: LiveData<SignInResponse> = _signIn
 
     fun signIn(request: SignInRequest) {
+
+        if (request.username== Constent.TEST_MOBILE_NUMBER && request.password== Constent.TEST_PASSWORD){
+            _signIn.value= SignInResponse(
+                data = null,
+                message = "Login Successful",
+                status = true,
+                responseCode = 1
+            )
+            return
+        }
+
         incrementLoader()
 
         val call = RetrofitClient.apiCall.signIn(
@@ -312,7 +348,5 @@ class PaymentViewModel:ViewModel() {
             }
         })
     }
-
-
 
 }

@@ -102,7 +102,14 @@ class SharedViewModel : ViewModel() {
     }
 
 
-    fun ulbData() {
+    fun ulbData( loginMobileNumber: String ) {
+
+        if (loginMobileNumber == Constent.TEST_MOBILE_NUMBER) {
+            _ulbList.value = getDummyUlbData()
+            _errorMessage.value = null
+            return
+        }
+
         incrementLoader()
         val call = RetrofitClient.apiCall.ulbData(Constent.APP_VERSION)
         call.enqueue(object : Callback<UlbDataResponse> {
@@ -127,6 +134,26 @@ class SharedViewModel : ViewModel() {
             }
 
         })
+    }
+
+    private fun getDummyUlbData(): List<UlbItem> {
+        return listOf(
+            UlbItem(
+                districtId = "1",
+                ulbType = "Nagar Nigam",
+                districtName = "Lucknow",
+                ulbId = "101",
+                ulbName = "Lucknow Nagar Nigam"
+            ),
+            UlbItem(
+                districtId = "2",
+                ulbType = "Nagar Palika",
+                districtName = "Kanpur",
+                ulbId = "102",
+                ulbName = "Kanpur Nagar Palika"
+            )
+
+        )
     }
 
 
@@ -296,7 +323,13 @@ class SharedViewModel : ViewModel() {
 
 
     // property search
-    fun propertySearch(){
+    fun propertySearch(loginMobileNumber: String){
+
+        if (loginMobileNumber == Constent.TEST_MOBILE_NUMBER) {
+            _propertyList.value = getDummyPropertyData()
+            return
+        }
+
         incrementLoader()
         val call = RetrofitClient.apiCall.propertySearch(
             authorization = Constent.APP_VERSION,
@@ -326,6 +359,42 @@ class SharedViewModel : ViewModel() {
             }
 
         })
+    }
+
+
+    private fun getDummyPropertyData(): List<PropertyItem> {
+        return listOf(
+
+            PropertyItem(
+                oldPropertyId = "OLD-1001",
+                address = "Alambagh, Lucknow",
+                ownerName = "Ramesh Kumar",
+                totalArv = 12500.50,
+                propertyType = "Residential",
+                fatherHusbandName = "Suresh Kumar",
+                finYear = "2024-25",
+                houseNo = "H-12",
+                chukNo = "C-45",
+                propertyId = "PROP-1001",
+                billNo = "BILL-9001",
+                totalArea = "1200 Sq.ft"
+            ),
+
+            PropertyItem(
+                oldPropertyId = "OLD-1002",
+                address = "Swaroop Nagar, Kanpur",
+                ownerName = "Amit Sharma",
+                totalArv = 18500.00,
+                propertyType = "Commercial",
+                fatherHusbandName = "Mahesh Sharma",
+                finYear = "2024-25",
+                houseNo = "H-45",
+                chukNo = "C-12",
+                propertyId = "PROP-1002",
+                billNo = "BILL-9002",
+                totalArea = "2200 Sq.ft"
+            )
+        )
     }
 
 }

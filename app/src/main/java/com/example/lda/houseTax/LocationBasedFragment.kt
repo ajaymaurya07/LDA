@@ -13,6 +13,7 @@ import android.widget.Filter
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.lda.databinding.FragmentLocationBasedBinding
+import com.example.lda.houseTax.utils.PreferenceManager
 import com.example.lda.houseTax.viewmodel.SharedViewModel
 import com.example.lda.model.MohallaItem
 import com.example.lda.model.UlbItem
@@ -26,6 +27,7 @@ class LocationBasedFragment : Fragment() {
     private var _binding: FragmentLocationBasedBinding? = null
     private val binding get() = _binding!!
     lateinit var viewModel: SharedViewModel
+    private lateinit var preferenceManager: PreferenceManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +35,7 @@ class LocationBasedFragment : Fragment() {
     ): View {
         _binding = FragmentLocationBasedBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+        preferenceManager = PreferenceManager(requireContext())
         return binding.root
     }
 
@@ -77,7 +80,7 @@ class LocationBasedFragment : Fragment() {
                 ulbId = ulbId,
                 searchType = "LOCATION"
             )
-            viewModel.propertySearch()
+            viewModel.propertySearch(preferenceManager.getLoginMobileNumber().toString())
 
         }
     }

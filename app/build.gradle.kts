@@ -4,14 +4,14 @@ plugins {
     id("com.google.devtools.ksp") version "2.0.0-1.0.24"
     id("kotlin-parcelize")
 }
-// ecout project
+// ecourt project
 android {
     namespace = "com.example.lda"
     compileSdk = 35
 
     defaultConfig {
         applicationId = "com.vdsai.house_tax_final"
-        minSdk = 24
+        minSdk = 26   // upgrade 24 to 26 for ChronoUnit time calculate
         targetSdk = 35
         versionCode = 3
         versionName = "2.0.1"
@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.play.services.maps)
     implementation(libs.play.services.auth)
+    implementation(libs.androidx.work.runtime.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -82,6 +83,11 @@ dependencies {
 
     // payu for payment integration
     implementation ("in.payu:payu-checkout-pro:3.0.3")
+
+
+    // firebase push notification
+    implementation (platform(libs.firebase.bom))
+    implementation (libs.firebase.messaging)
 
 
 }
