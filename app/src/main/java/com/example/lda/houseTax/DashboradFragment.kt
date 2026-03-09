@@ -21,11 +21,9 @@ import com.example.lda.houseTax.data.database.entity.BillEntity
 import com.example.lda.houseTax.utils.AlertDate
 import com.example.lda.houseTax.viewmodel.PropertyDetailsViewmodel
 import com.example.lda.serviceactivity.MutationService
-import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlin.math.log
 
 class DashboradFragment : Fragment() {
 
@@ -62,16 +60,8 @@ class DashboradFragment : Fragment() {
 
     private fun setupClicks() {
         binding.propertyTaxCard.cardRoot.setOnClickListener {
-            val response = viewModel.dataList.value
-            if (response?.success == true) {
-                val json = Gson().toJson(response.data)
-                val intent = Intent(requireActivity(), PropertyDetailsActivity::class.java)
-                intent.putExtra("property_data_json", json)
-                intent.putExtra("pid",viewModel.pid.value)
-                startActivity(intent)
-            } else {
-                Toast.makeText(requireContext(), response?.message ?: "Data not available", Toast.LENGTH_SHORT).show()
-            }
+            val intent = Intent(requireActivity(), PropertyDetailsActivity::class.java)
+            startActivity(intent)
         }
 
 
@@ -83,8 +73,8 @@ class DashboradFragment : Fragment() {
 //            startActivity(Intent(requireActivity(), TrackGrivanceActivity::class.java))
         }
 
-        binding.paymentHistoryCard.cardPaymentHistory.setOnClickListener {
-//            startActivity(Intent(requireActivity(), PaymentHistoryActivity::class.java))
+        binding.propertySearch.cardPropertySearch.setOnClickListener {
+            startActivity(Intent(requireActivity(), PropertySearchActivity::class.java))
         }
 
         binding.arvHistoryCard.cardArvHistory.setOnClickListener {

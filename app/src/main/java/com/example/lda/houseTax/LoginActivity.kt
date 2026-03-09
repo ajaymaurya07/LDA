@@ -11,23 +11,30 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.lda.MainMenu
 import com.example.lda.R
 import com.example.lda.databinding.ActivityLogin2Binding
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
 import com.example.lda.houseTax.data.SendOtpRequest
 import com.example.lda.houseTax.data.VerifyOtpRequest
+import com.example.lda.houseTax.data.database.AppDatabase
+import com.example.lda.houseTax.data.database.entity.PropertyEntity
 import com.example.lda.houseTax.utils.PreferenceManager
 import com.example.lda.houseTax.viewmodel.PaymentViewModel
 import com.example.lda.utils.LoderHelper
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLogin2Binding
     lateinit var viewmodel :PaymentViewModel
     private lateinit var loderHelper: LoderHelper
     private lateinit var phoneNumber:String
+    private lateinit var ownerName:String
+    private lateinit var ward:String
+    private lateinit var mohalla:String
     private lateinit var dialog: BottomSheetDialog
     lateinit var sharedPreferences: PreferenceManager
 
@@ -56,6 +63,9 @@ class LoginActivity : AppCompatActivity() {
 
 
         phoneNumber = intent.getStringExtra("phone_no").toString()
+        ownerName = intent.getStringExtra("owner_name").toString()
+        ward = intent.getStringExtra("ward").toString()
+        mohalla = intent.getStringExtra("mohalla").toString()
         binding.etMobile.setText(maskMobileNumber(phoneNumber))
 
         binding.btnSendOtp.setOnClickListener {
@@ -109,6 +119,23 @@ class LoginActivity : AppCompatActivity() {
         }
         viewmodel.otpVerification.observe(this){
             if (it.success==true){
+
+                val db = AppDatabase.getDatabase(this)
+                val propertyDao = db.propertyDao()
+                lifecycleScope.launch {
+                    sharedPreferences.getPropertyId()?.let { pid ->
+                        propertyDao.insertProperty(
+                            PropertyEntity(
+                                propertyId = pid,
+                                ownerName = ownerName,
+                                ward = ward,
+                                mohalla = mohalla,
+                                phoneNumber = phoneNumber
+                            )
+                        )
+                    }
+                }
+
                 Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
                 dialog.dismiss()
                 sharedPreferences.saveUserId(it.userId.toString())

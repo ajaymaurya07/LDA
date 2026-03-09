@@ -119,7 +119,7 @@
 
             <!-- CARD 4 -->
             <include
-                android:id="@+id/payment_history_card"
+                android:id="@+id/property_search"
                 layout="@layout/item_payment_history"
                 android:layout_width="0dp"
                 android:layout_height="180dp"

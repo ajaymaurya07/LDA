@@ -45,6 +45,8 @@ class PropertyDetailsViewmodel:ViewModel() {
 
     fun propertyDetailsData(loginMobileNumber: String) {
 
+        Log.d("TAG", "propertyDetailsData: called")
+
         if (loginMobileNumber == Constent.TEST_MOBILE_NUMBER) {
             _dataList.value = getFullDummyPropertyDetails()
             return

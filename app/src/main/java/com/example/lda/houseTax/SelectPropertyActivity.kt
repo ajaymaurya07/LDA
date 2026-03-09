@@ -88,6 +88,10 @@ class SelectPropertyActivity : AppCompatActivity() {
             if (response.success == true && !mobileNo.isNullOrBlank()) {
                 val intent = Intent(this, LoginActivity::class.java)
                 intent.putExtra("phone_no", mobileNo)
+                intent.putExtra("owner_name", response.data.ownerDetails.ownerName)
+                intent.putExtra("ward", response.data.propertyDetails?.wardName)
+                intent.putExtra("mohalla", response.data.propertyDetails?.mohallaName)
+
                 startActivity(intent)
             }
             else if (response.success == true && mobileNo.isNullOrBlank()) {
