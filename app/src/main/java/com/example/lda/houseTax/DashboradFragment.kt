@@ -71,7 +71,7 @@ class DashboradFragment : Fragment() {
         }
 
         binding.trackGrivanceCard.cardPropertyGrivance.setOnClickListener {
-//            startActivity(Intent(requireActivity(), TrackGrivanceActivity::class.java))
+            startActivity(Intent(requireActivity(), TrackGrivanceActivity::class.java))
         }
 
         binding.propertySearch.cardPropertySearch.setOnClickListener {

@@ -1,226 +1,500 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    >
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="16dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="10dp"
+        android:paddingBottom="20dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Property Details"
+                android:textSize="16sp"
+                android:fontFamily="@font/montserrat_bold"/>
+
+            <!-- House Number -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="House Number">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etHouseNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:fontFamily="@font/poppins_regular"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Colony/Area -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Colony / Area"
+                android:layout_marginTop="10dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etColony"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:fontFamily="@font/poppins_regular"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Ward Number -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ward Number"
+                android:layout_marginTop="10dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etWardNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:fontFamily="@font/poppins_regular"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Connection Type Dropdown -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Connection Type"
+                android:layout_marginTop="10dp">
+                <AutoCompleteTextView
+                    android:id="@+id/spinnerConnectionType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:fontFamily="@font/poppins_regular"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Requirement Type Dropdown -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Requirement Type"
+                android:layout_marginTop="10dp">
+                <AutoCompleteTextView
+                    android:id="@+id/spinnerRequirement"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:fontFamily="@font/poppins_regular"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Category Dropdown -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Category"
+                android:layout_marginTop="10dp">
+                <AutoCompleteTextView
+                    android:id="@+id/spinnerCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:fontFamily="@font/poppins_regular"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Pipe Size Dropdown -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Pipe Size"
+                android:layout_marginTop="10dp">
+                <AutoCompleteTextView
+                    android:id="@+id/spinnerPipeSize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:fontFamily="@font/poppins_regular"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <!-- Document Upload Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Required Documents"
+            android:textSize="16sp"
+            android:fontFamily="@font/montserrat_bold"
+            android:layout_marginBottom="10dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Connection Details"
-                android:textSize="16sp"
-                android:fontFamily="@font/montserrat_bold"
-                android:layout_marginBottom="10dp"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            <!-- ID Proof Card -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:hint="Connection Type">
-                <AutoCompleteTextView
-                    android:id="@+id/spinnerConnectionType"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:hint="Connection Requirement">
-                <AutoCompleteTextView
-                    android:id="@+id/spinnerRequirement"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:hint="Property ID">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPropertyId"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:hint="Plot Area (in sq. meter)">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPlotArea"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:hint="Connection Category">
-                <AutoCompleteTextView
-                    android:id="@+id/spinnerCategory"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
                 android:layout_marginBottom="16dp"
-                android:hint="Pipe Size">
-                <AutoCompleteTextView
-                    android:id="@+id/spinnerPipeSize"
+                app:strokeColor="#E0E0E0"
+                app:strokeWidth="1dp">
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:orientation="vertical"
+                    android:padding="16dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:src="@drawable/ic_upload"
+                            android:padding="10dp"
+                            android:background="#F0F2FF" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginStart="12dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="ID Proof"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/poppins_medium" />
+                            <TextView
+                                android:id="@+id/tvIdProofStatus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Voter ID or National ID"
+                                android:textSize="12sp"
+                                android:textColor="#7A7A7A" />
+                        </LinearLayout>
+                    </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Upload Documents"
-                android:textSize="16sp"
-                android:fontFamily="@font/montserrat_bold"
-                android:layout_marginBottom="5dp"/>
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Select ID Type"
+                        android:layout_marginBottom="10dp"
+                        app:boxCornerRadiusBottomEnd="10dp"
+                        app:boxCornerRadiusBottomStart="10dp"
+                        app:boxCornerRadiusTopEnd="10dp"
+                        app:boxCornerRadiusTopStart="10dp">
+                        <AutoCompleteTextView
+                            android:id="@+id/spinnerIdProofType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:paddingTop="6dp"
+                            android:paddingBottom="6dp"
+                            android:fontFamily="@font/poppins_regular"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- ID Proof -->
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnIdCamera"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="Camera"
+                            app:icon="@drawable/ic_upload"
+                            app:iconSize="20dp"
+                            app:iconGravity="textEnd"
+                            android:textAllCaps="false"
+                            android:layout_marginEnd="8dp"
+                            android:backgroundTint="@color/primary"
+                            app:cornerRadius="12dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:elevation="0dp"
+                            android:stateListAnimator="@null"/>
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnIdBrowse"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="Browse"
+                            app:icon="@drawable/ic_upload"
+                            app:iconSize="20dp"
+                            app:iconGravity="textEnd"
+                            android:textAllCaps="false"
+                            app:cornerRadius="12dp"
+                            app:strokeColor="#E0E0E0"
+                            android:textColor="#1A1A1A"
+                            app:iconTint="#1A1A1A"
+                            android:fontFamily="@font/poppins_medium"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Property Document Card -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:hint="ID Proof Type">
-                <AutoCompleteTextView
-                    android:id="@+id/spinnerIdProofType"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnUploadIdProof"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Upload ID Proof File (Max 200 KB)"
-                app:icon="@drawable/ic_upload"
-                android:gravity="start|center_vertical" />
-            <TextView
-                android:id="@+id/tvIdProofStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:textColor="@color/black"
-                android:layout_marginStart="44dp"
-                android:layout_marginBottom="12dp"
-                android:visibility="gone"/>
-
-            <!-- Property Document -->
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:hint="Property Document Type">
-                <AutoCompleteTextView
-                    android:id="@+id/spinnerPropertyDocType"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnUploadPropertyDoc"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Upload Property Document File (Max 200 KB)"
-                app:icon="@drawable/ic_upload"
-                android:gravity="start|center_vertical" />
-            <TextView
-                android:id="@+id/tvPropertyDocStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:textColor="@color/black"
-                android:layout_marginStart="44dp"
-                android:layout_marginBottom="12dp"
-                android:visibility="gone"/>
-
-            <!-- Photo -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnUploadPhoto"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Upload Self Photo (Passport Size)"
-                app:icon="@drawable/ic_upload"
-                android:gravity="start|center_vertical" />
-            <TextView
-                android:id="@+id/tvPhotoStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:textColor="@color/black"
-                android:layout_marginStart="44dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
                 android:layout_marginBottom="16dp"
-                android:visibility="gone"/>
+                app:strokeColor="#E0E0E0"
+                app:strokeWidth="1dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:src="@drawable/ic_upload"
+                            android:padding="10dp"
+                            android:background="#F0F2FF" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginStart="12dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Property Document"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/poppins_medium"/>
+                            <TextView
+                                android:id="@+id/tvPropertyDocStatus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Lease or Registry copy"
+                                android:textSize="12sp"
+                                android:textColor="#7A7A7A" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Select Document Type"
+                        android:layout_marginBottom="12dp"
+                        app:boxCollapsedPaddingTop="4dp"
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusTopStart="12dp">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/spinnerPropertyDocType"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:minHeight="0dp"
+                            android:paddingTop="6dp"
+                            android:paddingBottom="6dp"
+                            android:inputType="none"
+                            android:fontFamily="@font/poppins_regular"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnPropertyCamera"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="Camera"
+                            app:icon="@drawable/ic_upload"
+                            app:iconSize="20dp"
+                            app:iconGravity="textEnd"
+                            android:textAllCaps="false"
+                            android:layout_marginEnd="8dp"
+                            android:backgroundTint="@color/primary"
+                            app:cornerRadius="12dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:elevation="0dp"
+                            android:stateListAnimator="@null"/>
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnPropertyBrowse"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="Browse"
+                            app:icon="@drawable/ic_upload"
+                            android:textAllCaps="false"
+                            app:cornerRadius="12dp"
+                            app:iconSize="20dp"
+                            app:iconGravity="textEnd"
+                            app:strokeColor="#E0E0E0"
+                            android:textColor="#1A1A1A"
+                            app:iconTint="#1A1A1A"
+                            android:fontFamily="@font/poppins_medium"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Self Photo Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                android:layout_marginBottom="16dp"
+                app:strokeColor="#E0E0E0"
+                app:strokeWidth="1dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:src="@drawable/ic_upload"
+                            android:padding="10dp"
+                            android:background="#F0F2FF" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginStart="12dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Self Photo"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/poppins_medium" />
+                            <TextView
+                                android:id="@+id/tvPhotoStatus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Passport size photo"
+                                android:textSize="12sp"
+                                android:textColor="#7A7A7A" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnPhotoCamera"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="54dp"
+                            android:text="Camera"
+                            app:icon="@drawable/ic_upload"
+                            android:textAllCaps="false"
+                            android:layout_marginEnd="8dp"
+                            android:backgroundTint="@color/primary"
+                            app:cornerRadius="12dp"
+                            app:iconSize="20dp"
+                            app:iconGravity="textEnd"
+                            android:fontFamily="@font/poppins_medium"
+                            android:elevation="0dp"
+                            android:stateListAnimator="@null"/>
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnPhotoBrowse"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="54dp"
+                            android:text="Browse"
+                            app:icon="@drawable/ic_upload"
+                            android:textAllCaps="false"
+                            app:cornerRadius="12dp"
+                            app:strokeColor="#E0E0E0"
+                            android:textColor="#1A1A1A"
+                            app:iconSize="20dp"
+                            app:iconGravity="textEnd"
+                            app:iconTint="#1A1A1A"
+                            android:fontFamily="@font/poppins_medium"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
-    </ScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginHorizontal="10dp"
-        >
+        <!-- Submit Button with Progress Background -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnBack"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:text="Back"
-            android:layout_marginEnd="8dp"
-            app:cornerRadius="8dp"
-            android:textAllCaps="false"/>
+            <ProgressBar
+                android:id="@+id/btnSubmitProgress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:progressDrawable="@drawable/button_progress_drawable"
+                android:max="100"
+                android:progress="0" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnSubmit"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:text="Submit"
-            app:cornerRadius="8dp"
-            android:textAllCaps="false"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSubmit"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="@android:color/transparent"
+                android:elevation="0dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="Upload Documents (0%)"
+                android:textAllCaps="false"
+                android:textColor="@color/primary"
+                android:textSize="16sp"
+                app:cornerRadius="12dp"
+                app:rippleColor="@color/primary" />
+        </FrameLayout>
+
     </LinearLayout>
-
-</LinearLayout>
+</ScrollView>
