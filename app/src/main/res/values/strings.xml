@@ -75,6 +75,7 @@
     <string name="share_receipt">Share Receipt</string>
     <string name="download_receipt">Download Receipt</string>
     <string name="financial_year">Financial year</string>
+    <string name="connection_amp_documents"><![CDATA[Connection & Documents]]></string>
 
 
 </resources>

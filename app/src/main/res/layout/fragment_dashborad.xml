@@ -135,6 +135,14 @@
                 android:layout_columnWeight="1"
                 android:layout_margin="8dp"/>
 
+            <include
+                android:id="@+id/water_sewerage_card"
+                layout="@layout/item_water_sewerage"
+                android:layout_width="0dp"
+                android:layout_height="180dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"/>
+
         </GridLayout>
 
     </ScrollView>

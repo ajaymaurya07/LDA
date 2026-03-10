@@ -272,6 +272,15 @@
             android:name=".serviceactivity.MutationService"
             android:exported="false" />
         <activity
+            android:name=".serviceactivity.WaterSewerageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".serviceactivity.WaterSewerageServiceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".serviceactivity.WaterSewerageFormActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainMenu"
             android:exported="true"
             android:screenOrientation="portrait">

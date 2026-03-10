@@ -21,6 +21,7 @@ import com.example.lda.houseTax.data.database.entity.BillEntity
 import com.example.lda.houseTax.utils.AlertDate
 import com.example.lda.houseTax.viewmodel.PropertyDetailsViewmodel
 import com.example.lda.serviceactivity.MutationService
+import com.example.lda.serviceactivity.WaterSewerageServiceActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -83,6 +84,10 @@ class DashboradFragment : Fragment() {
 
         binding.mutationCard.cardMutation.setOnClickListener {
             startActivity(Intent(requireActivity(), MutationService::class.java).putExtra("text","Name Transfer/Mutation"))
+        }
+
+        binding.waterSewerageCard.cardWaterSewerage.setOnClickListener {
+            startActivity(Intent(requireActivity(), WaterSewerageServiceActivity::class.java).putExtra("text","Water & Sewerage"))
         }
     }
 
