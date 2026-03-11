@@ -8,9 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.example.lda.databinding.FragmentWaterConnectionDetailsBinding
 import com.example.lda.utils.ImagePickerHandler
@@ -38,10 +40,6 @@ class WaterConnectionDetailsFragment : Fragment() {
         setupSpinners()
         updateUI()
 
-//        binding.btnBack.setOnClickListener {
-//            requireActivity().onBackPressedDispatcher.onBackPressed()
-//        }
-
         binding.btnSubmit.setOnClickListener {
             if (docsCompletedCount < 3) {
                 Toast.makeText(requireContext(), "Please upload all required documents (100% completion required)", Toast.LENGTH_SHORT).show()
@@ -52,6 +50,7 @@ class WaterConnectionDetailsFragment : Fragment() {
         }
         
         setupUploadButtons()
+        setupPreviewButtons()
     }
 
     private fun registerLaunchers() {
@@ -89,10 +88,12 @@ class WaterConnectionDetailsFragment : Fragment() {
             binding.btnIdBrowse.setIconTintResource(android.R.color.transparent) 
             binding.tvIdProofStatus.setTextColor(uploadedColor)
             binding.tvIdProofStatus.text = "ID Proof Uploaded"
+            binding.btnIdPreview.visibility = View.VISIBLE
         } else {
             binding.btnIdCamera.backgroundTintList = ColorStateList.valueOf(defaultBlue)
             binding.btnIdBrowse.strokeColor = ColorStateList.valueOf(gray)
             binding.btnIdBrowse.setTextColor(Color.parseColor("#1A1A1A"))
+            binding.btnIdPreview.visibility = View.GONE
         }
 
         // 2. Property Document
@@ -103,10 +104,12 @@ class WaterConnectionDetailsFragment : Fragment() {
             binding.btnPropertyBrowse.setTextColor(uploadedColor)
             binding.tvPropertyDocStatus.setTextColor(uploadedColor)
             binding.tvPropertyDocStatus.text = "Property Document Uploaded"
+            binding.btnPropertyPreview.visibility = View.VISIBLE
         } else {
             binding.btnPropertyCamera.backgroundTintList = ColorStateList.valueOf(defaultBlue)
             binding.btnPropertyBrowse.strokeColor = ColorStateList.valueOf(gray)
             binding.btnPropertyBrowse.setTextColor(Color.parseColor("#1A1A1A"))
+            binding.btnPropertyPreview.visibility = View.GONE
         }
 
         // 3. Photo
@@ -117,10 +120,12 @@ class WaterConnectionDetailsFragment : Fragment() {
             binding.btnPhotoBrowse.setTextColor(uploadedColor)
             binding.tvPhotoStatus.setTextColor(uploadedColor)
             binding.tvPhotoStatus.text = "Photo Uploaded"
+            binding.btnPhotoPreview.visibility = View.VISIBLE
         } else {
             binding.btnPhotoCamera.backgroundTintList = ColorStateList.valueOf(defaultBlue)
             binding.btnPhotoBrowse.strokeColor = ColorStateList.valueOf(gray)
             binding.btnPhotoBrowse.setTextColor(Color.parseColor("#1A1A1A"))
+            binding.btnPhotoPreview.visibility = View.GONE
         }
 
         docsCompletedCount = count
@@ -195,6 +200,33 @@ class WaterConnectionDetailsFragment : Fragment() {
         binding.btnPhotoBrowse.setOnClickListener {
             openDirectGallery(3)
         }
+    }
+
+    private fun setupPreviewButtons() {
+        binding.btnIdPreview.setOnClickListener {
+            showImagePreview(imagePickerHandler.photoUri1, "ID Proof Preview")
+        }
+        binding.btnPropertyPreview.setOnClickListener {
+            showImagePreview(imagePickerHandler.photoUri2, "Property Document Preview")
+        }
+        binding.btnPhotoPreview.setOnClickListener {
+            showImagePreview(imagePickerHandler.photoUri3, "Self Photo Preview")
+        }
+    }
+
+    private fun showImagePreview(uri: Uri?, title: String) {
+        if (uri == null) return
+
+        val builder = AlertDialog.Builder(requireContext())
+        val imageView = ImageView(requireContext())
+        imageView.setPadding(20, 20, 20, 20)
+        imageView.adjustViewBounds = true
+        imageView.setImageURI(uri)
+
+        builder.setTitle(title)
+            .setView(imageView)
+            .setPositiveButton("Close") { dialog, _ -> dialog.dismiss() }
+            .show()
     }
     
     private fun openDirectCamera(index: Int) {

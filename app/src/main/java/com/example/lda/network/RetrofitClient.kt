@@ -28,6 +28,18 @@ object RetrofitClient {
     }
 
 
+    val retrofitClientUlb: Retrofit.Builder by lazy {
+        Retrofit.Builder()
+            .baseUrl(Constent.BASE_URL_ULB)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create(Gson()))
+    }
+
+    val apiCallUlb: ApiMethod by lazy {
+        retrofitClientUlb.build().create(ApiMethod::class.java)
+    }
+
+
 
 
 }

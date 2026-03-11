@@ -14,6 +14,7 @@ import com.example.lda.houseTax.data.SignUpRequest
 import com.example.lda.houseTax.data.VerifyOtpMailRequest
 import com.example.lda.houseTax.data.VerifyOtpRequest
 import com.example.lda.model.CreateTransactionResponse
+import com.example.lda.model.FetchGrievanceResponse
 import com.example.lda.model.HashResponse
 import com.example.lda.model.OtpVerificationResponse
 import com.example.lda.model.SendOtpResponse
@@ -343,6 +344,39 @@ class PaymentViewModel:ViewModel() {
                     data = null,
                     message = "error",
                     status = false,
+                    responseCode = 0
+                )
+            }
+        })
+    }
+
+
+
+
+    private val _grievanceData = MutableLiveData<FetchGrievanceResponse>()
+    val grievanceData: LiveData<FetchGrievanceResponse> = _grievanceData
+    fun fetchGrievanceData() {
+
+        incrementLoader()
+        val call = RetrofitClient.apiCallUlb.fetchGrievance(
+            appVersion = Constent.APP_VERSION,
+            authorization ="c3e82254e2a7f03ab46c6d0adff1b6d155c8f20de7630a9e3af41b6884133ecd"
+        )
+        call.enqueue(object : Callback<FetchGrievanceResponse> {
+            override fun onResponse(
+                call: Call<FetchGrievanceResponse>,
+                response: Response<FetchGrievanceResponse>
+            ) {
+                decrementLoader()
+                _grievanceData.value= response.body()
+            }
+            override fun onFailure(
+                call: Call<FetchGrievanceResponse>, t: Throwable) {
+                decrementLoader()
+                _grievanceData.value= FetchGrievanceResponse(
+                    data = null,
+                    message = "error",
+                    success = false,
                     responseCode = 0
                 )
             }

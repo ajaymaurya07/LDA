@@ -10,6 +10,7 @@ import com.example.lda.model.AllCaseDetailsResponse
 import com.example.lda.model.CaseDetailsByCnrResponse
 import com.example.lda.model.CaseStatusCountResponse
 import com.example.lda.model.CreateTransactionResponse
+import com.example.lda.model.FetchGrievanceResponse
 import com.example.lda.model.FinalOrderCountResponse
 import com.example.lda.model.FinalOrderDetailResponse
 import com.example.lda.model.HashResponse
@@ -313,6 +314,12 @@ interface ApiMethod {
         @Body request: SignInRequest
     ): Call<SignInResponse>
 
+
+    @GET("apis/grievance-cat-subcat")
+    fun fetchGrievance(
+        @Header("X-App-Version") appVersion: Int,
+        @Header("Authorization") authorization: String,
+    ): Call<FetchGrievanceResponse>
 
 
 }

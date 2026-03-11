@@ -8,5 +8,6 @@ class Constent {
         const val APP_VERSION=2
         const val TEST_MOBILE_NUMBER="7394961460"
         const val TEST_PASSWORD="123456"
+        const val BASE_URL_ULB="https://e-nagarsewaup.gov.in/integratorclient/mobileapp/"
     }
 }

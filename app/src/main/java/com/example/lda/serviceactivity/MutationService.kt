@@ -10,6 +10,8 @@ import com.example.lda.NoStatusFoundActivity
 import com.example.lda.R
 import com.example.lda.databinding.ActivityMutationServiceBinding
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
+import com.example.lda.houseTax.grivance.ApplyGrivanceActivity
+import com.example.lda.houseTax.grivance.TrackGrivanceActivity
 
 class MutationService : AppCompatActivity() {
     lateinit var binding:ActivityMutationServiceBinding
@@ -20,7 +22,8 @@ class MutationService : AppCompatActivity() {
 
         val navText=intent.getStringExtra("text")
 
-//        enableEdgeToEdge()
+        binding.tvTitle.text=navText
+
         applySafeAreaInsets(
             rootView = findViewById(R.id.root),
             statusBarColor = getColor(R.color.primary),
@@ -46,6 +49,10 @@ class MutationService : AppCompatActivity() {
             else if (navText=="Martgage"){
                 val intent= Intent(this,FreeHoldServiceActivity::class.java)
                 intent.putExtra("text","Martgage")
+                startActivity(intent)
+            }
+            else if(navText=="Track Grivance") {
+                val intent = Intent(this, ApplyGrivanceActivity::class.java)
                 startActivity(intent)
             }
         }

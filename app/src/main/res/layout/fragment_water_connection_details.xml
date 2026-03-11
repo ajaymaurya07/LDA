@@ -146,8 +146,7 @@
             android:layout_height="wrap_content"
             android:text="Required Documents"
             android:textSize="16sp"
-            android:fontFamily="@font/montserrat_bold"
-            android:layout_marginBottom="10dp"/>
+            android:fontFamily="@font/montserrat_bold"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -160,7 +159,8 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="50dp"
+                android:layout_marginTop="20dp"
                 app:strokeColor="#E0E0E0"
                 app:strokeWidth="1dp">
                 <LinearLayout
@@ -200,6 +200,20 @@
                                 android:textSize="12sp"
                                 android:textColor="#7A7A7A" />
                         </LinearLayout>
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnIdPreview"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="Preview"
+                            android:textAllCaps="false"
+                            app:cornerRadius="12dp"
+                            android:layout_marginStart="4dp"
+                            android:visibility="gone"
+                            app:strokeColor="#E0E0E0"
+                            android:textColor="#1A1A1A"
+                            android:fontFamily="@font/poppins_medium"/>
                     </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -236,7 +250,7 @@
                             app:iconSize="20dp"
                             app:iconGravity="textEnd"
                             android:textAllCaps="false"
-                            android:layout_marginEnd="8dp"
+                            android:layout_marginEnd="4dp"
                             android:backgroundTint="@color/primary"
                             app:cornerRadius="12dp"
                             android:fontFamily="@font/poppins_medium"
@@ -257,7 +271,9 @@
                             app:strokeColor="#E0E0E0"
                             android:textColor="#1A1A1A"
                             app:iconTint="#1A1A1A"
+                            android:layout_marginHorizontal="4dp"
                             android:fontFamily="@font/poppins_medium"/>
+
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -268,7 +284,7 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="50dp"
                 app:strokeColor="#E0E0E0"
                 app:strokeWidth="1dp">
                 <LinearLayout
@@ -308,6 +324,20 @@
                                 android:textSize="12sp"
                                 android:textColor="#7A7A7A" />
                         </LinearLayout>
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnPropertyPreview"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="Preview"
+                            android:textAllCaps="false"
+                            app:cornerRadius="12dp"
+                            android:layout_marginStart="4dp"
+                            android:visibility="gone"
+                            app:strokeColor="#E0E0E0"
+                            android:textColor="#1A1A1A"
+                            android:fontFamily="@font/poppins_medium"/>
                     </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -348,7 +378,7 @@
                             app:iconSize="20dp"
                             app:iconGravity="textEnd"
                             android:textAllCaps="false"
-                            android:layout_marginEnd="8dp"
+                            android:layout_marginEnd="4dp"
                             android:backgroundTint="@color/primary"
                             app:cornerRadius="12dp"
                             android:fontFamily="@font/poppins_medium"
@@ -369,7 +399,9 @@
                             app:strokeColor="#E0E0E0"
                             android:textColor="#1A1A1A"
                             app:iconTint="#1A1A1A"
+                            android:layout_marginHorizontal="4dp"
                             android:fontFamily="@font/poppins_medium"/>
+
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -380,7 +412,7 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="50dp"
                 app:strokeColor="#E0E0E0"
                 app:strokeWidth="1dp">
                 <LinearLayout
@@ -420,6 +452,21 @@
                                 android:textSize="12sp"
                                 android:textColor="#7A7A7A" />
                         </LinearLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnPhotoPreview"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="Preview"
+                            android:textAllCaps="false"
+                            app:cornerRadius="12dp"
+                            android:layout_marginStart="4dp"
+                            android:visibility="gone"
+                            app:strokeColor="#E0E0E0"
+                            android:textColor="#1A1A1A"
+                            android:fontFamily="@font/poppins_medium"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -429,11 +476,11 @@
                             android:id="@+id/btnPhotoCamera"
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            android:layout_height="54dp"
+                            android:layout_height="wrap_content"
                             android:text="Camera"
                             app:icon="@drawable/ic_upload"
                             android:textAllCaps="false"
-                            android:layout_marginEnd="8dp"
+                            android:layout_marginEnd="4dp"
                             android:backgroundTint="@color/primary"
                             app:cornerRadius="12dp"
                             app:iconSize="20dp"
@@ -446,7 +493,7 @@
                             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            android:layout_height="54dp"
+                            android:layout_height="wrap_content"
                             android:text="Browse"
                             app:icon="@drawable/ic_upload"
                             android:textAllCaps="false"
@@ -456,7 +503,9 @@
                             app:iconSize="20dp"
                             app:iconGravity="textEnd"
                             app:iconTint="#1A1A1A"
+                            android:layout_marginHorizontal="4dp"
                             android:fontFamily="@font/poppins_medium"/>
+
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
