@@ -10,5 +10,7 @@ data class PropertyEntity(
     val ownerName: String,
     val ward: String,
     val mohalla: String,
-    val phoneNumber: String
+    val phoneNumber: String,
+    val email: String? = null,
+    val userType: String? = null
 )

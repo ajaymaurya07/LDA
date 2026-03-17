@@ -322,4 +322,12 @@ interface ApiMethod {
     ): Call<FetchGrievanceResponse>
 
 
+
+    @POST("api/house_tax/registerGrievanceAfterOtp")
+    fun registerGrievanceVerifyOtp(
+        @Header("X-App-Version") appVersion: Int,
+        @Body request: VerifyOtpRequest
+    ): Call<OtpVerificationResponse>
+
+
 }

@@ -52,7 +52,6 @@ class PropertySearchActivity : AppCompatActivity() {
         observePropertyResult()
 
 
-
     }
 
     private fun observerErrorMessage(){

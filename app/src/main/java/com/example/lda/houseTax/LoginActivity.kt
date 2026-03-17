@@ -130,7 +130,9 @@ class LoginActivity : AppCompatActivity() {
                                 ownerName = ownerName,
                                 ward = ward,
                                 mohalla = mohalla,
-                                phoneNumber = phoneNumber
+                                phoneNumber = phoneNumber,
+                                email = sharedPreferences.getEmail().toString(),
+                                userType = sharedPreferences.getUserType().toString()
                             )
                         )
                     }

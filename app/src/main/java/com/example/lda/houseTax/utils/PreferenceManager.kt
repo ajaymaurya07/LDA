@@ -16,6 +16,8 @@ class PreferenceManager(context: Context) {
         private const val USER_ID = "user_id"
         private const val IS_LOGIN = "is_login"
         private const val LOGIN_MOBILE_NUMBER = "login_mobile_number"
+        private const val KEY_EMAIL = "key_email"
+        private const val KEY_USER_TYPE = "key_user_type"
     }
 
     private val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
@@ -113,6 +115,20 @@ class PreferenceManager(context: Context) {
         return prefs.getString(LOGIN_MOBILE_NUMBER, null)
     }
 
+    fun saveEmail(email: String) {
+        prefs.edit().putString(KEY_EMAIL, email).apply()
+    }
 
+    fun getEmail(): String? {
+        return prefs.getString(KEY_EMAIL, null)
+    }
+
+    fun saveUserType(userType: String) {
+        prefs.edit().putString(KEY_USER_TYPE, userType).apply()
+    }
+
+    fun getUserType(): String? {
+        return prefs.getString(KEY_USER_TYPE, null)
+    }
 
 }

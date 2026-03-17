@@ -289,6 +289,7 @@ class PaymentActivity : AppCompatActivity() {
                 propertyId = propertyId
             )
 
+
             sendOtpDialog.dismiss()
             viewModel.sendOtp(request,preferenceManager.getLoginMobileNumber().toString())
 

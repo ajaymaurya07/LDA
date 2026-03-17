@@ -18,6 +18,7 @@ import com.example.lda.model.FetchGrievanceResponse
 import com.example.lda.model.HashResponse
 import com.example.lda.model.OtpVerificationResponse
 import com.example.lda.model.SendOtpResponse
+import com.example.lda.model.SignIn
 import com.example.lda.model.SignInResponse
 import com.example.lda.model.SignUpResponse
 import com.example.lda.model.TransactionsDetailsResponse
@@ -228,10 +229,48 @@ class PaymentViewModel:ViewModel() {
     }
 
 
+
+    private val _otpVerificationForGrievance = MutableLiveData<OtpVerificationResponse>()
+    val otpVerificationGrievance: LiveData<OtpVerificationResponse> = _otpVerificationForGrievance
+
+    fun otpVerificationForGrievance(request: VerifyOtpRequest,loginMobileNumber: String) {
+
+        if (loginMobileNumber==Constent.TEST_MOBILE_NUMBER){
+            _otpVerificationForGrievance.value=dummyOtpVerificationResponse()
+            return
+        }
+
+        incrementLoader()
+        val call = RetrofitClient.apiCall.registerGrievanceVerifyOtp(
+            appVersion = Constent.APP_VERSION,
+            request = request
+        )
+        call.enqueue(object : Callback<OtpVerificationResponse> {
+            override fun onResponse(
+                call: Call<OtpVerificationResponse>,
+                response: Response<OtpVerificationResponse>
+            ) {
+                decrementLoader()
+                _otpVerificationForGrievance.value= response.body()
+
+            }
+            override fun onFailure(
+                call: Call<OtpVerificationResponse>, t: Throwable) {
+                decrementLoader()
+                _otpVerificationForGrievance.value= OtpVerificationResponse(
+                    data = null,
+                    message = "error",
+                    success = false
+                )
+            }
+        })
+    }
+
+
     private fun dummyOtpVerificationResponse():OtpVerificationResponse{
         return OtpVerificationResponse(
             data = null,
-            message = "Otp send Successfully",
+            message = "Otp verify Successfully",
             success = true,
             responseCode = 1,
             userId = 123456
@@ -315,10 +354,15 @@ class PaymentViewModel:ViewModel() {
 
         if (request.username== Constent.TEST_MOBILE_NUMBER && request.password== Constent.TEST_PASSWORD){
             _signIn.value= SignInResponse(
-                data = null,
+                data = SignIn(
+                    accessToken = "1234",
+                    refreshToken = "1234",
+                    emailId = "ajaymaurya08072002@gmail.com",
+                    userType = "citizen"
+                ),
                 message = "Login Successful",
                 status = true,
-                responseCode = 1
+                responseCode = 1,
             )
             return
         }

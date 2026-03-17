@@ -23,5 +23,15 @@ data class SignIn(
 	val accessToken: Any? = null,
 
 	@field:SerializedName("refresh_token")
-	val refreshToken: Any? = null
+	val refreshToken: Any? = null,
+
+
+	@field:SerializedName("email_id")
+	val emailId: Any? = null,
+
+
+	@field:SerializedName("user_type")
+	val userType: Any? = null,
+
+
 )

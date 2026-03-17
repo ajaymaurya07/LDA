@@ -9,7 +9,7 @@ import com.example.lda.houseTax.data.database.dao.PropertyDao
 import com.example.lda.houseTax.data.database.entity.BillEntity
 import com.example.lda.houseTax.data.database.entity.PropertyEntity
 
-@Database(entities = [BillEntity::class, PropertyEntity::class], version = 3)
+@Database(entities = [BillEntity::class, PropertyEntity::class], version = 4)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun billDao(): BillDao

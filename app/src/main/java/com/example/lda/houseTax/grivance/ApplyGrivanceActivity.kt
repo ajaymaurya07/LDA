@@ -12,7 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -27,6 +27,8 @@ import com.example.lda.databinding.ActivityApplyGrivanceBinding
 import com.example.lda.databinding.DialogSearchableSelectionBinding
 import com.example.lda.databinding.LayoutPhotoPickerBinding
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
+import com.example.lda.houseTax.data.SendOtpRequest
+import com.example.lda.houseTax.data.VerifyOtpRequest
 import com.example.lda.houseTax.data.database.AppDatabase
 import com.example.lda.houseTax.data.database.entity.PropertyEntity
 import com.example.lda.houseTax.viewmodel.PaymentViewModel
@@ -37,6 +39,7 @@ import com.example.lda.model.SubCategoriesItem
 import com.example.lda.model.UlbItem
 import com.example.lda.model.WardItem
 import com.example.lda.model.ZoneItem
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.coroutines.launch
 
@@ -53,6 +56,7 @@ class ApplyGrivanceActivity : AppCompatActivity() {
     private var subCategoryList: List<SubCategoriesItem> = emptyList()
     private var propertyList: List<PropertyEntity> = emptyList()
 
+    private var selectedProperty: PropertyEntity? = null
     private var selectedUlbItem: UlbItem? = null
     private var selectedZoneItem: ZoneItem? = null
     private var selectedWardItem: WardItem? = null
@@ -64,6 +68,10 @@ class ApplyGrivanceActivity : AppCompatActivity() {
     private lateinit var cameraLauncher: ActivityResultLauncher<Uri>
     private lateinit var galleryLauncher: ActivityResultLauncher<String>
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
+
+    private lateinit var verifyOtpDialog:BottomSheetDialog
+    private var isOtpVerificationIsDone=false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,6 +92,7 @@ class ApplyGrivanceActivity : AppCompatActivity() {
         setupLaunchers()
         setupListeners()
         fetchProperties()
+        otpObserver()
 
         viewModel.fetchGrievanceData()
         sharedViewModel.ulbData("")
@@ -94,6 +103,7 @@ class ApplyGrivanceActivity : AppCompatActivity() {
             try {
                 val db = AppDatabase.getDatabase(this@ApplyGrivanceActivity)
                 propertyList = db.propertyDao().getAllProperties()
+
             } catch (e: Exception) {
                 Log.e("ApplyGrivance", "Error fetching properties", e)
             }
@@ -124,9 +134,11 @@ class ApplyGrivanceActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             showSearchableDialog("Select Property", propertyList, { "${it.ownerName} (${it.propertyId})" }) { property ->
+                selectedProperty = property
                 binding.spinnerProperty.setText("${property.ownerName} (${property.propertyId})", false)
                 binding.etName.setText(property.ownerName)
                 binding.etMobileNumber.setText(property.phoneNumber)
+                binding.etEmail.setText(property.email)
             }
         }
 
@@ -308,17 +320,117 @@ class ApplyGrivanceActivity : AppCompatActivity() {
     private fun validateAndSubmit() {
         val name = binding.etName.text.toString().trim()
         val mobile = binding.etMobileNumber.text.toString().trim()
+        val email = binding.etEmail.text.toString().trim()
+        val fatherName = binding.etFatherName.text.toString().trim()
+        val address = binding.etAddress.text.toString().trim()
+        val landmark = binding.etLandmark.text.toString().trim()
         val desc = binding.etDescription.text.toString().trim()
 
-        if (name.isEmpty()) { binding.etName.error = "Enter Name"; return }
-        if (mobile.length != 10) { binding.etMobileNumber.error = "Enter 10 digit number"; return }
+        if (name.isEmpty()) { Toast.makeText(this, "Enter Full Name", Toast.LENGTH_SHORT).show(); return }
+        if (mobile.length != 10) { Toast.makeText(this, "Enter valid 10-digit Mobile Number", Toast.LENGTH_SHORT).show(); return }
+        if (fatherName.isEmpty()) { Toast.makeText(this, "Enter Father's/Husband's Name", Toast.LENGTH_SHORT).show(); return }
+        if (email.isEmpty()) { Toast.makeText(this, "Enter Email ID", Toast.LENGTH_SHORT).show(); return }
+        if (address.isEmpty()) { Toast.makeText(this, "Enter Address", Toast.LENGTH_SHORT).show(); return }
         if (selectedUlbItem == null) { Toast.makeText(this, "Select ULB", Toast.LENGTH_SHORT).show(); return }
+        if (selectedZoneItem == null) { Toast.makeText(this, "Select Zone", Toast.LENGTH_SHORT).show(); return }
+        if (selectedWardItem == null) { Toast.makeText(this, "Select Ward", Toast.LENGTH_SHORT).show(); return }
+        if (selectedMohallaItem == null) { Toast.makeText(this, "Select Mohalla", Toast.LENGTH_SHORT).show(); return }
         if (selectedCategory == null) { Toast.makeText(this, "Select Category", Toast.LENGTH_SHORT).show(); return }
-        if (desc.isEmpty()) { binding.etDescription.error = "Enter details"; return }
+        if (desc.isEmpty()) { Toast.makeText(this, "Enter Grievance Details", Toast.LENGTH_SHORT).show(); return }
 
-        Log.d("GrievanceSubmit", "Name: $name, ULB: ${selectedUlbItem?.ulbName}, Category ID: ${selectedCategory?.serviceCode}")
-        Toast.makeText(this, "Grievance submitted successfully!", Toast.LENGTH_LONG).show()
-        finish()
+        // Logging all data
+        Log.d("GrievanceSubmit", "--- Form Data ---")
+        Log.d("GrievanceSubmit", "Property ID: ${selectedProperty?.propertyId ?: "N/A"}")
+        Log.d("GrievanceSubmit", "Name: $name")
+        Log.d("GrievanceSubmit", "Mobile: $mobile")
+        Log.d("GrievanceSubmit", "Email: $email")
+        Log.d("GrievanceSubmit", "Father Name: $fatherName")
+        Log.d("GrievanceSubmit", "Address: $address")
+        Log.d("GrievanceSubmit", "ULB: ${selectedUlbItem?.ulbName} (ID: ${selectedUlbItem?.ulbId})")
+        Log.d("GrievanceSubmit", "Zone: ${selectedZoneItem?.zoneName} (ID: ${selectedZoneItem?.zoneId})")
+        Log.d("GrievanceSubmit", "Ward: ${selectedWardItem?.wardName} (ID: ${selectedWardItem?.wardId})")
+        Log.d("GrievanceSubmit", "Mohalla: ${selectedMohallaItem?.mohallaName} (ID: ${selectedMohallaItem?.mohallaId})")
+        Log.d("GrievanceSubmit", "Landmark: $landmark")
+        Log.d("GrievanceSubmit", "Category: ${selectedCategory?.serviceName} (ID: ${selectedCategory?.serviceCode})")
+        Log.d("GrievanceSubmit", "Sub-Category: ${selectedSubCategory?.subName ?: "N/A"} (ID: ${selectedSubCategory?.subCatCode})")
+        Log.d("GrievanceSubmit", "Description: $desc")
+        Log.d("GrievanceSubmit", "Image URI: ${imageUri ?: "No Image Selected"}")
+        Log.d("GrievanceSubmit", "-----------------")
+
+        if (!isOtpVerificationIsDone) {
+            val request = SendOtpRequest(
+                mobileNo = mobile,
+                propertyId = selectedProperty?.propertyId ?: ""
+            )
+            viewModel.sendOtp(request, "7394961460")
+        } else {
+            Toast.makeText(this, "Grievance submitted successfully!", Toast.LENGTH_LONG).show()
+            finish()
+        }
+    }
+
+    private fun otpObserver(){
+        viewModel.sendOtp.observe(this){
+            if (it.success==true){
+                openPropertyVerifyOtpBottomSheet()
+                Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+            }
+        }
+        viewModel.otpVerificationGrievance.observe(this){
+            if (it.success==true){
+                isOtpVerificationIsDone=true
+                Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
+                verifyOtpDialog.dismiss()
+                // Re-trigger submit after OTP success
+            }
+            else{
+                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+            }
+        }
+
+    }
+
+    private fun openPropertyVerifyOtpBottomSheet() {
+
+        verifyOtpDialog = BottomSheetDialog(this, R.style.BottomSheetTheme)
+        val view = layoutInflater.inflate(R.layout.bottom_sheet_otp, null)
+        verifyOtpDialog.setContentView(view)
+
+        val verifyOtpButton = view.findViewById<View>(R.id.btnVerifyOtp)
+        val etOtp = view.findViewById<EditText>(R.id.etOtp)
+
+        verifyOtpButton.setOnClickListener {
+            val otp = etOtp.text.toString().trim()
+            if (otp.isEmpty()) {
+                Toast.makeText(this, "Enter OTP first", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+            val request = VerifyOtpRequest(
+                mobileNo = binding.etMobileNumber.text.toString().trim(),
+                otp = otp
+            )
+            viewModel.otpVerificationForGrievance(request,"7394961460")
+        }
+
+
+        verifyOtpDialog.setOnShowListener {
+            val bottomSheet = verifyOtpDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+
+            bottomSheet?.let {
+                val layoutParams = it.layoutParams
+                layoutParams.height = (resources.displayMetrics.heightPixels * 0.65).toInt()
+                it.layoutParams = layoutParams
+
+                val behavior = BottomSheetBehavior.from(it)
+                behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                behavior.skipCollapsed = true
+            }
+        }
+
+        verifyOtpDialog.show()
     }
 
     private fun setupLaunchers() {
@@ -394,7 +506,7 @@ class ApplyGrivanceActivity : AppCompatActivity() {
                 originalList
             } else {
                 originalList.filter { 
-                    displayNameMapper(it).lowercase().contains(query.lowercase()) 
+                    displayNameMapper(it).lowercase().contains(query.lowercase())
                 }
             }
             notifyDataSetChanged()
