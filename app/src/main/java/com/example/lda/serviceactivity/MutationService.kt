@@ -11,6 +11,7 @@ import com.example.lda.R
 import com.example.lda.databinding.ActivityMutationServiceBinding
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
 import com.example.lda.houseTax.grivance.ApplyGrivanceActivity
+import com.example.lda.houseTax.grivance.ApplyGrivanceListActivity
 import com.example.lda.houseTax.grivance.TrackGrivanceActivity
 
 class MutationService : AppCompatActivity() {
@@ -58,8 +59,10 @@ class MutationService : AppCompatActivity() {
         }
 
         binding.trackStatus.setOnClickListener {
-//            val intent= Intent(this,NoStatusFoundActivity::class.java)
-//            startActivity(intent)
+            if(navText=="Track Grivance") {
+                val intent = Intent(this, ApplyGrivanceListActivity::class.java)
+                startActivity(intent)
+            }
         }
 
     }

@@ -344,6 +344,9 @@ class SharedViewModel : ViewModel() {
                 decrementLoader()
                 if (response.isSuccessful && response.body()?.success == true) {
                     _propertyList.value = response.body()?.data?.filterNotNull() ?: emptyList()
+
+                    Log.d("TAG", "onResponse: ${response.body()}")
+
 //                    _errorMessage.value = null
                 } else {
 //                    Log.d("TAG", "PRoperty search: ${response.body()}")

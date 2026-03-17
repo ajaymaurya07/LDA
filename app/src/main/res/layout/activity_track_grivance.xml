@@ -1,51 +1,559 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:id="@+id/root"
-    android:background="@drawable/bg_with_opacity">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F4F7FA">
+
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/topAppBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolBar"
+            style="@style/Widget.MaterialComponents.Toolbar.Surface"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            style="@style/Widget.MaterialComponents.Toolbar.Surface"
-            >
+            app:contentInsetStartWithNavigation="0dp">
 
             <!-- Back Icon -->
             <ImageView
                 android:id="@+id/navBack"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/left_icon"
-                android:layout_marginStart="12dp"
                 android:layout_gravity="start|center_vertical"
-                android:padding="4dp" />
+                android:layout_marginStart="12dp"
+                android:padding="4dp"
+                android:src="@drawable/left_icon" />
 
             <!-- Title placed manually -->
             <TextView
                 android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
                 android:text="Track Grievance"
                 android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginStart="20dp"
-                android:layout_gravity="center_vertical" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:layout_marginHorizontal="10dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+
+            <com.google.android.material.card.MaterialCardView
+                    style="@style/TrackSectionCard"
+                    app:cardUseCompatPadding="true"
+                    app:cardElevation="0dp"
+                    android:layout_marginTop="10dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="Complaint Reference ID"
+                            android:textColor="#A4B0BE"
+                            android:textSize="12sp"
+                            />
+
+                        <TextView
+                            android:id="@+id/tvComplaintId"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="PGF43925260008472"
+                            android:textColor="#2F3542"
+                            android:textSize="14sp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_bold"
+                            android:letterSpacing="0.1"
+                            android:text="CATEGORY"
+                            android:textColor="#A4B0BE"
+                            android:textSize="10sp" />
+
+                        <TextView
+                            android:id="@+id/tvCategory"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="Garbage and Cleanliness"
+                            android:textColor="#2F3542"
+                            android:textSize="14sp" />
+
+
+
+                        <TextView
+                            android:id="@+id/tvSubCategory"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="Lifting of Malwa"
+                            android:textColor="#747D8C"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+
+                </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="#FFF8F8"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="0dp"
+                    app:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="16dp"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_alert"
+                            app:tint="#FF4757" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_bold"
+                                android:text="Resolution Due By"
+                                android:textColor="#FF4757"
+                                android:textSize="11sp"
+                                android:textAllCaps="true" />
+
+                            <TextView
+                                android:id="@+id/tvDueDate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_bold"
+                                android:text="22-02-2026"
+                                android:textColor="#D32F2F"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+
+
+
+            <TextView
+                android:id="@+id/tvComplaintDesc"
+                style="@style/TrackSectionHeader"
+                android:text="Water supply issue"/>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/TrackSectionCard"
+                app:cardUseCompatPadding="true"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!-- Date & Time Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/clock"
+                            app:tint="@color/primary" />
+
+                        <TextView
+                            android:id="@+id/tvDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="20-02-2026"
+                            android:textColor="#747D8C"
+                            android:textSize="13sp"
+                            android:layout_marginStart="5dp"/>
+
+                        <TextView
+                            android:id="@+id/tvTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text=", 12:51 P.M."
+                            android:textColor="#747D8C"
+                            android:textSize="13sp"/>
+
+                    </LinearLayout>
+
+                    <!-- Landmark Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="12dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/gps"
+                            app:tint="@color/primary"/>
+
+                        <TextView
+                            android:id="@+id/tvLandmark"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="Near Post Office"
+                            android:textColor="#747D8C"
+                            android:textSize="13sp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <!-- Location Details -->
+            <TextView
+                style="@style/TrackSectionHeader"
+                android:text="Location Information"/>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/TrackSectionCard"
+                app:cardUseCompatPadding="true"
+                app:cardElevation="0dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <include
+                        layout="@layout/item_track_info"
+                        android:id="@+id/layoutUlb" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F1F2F6"
+                        android:layout_marginStart="56dp"
+                        android:layout_marginBottom="16dp" />
+
+                    <include
+                        layout="@layout/item_track_info"
+                        android:id="@+id/layoutZoneWard" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F1F2F6"
+                        android:layout_marginStart="56dp"
+                        android:layout_marginBottom="16dp" />
+
+                    <include
+                        layout="@layout/item_track_info"
+                        android:id="@+id/layoutMohalla" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F1F2F6"
+                        android:layout_marginStart="56dp"
+                        android:layout_marginBottom="16dp" />
+
+                    <include
+                        layout="@layout/item_track_info"
+                        android:id="@+id/layoutAddress" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Complainant Info -->
+            <TextView
+                style="@style/TrackSectionHeader"
+                android:text="Contact Information"/>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/TrackSectionCard"
+                app:cardUseCompatPadding="true"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <include
+                        layout="@layout/item_track_info"
+                        android:id="@+id/layoutName" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F1F2F6"
+                        android:layout_marginStart="56dp"
+                        android:layout_marginBottom="16dp" />
+
+                    <include
+                        layout="@layout/item_track_info"
+                        android:id="@+id/layoutFather" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F1F2F6"
+                        android:layout_marginStart="56dp"
+                        android:layout_marginBottom="16dp" />
+
+                    <include
+                        layout="@layout/item_track_info"
+                        android:id="@+id/layoutMobile" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F1F2F6"
+                        android:layout_marginStart="56dp"
+                        android:layout_marginBottom="16dp" />
+
+                    <include
+                        layout="@layout/item_track_info"
+                        android:id="@+id/layoutEmail" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Assigned Officials -->
+            <TextView
+                style="@style/TrackSectionHeader"
+                android:text="Assigned Authorities" />
+
+
+
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/TrackSectionCard"
+                app:cardUseCompatPadding="true"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="16dp"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/user"
+                            android:padding="8dp"
+                            android:background="@drawable/bg_circle_white" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="16dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_bold"
+                                android:text="OFFICER"
+                                android:textColor="#A4B0BE"
+                                android:textSize="10sp"
+                                android:letterSpacing="0.05" />
+
+                            <TextView
+                                android:id="@+id/tvOffName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_bold"
+                                android:text="Rekha Singh"
+                                android:textColor="#2F3542"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:id="@+id/tvOffDetails"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_medium"
+                                android:text="SWO • 7777766666"
+                                android:textColor="#747D8C"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/btnCallOff"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/phone"
+                            android:padding="10dp"
+                            android:background="@drawable/bg_circle_white"
+                            app:tint="@color/primary" />
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="#F1F2F6"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginBottom="16dp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="16dp"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/user"
+                            android:padding="8dp"
+                            android:background="@drawable/bg_circle_white" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="16dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_bold"
+                                android:text="EMPLOYEE"
+                                android:textColor="#A4B0BE"
+                                android:textSize="10sp"
+                                android:letterSpacing="0.05" />
+
+                            <TextView
+                                android:id="@+id/tvEmpName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_bold"
+                                android:text="Amit Singh"
+                                android:textColor="#2F3542"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:id="@+id/tvEmpDetails"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_medium"
+                                android:text="Ast SWO • 9999988888"
+                                android:textColor="#747D8C"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/btnCallEmp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/phone"
+                            android:padding="10dp"
+                            android:background="@drawable/bg_circle_white"
+                            app:tint="@color/primary" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Resolution -->
+            <TextView
+                style="@style/TrackSectionHeader"
+                android:text="Final Resolution"
+                />
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/TrackSectionCard"
+                app:cardUseCompatPadding="true"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <include
+                        layout="@layout/item_track_info"
+                        android:id="@+id/layoutCloseDate" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="#F1F2F6"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginBottom="16dp" />
+
+                    <include
+                        layout="@layout/item_track_info"
+                        android:id="@+id/layoutCloseRemark" />
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
-
-

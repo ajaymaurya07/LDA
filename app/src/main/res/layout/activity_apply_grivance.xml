@@ -60,6 +60,31 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <!-- Property Selection Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Property Details"
+                android:textSize="16sp"
+                android:fontFamily="@font/poppins_bold"
+                android:textColor="@color/primary"
+                android:layout_marginBottom="8dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:hint="Select Property">
+
+                <AutoCompleteTextView
+                    android:id="@+id/spinnerProperty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <!-- Personal Information Section -->
             <TextView
                 android:layout_width="wrap_content"
@@ -75,13 +100,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                android:hint="Full Name">
+                android:hint="Full Name"
+                android:enabled="false">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:fontFamily="@font/poppins_regular"/>
+                    android:inputType="textPersonName"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Mobile Number"
+                android:enabled="false">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etMobileNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:maxLength="10"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -94,23 +136,7 @@
                     android:id="@+id/etFatherName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:fontFamily="@font/poppins_regular"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:hint="Mobile Number">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etMobileNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="phone"
-                    android:maxLength="10"
-                    android:fontFamily="@font/poppins_regular"/>
+                    android:inputType="textPersonName"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -123,8 +149,7 @@
                     android:id="@+id/etEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    android:fontFamily="@font/poppins_regular"/>
+                    android:inputType="textEmailAddress"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -139,8 +164,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPostalAddress"
                     android:gravity="top"
-                    android:lines="2"
-                    android:fontFamily="@font/poppins_regular"/>
+                    android:lines="2"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Location Details Section -->
@@ -159,12 +183,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:hint="Select ULB">
+
                 <AutoCompleteTextView
                     android:id="@+id/spinnerUlb"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
-                    android:fontFamily="@font/poppins_regular"/>
+                    android:focusable="false"/>
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -173,12 +199,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:hint="Select Zone">
+
                 <AutoCompleteTextView
                     android:id="@+id/spinnerZone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:completionThreshold="1"
                     android:inputType="none"
-                    android:fontFamily="@font/poppins_regular"/>
+                    android:focusable="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -192,7 +220,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
-                    android:fontFamily="@font/poppins_regular"/>
+                    android:focusable="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -206,7 +234,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
-                    android:fontFamily="@font/poppins_regular"/>
+                    android:focusable="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -219,8 +247,7 @@
                     android:id="@+id/etLandmark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:fontFamily="@font/poppins_regular"/>
+                    android:inputType="text"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Grievance Details Section -->
@@ -244,7 +271,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
-                    android:fontFamily="@font/poppins_regular"/>
+                    android:focusable="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
@@ -259,12 +286,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
                     android:hint="Select Sub-Category">
+
                     <AutoCompleteTextView
                         android:id="@+id/spinnerSubCategory"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="none"
-                        android:fontFamily="@font/poppins_regular"/>
+                        android:focusable="false"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
@@ -279,8 +307,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="top"
-                    android:lines="4"
-                    android:fontFamily="@font/poppins_regular"/>
+                    android:lines="4"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView

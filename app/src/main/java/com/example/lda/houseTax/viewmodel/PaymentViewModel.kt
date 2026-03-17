@@ -336,10 +336,12 @@ class PaymentViewModel:ViewModel() {
             ) {
                 decrementLoader()
                 _signIn.value= response.body()
+                Log.d("TAG",response.body().toString())
             }
             override fun onFailure(
                 call: Call<SignInResponse>, t: Throwable) {
                 decrementLoader()
+                Log.d("TAG", "onFailure: $t")
                 _signIn.value= SignInResponse(
                     data = null,
                     message = "error",
