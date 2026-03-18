@@ -22,6 +22,7 @@ import com.example.lda.model.SendOtpResponse
 import com.example.lda.model.SignIn
 import com.example.lda.model.SignInResponse
 import com.example.lda.model.SignUpResponse
+import com.example.lda.model.TransactionsByEmailResponse
 import com.example.lda.model.TransactionsDetailsResponse
 import com.example.lda.model.VerifyOtpMailResponse
 import com.example.lda.network.RetrofitClient
@@ -508,6 +509,36 @@ class PaymentViewModel:ViewModel() {
                 _saveGrievance.value = SaveGrievanceResponse(
                     success = false,
                     message = t.message
+                )
+            }
+        })
+    }
+
+    private val _transactionsByEmail = MutableLiveData<TransactionsByEmailResponse>()
+    val transactionsByEmail: LiveData<TransactionsByEmailResponse> = _transactionsByEmail
+
+    fun getTransactionsByEmail(email: String) {
+        incrementLoader()
+        val emailMap = mapOf("email_id" to email)
+        val call = RetrofitClient.apiCall.getTransactionsByEmail(
+            appVersion = Constent.APP_VERSION,
+            emailId = emailMap
+        )
+        call.enqueue(object : Callback<TransactionsByEmailResponse> {
+            override fun onResponse(
+                call: Call<TransactionsByEmailResponse>,
+                response: Response<TransactionsByEmailResponse>
+            ) {
+                decrementLoader()
+                _transactionsByEmail.value = response.body()
+            }
+
+            override fun onFailure(call: Call<TransactionsByEmailResponse>, t: Throwable) {
+                decrementLoader()
+                _transactionsByEmail.value = TransactionsByEmailResponse(
+                    status = false,
+                    message = t.message,
+                    data = null
                 )
             }
         })

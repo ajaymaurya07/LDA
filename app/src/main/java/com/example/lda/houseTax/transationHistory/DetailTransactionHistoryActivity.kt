@@ -1,6 +1,7 @@
 package com.example.lda.houseTax.transationHistory
 
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -23,6 +24,11 @@ class DetailTransactionHistoryActivity : AppCompatActivity() {
             statusBarColor = getColor(R.color.primary),
             lightStatusBar = true,
         )
+
+        val toolbar = findViewById<ImageView>(R.id.navBack)
+        toolbar.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
 
 
 
@@ -55,6 +61,9 @@ class DetailTransactionHistoryActivity : AppCompatActivity() {
             binding.tvTxnId.text = data.txnId
             binding.tvBillNo.text = data.billNo
             binding.tvPropertyId.text = data.propertyId
+            binding.tvFinancialYear.text=data.financialYear
+            binding.tvPaymentMode.text=data.paymentMode
+            binding.tvBankRef.text=data.bankRefNo
         }
 
 

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lda.R
 import com.example.lda.utils.dataClass.TransactionItem
 
-class TransactionAdapter(private val list: List<TransactionItem>, private val onItemClick: (TransactionItem) -> Unit) :
+class TransactionAdapter(private var list: List<TransactionItem>, private val onItemClick: (TransactionItem) -> Unit) :
     RecyclerView.Adapter<TransactionAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -58,5 +58,10 @@ class TransactionAdapter(private val list: List<TransactionItem>, private val on
                 holder.tvAmount.setTextColor(Color.parseColor("#F57C00"))
             }
         }
+    }
+
+    fun updateList(newList: List<TransactionItem>) {
+        list = newList
+        notifyDataSetChanged()
     }
 }

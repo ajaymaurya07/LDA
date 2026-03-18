@@ -29,6 +29,7 @@ import com.example.lda.model.SaveGrievanceResponse
 import com.example.lda.model.SendOtpResponse
 import com.example.lda.model.SignInResponse
 import com.example.lda.model.SignUpResponse
+import com.example.lda.model.TransactionsByEmailResponse
 import com.example.lda.model.TransactionsDetailsResponse
 import com.example.lda.model.UlbDataResponse
 import com.example.lda.model.VerifyOtpMailResponse
@@ -147,8 +148,8 @@ interface ApiMethod {
     @POST("api/getCaseDetailsByIACategory")
     fun iaCaseDetails(
         @Header("api_key") apiKey:String,
+        @Header("app_version") version: String,
         @Field("user_id") userId: String,
-        @Field("app_version") version: String,
         @Field("user_type") userType: String,
         @Field("department") department:String,
         @Field("category") category:String,
@@ -354,6 +355,16 @@ interface ApiMethod {
         @Part("address") address: RequestBody,
         @Part file: MultipartBody.Part?
     ): Call<SaveGrievanceResponse>
+
+
+    @Headers(
+        "Content-Type: application/json",
+        "Accept: application/json")
+    @POST("api/payment/get_transactions_by_email")
+    fun getTransactionsByEmail(
+        @Header("X-App-Version") appVersion: Int,
+        @Body emailId: Map<String, String>
+    ): Call<TransactionsByEmailResponse>
 
 
 }
