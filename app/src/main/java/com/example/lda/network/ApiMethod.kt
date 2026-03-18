@@ -25,6 +25,7 @@ import com.example.lda.model.OtpVerificationResponse
 import com.example.lda.model.PropertyDetailsResponse
 import com.example.lda.model.PropertySearchResponse
 import com.example.lda.model.RecentInterimOrderCaseDetailByTypeResponse
+import com.example.lda.model.SaveGrievanceResponse
 import com.example.lda.model.SendOtpResponse
 import com.example.lda.model.SignInResponse
 import com.example.lda.model.SignUpResponse
@@ -35,6 +36,8 @@ import com.example.lda.model.WardListResponse
 import com.example.lda.model.ZoneListResponse
 import com.example.lda.utils.dataClass.PropertyDetailsRequest
 import com.example.lda.utils.dataClass.PropertySearchRequest
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Field
@@ -42,7 +45,9 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
 
 
@@ -328,6 +333,27 @@ interface ApiMethod {
         @Header("X-App-Version") appVersion: Int,
         @Body request: VerifyOtpRequest
     ): Call<OtpVerificationResponse>
+
+
+    @Multipart
+    @POST("api/house_tax/saveGrievance")
+    fun saveGrievance(
+        @Header("X-App-Version") appVersion: Int,
+        @Part("ulbId") ulbId: RequestBody,
+        @Part("zoneId") zoneId: RequestBody,
+        @Part("wardId") wardId: RequestBody,
+        @Part("mohallaId") mohallaId: RequestBody,
+        @Part("categoryId") categoryId: RequestBody,
+        @Part("subCategoryId") subCategoryId: RequestBody,
+        @Part("landmark") landmark: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part("name") name: RequestBody,
+        @Part("fatherName") fatherName: RequestBody,
+        @Part("mobileNo") mobileNo: RequestBody,
+        @Part("email") email: RequestBody,
+        @Part("address") address: RequestBody,
+        @Part file: MultipartBody.Part?
+    ): Call<SaveGrievanceResponse>
 
 
 }

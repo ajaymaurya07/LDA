@@ -39,9 +39,12 @@ import com.example.lda.model.SubCategoriesItem
 import com.example.lda.model.UlbItem
 import com.example.lda.model.WardItem
 import com.example.lda.model.ZoneItem
+import com.example.lda.utils.LoderHelper
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
 
 class ApplyGrivanceActivity : AppCompatActivity() {
     private lateinit var binding: ActivityApplyGrivanceBinding
@@ -71,6 +74,7 @@ class ApplyGrivanceActivity : AppCompatActivity() {
 
     private lateinit var verifyOtpDialog:BottomSheetDialog
     private var isOtpVerificationIsDone=false
+    private lateinit var loderHelper: LoderHelper
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,6 +100,8 @@ class ApplyGrivanceActivity : AppCompatActivity() {
 
         viewModel.fetchGrievanceData()
         sharedViewModel.ulbData("")
+
+        loderHelper= LoderHelper(this)
     }
 
     private fun fetchProperties() {
@@ -103,7 +109,18 @@ class ApplyGrivanceActivity : AppCompatActivity() {
             try {
                 val db = AppDatabase.getDatabase(this@ApplyGrivanceActivity)
                 propertyList = db.propertyDao().getAllProperties()
-
+                
+                if (propertyList.size == 1) {
+                    val property = propertyList[0]
+                    selectedProperty = property
+                    binding.spinnerProperty.setText("${property.ownerName} (${property.propertyId})", false)
+                    binding.etName.setText(property.ownerName)
+                    binding.etMobileNumber.setText(property.phoneNumber)
+                    binding.etEmail.setText(property.email)
+                    
+                    binding.tilProperty.visibility = View.GONE
+                    binding.tvPropertyHeader.visibility = View.GONE
+                }
             } catch (e: Exception) {
                 Log.e("ApplyGrivance", "Error fetching properties", e)
             }
@@ -125,6 +142,15 @@ class ApplyGrivanceActivity : AppCompatActivity() {
         sharedViewModel.zoneList.observe(this) { list -> zoneList = list }
         sharedViewModel.wardList.observe(this) { list -> wardList = list }
         sharedViewModel.mohallaList.observe(this) { list -> mohallaList = list }
+
+        viewModel.saveGrievance.observe(this) { response ->
+            if (response?.success == true) {
+                Toast.makeText(this, response.message, Toast.LENGTH_LONG).show()
+                finish()
+            } else {
+                Toast.makeText(this, response?.message, Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     private fun setupListeners() {
@@ -338,25 +364,6 @@ class ApplyGrivanceActivity : AppCompatActivity() {
         if (selectedCategory == null) { Toast.makeText(this, "Select Category", Toast.LENGTH_SHORT).show(); return }
         if (desc.isEmpty()) { Toast.makeText(this, "Enter Grievance Details", Toast.LENGTH_SHORT).show(); return }
 
-        // Logging all data
-        Log.d("GrievanceSubmit", "--- Form Data ---")
-        Log.d("GrievanceSubmit", "Property ID: ${selectedProperty?.propertyId ?: "N/A"}")
-        Log.d("GrievanceSubmit", "Name: $name")
-        Log.d("GrievanceSubmit", "Mobile: $mobile")
-        Log.d("GrievanceSubmit", "Email: $email")
-        Log.d("GrievanceSubmit", "Father Name: $fatherName")
-        Log.d("GrievanceSubmit", "Address: $address")
-        Log.d("GrievanceSubmit", "ULB: ${selectedUlbItem?.ulbName} (ID: ${selectedUlbItem?.ulbId})")
-        Log.d("GrievanceSubmit", "Zone: ${selectedZoneItem?.zoneName} (ID: ${selectedZoneItem?.zoneId})")
-        Log.d("GrievanceSubmit", "Ward: ${selectedWardItem?.wardName} (ID: ${selectedWardItem?.wardId})")
-        Log.d("GrievanceSubmit", "Mohalla: ${selectedMohallaItem?.mohallaName} (ID: ${selectedMohallaItem?.mohallaId})")
-        Log.d("GrievanceSubmit", "Landmark: $landmark")
-        Log.d("GrievanceSubmit", "Category: ${selectedCategory?.serviceName} (ID: ${selectedCategory?.serviceCode})")
-        Log.d("GrievanceSubmit", "Sub-Category: ${selectedSubCategory?.subName ?: "N/A"} (ID: ${selectedSubCategory?.subCatCode})")
-        Log.d("GrievanceSubmit", "Description: $desc")
-        Log.d("GrievanceSubmit", "Image URI: ${imageUri ?: "No Image Selected"}")
-        Log.d("GrievanceSubmit", "-----------------")
-
         if (!isOtpVerificationIsDone) {
             val request = SendOtpRequest(
                 mobileNo = mobile,
@@ -364,8 +371,45 @@ class ApplyGrivanceActivity : AppCompatActivity() {
             )
             viewModel.sendOtp(request, "7394961460")
         } else {
-            Toast.makeText(this, "Grievance submitted successfully!", Toast.LENGTH_LONG).show()
-            finish()
+            submitGrievanceData()
+        }
+    }
+
+    private fun submitGrievanceData() {
+        val file = imageUri?.let { getFileFromUri(it) }
+        
+        viewModel.saveGrievance(
+            ulbId = selectedUlbItem?.ulbId.toString(),
+            zoneId = selectedZoneItem?.zoneId.toString(),
+            wardId = selectedWardItem?.wardId.toString(),
+            mohallaId = selectedMohallaItem?.mohallaId.toString(),
+            categoryId = selectedCategory?.serviceCode.toString(),
+            subCategoryId = selectedSubCategory?.subCatCode.toString(),
+            landmark = binding.etLandmark.text.toString().trim(),
+            description = binding.etDescription.text.toString().trim(),
+            name = binding.etName.text.toString().trim(),
+            fatherName = binding.etFatherName.text.toString().trim(),
+            mobileNo = binding.etMobileNumber.text.toString().trim(),
+            email = binding.etEmail.text.toString().trim(),
+            address = binding.etAddress.text.toString().trim(),
+            file = file
+        )
+    }
+
+    private fun getFileFromUri(uri: Uri): File? {
+        return try {
+            val contentResolver = applicationContext.contentResolver
+            val fileName = "grievance_image_${System.currentTimeMillis()}.jpg"
+            val tempFile = File(applicationContext.cacheDir, fileName)
+            contentResolver.openInputStream(uri)?.use { inputStream ->
+                FileOutputStream(tempFile).use { outputStream ->
+                    inputStream.copyTo(outputStream)
+                }
+            }
+            tempFile
+        } catch (e: Exception) {
+            Log.e("ApplyGrivance", "Error converting Uri to File", e)
+            null
         }
     }
 
@@ -379,18 +423,26 @@ class ApplyGrivanceActivity : AppCompatActivity() {
                 Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
             }
         }
+        
         viewModel.otpVerificationGrievance.observe(this){
             if (it.success==true){
                 isOtpVerificationIsDone=true
                 Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
                 verifyOtpDialog.dismiss()
-                // Re-trigger submit after OTP success
+                submitGrievanceData()
             }
             else{
                 Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
             }
         }
 
+        viewModel.isLoading.observe(this){
+            if (it){
+                loderHelper.startLoadingDialog("Loading Data, Please wait.")
+            }else{
+                loderHelper.dismissDialog()
+            }
+        }
     }
 
     private fun openPropertyVerifyOtpBottomSheet() {

@@ -17,6 +17,7 @@ import com.example.lda.model.CreateTransactionResponse
 import com.example.lda.model.FetchGrievanceResponse
 import com.example.lda.model.HashResponse
 import com.example.lda.model.OtpVerificationResponse
+import com.example.lda.model.SaveGrievanceResponse
 import com.example.lda.model.SendOtpResponse
 import com.example.lda.model.SignIn
 import com.example.lda.model.SignInResponse
@@ -24,9 +25,15 @@ import com.example.lda.model.SignUpResponse
 import com.example.lda.model.TransactionsDetailsResponse
 import com.example.lda.model.VerifyOtpMailResponse
 import com.example.lda.network.RetrofitClient
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 
 class PaymentViewModel:ViewModel() {
     fun hashData(
@@ -357,7 +364,7 @@ class PaymentViewModel:ViewModel() {
                 data = SignIn(
                     accessToken = "1234",
                     refreshToken = "1234",
-                    emailId = "ajaymaurya08072002@gmail.com",
+                    emailId = "amansinghraj37@gmail.com",
                     userType = "citizen"
                 ),
                 message = "Login Successful",
@@ -424,6 +431,83 @@ class PaymentViewModel:ViewModel() {
                     message = "error",
                     success = false,
                     responseCode = 0
+                )
+            }
+        })
+    }
+
+
+    private val _saveGrievance = MutableLiveData<SaveGrievanceResponse>()
+    val saveGrievance: LiveData<SaveGrievanceResponse> = _saveGrievance
+
+    fun saveGrievance(
+        ulbId: String,
+        zoneId: String,
+        wardId: String,
+        mohallaId: String,
+        categoryId: String,
+        subCategoryId: String,
+        landmark: String,
+        description: String,
+        name: String,
+        fatherName: String,
+        mobileNo: String,
+        email: String,
+        address: String,
+        file: File?
+    ) {
+        incrementLoader()
+
+        val ulbIdBody = ulbId.toRequestBody("text/plain".toMediaTypeOrNull())
+        val zoneIdBody = zoneId.toRequestBody("text/plain".toMediaTypeOrNull())
+        val wardIdBody = wardId.toRequestBody("text/plain".toMediaTypeOrNull())
+        val mohallaIdBody = mohallaId.toRequestBody("text/plain".toMediaTypeOrNull())
+        val categoryIdBody = categoryId.toRequestBody("text/plain".toMediaTypeOrNull())
+        val subCategoryIdBody = subCategoryId.toRequestBody("text/plain".toMediaTypeOrNull())
+        val landmarkBody = landmark.toRequestBody("text/plain".toMediaTypeOrNull())
+        val descriptionBody = description.toRequestBody("text/plain".toMediaTypeOrNull())
+        val nameBody = name.toRequestBody("text/plain".toMediaTypeOrNull())
+        val fatherNameBody = fatherName.toRequestBody("text/plain".toMediaTypeOrNull())
+        val mobileNoBody = mobileNo.toRequestBody("text/plain".toMediaTypeOrNull())
+        val emailBody = email.toRequestBody("text/plain".toMediaTypeOrNull())
+        val addressBody = address.toRequestBody("text/plain".toMediaTypeOrNull())
+
+        val filePart = file?.let {
+            val requestFile = it.asRequestBody("image/*".toMediaTypeOrNull())
+            MultipartBody.Part.createFormData("file", it.name, requestFile)
+        }
+
+        val call = RetrofitClient.apiCall.saveGrievance(
+            appVersion = Constent.APP_VERSION,
+            ulbId = ulbIdBody,
+            zoneId = zoneIdBody,
+            wardId = wardIdBody,
+            mohallaId = mohallaIdBody,
+            categoryId = categoryIdBody,
+            subCategoryId = subCategoryIdBody,
+            landmark = landmarkBody,
+            description = descriptionBody,
+            name = nameBody,
+            fatherName = fatherNameBody,
+            mobileNo = mobileNoBody,
+            email = emailBody,
+            address = addressBody,
+            file = filePart
+        )
+        call.enqueue(object : Callback<SaveGrievanceResponse> {
+            override fun onResponse(
+                call: Call<SaveGrievanceResponse>,
+                response: Response<SaveGrievanceResponse>
+            ) {
+                decrementLoader()
+                _saveGrievance.value = response.body()
+            }
+
+            override fun onFailure(call: Call<SaveGrievanceResponse>, t: Throwable) {
+                decrementLoader()
+                _saveGrievance.value = SaveGrievanceResponse(
+                    success = false,
+                    message = t.message
                 )
             }
         })
