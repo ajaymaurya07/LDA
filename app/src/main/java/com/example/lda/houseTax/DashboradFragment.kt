@@ -1,6 +1,7 @@
 package com.example.lda.houseTax
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -19,6 +20,7 @@ import com.example.lda.houseTax.data.SliderItem
 import com.example.lda.houseTax.data.database.AppDatabase
 import com.example.lda.houseTax.data.database.entity.BillEntity
 import com.example.lda.houseTax.utils.AlertDate
+import com.example.lda.houseTax.utils.PreferenceManager
 import com.example.lda.houseTax.viewmodel.PropertyDetailsViewmodel
 import com.example.lda.serviceactivity.MutationService
 import com.example.lda.serviceactivity.WaterSewerageServiceActivity
@@ -34,6 +36,7 @@ class DashboradFragment : Fragment() {
     lateinit var viewModel : PropertyDetailsViewmodel
     private lateinit var sliderHandler: Handler
     private lateinit var sliderRunnable: Runnable
+    lateinit var sharedPreferences: PreferenceManager
 
 
 
@@ -44,6 +47,7 @@ class DashboradFragment : Fragment() {
     ): View {
         _binding = FragmentDashboradBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity())[PropertyDetailsViewmodel::class.java]
+        sharedPreferences = PreferenceManager(requireContext())
         return binding.root
     }
 
@@ -53,7 +57,15 @@ class DashboradFragment : Fragment() {
 
         setupClicks()
         setupSlider()
-        binding.etPid.text = "PID: ${viewModel.pid.value}"
+
+        if (sharedPreferences.getUserType() == "admin") {
+            binding.etPid.text = "Admin"
+            binding.propertySearch.root.visibility = View.VISIBLE
+        } else {
+            binding.propertySearch.root.visibility = View.GONE
+            binding.etPid.text = "PID: ${viewModel.pid.value}"
+        }
+
 
     }
 

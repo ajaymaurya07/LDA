@@ -88,6 +88,8 @@
 
 
 
+
+
             <!-- CARD 3 -->
             <include
                 android:id="@+id/track_grivance_card"
@@ -118,13 +120,6 @@
                 android:layout_margin="8dp"/>
 
             <!-- CARD 4 -->
-            <include
-                android:id="@+id/property_search"
-                layout="@layout/item_payment_history"
-                android:layout_width="0dp"
-                android:layout_height="180dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"/>
 
 
             <include
@@ -138,6 +133,14 @@
             <include
                 android:id="@+id/water_sewerage_card"
                 layout="@layout/item_water_sewerage"
+                android:layout_width="0dp"
+                android:layout_height="180dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"/>
+
+            <include
+                android:id="@+id/property_search"
+                layout="@layout/item_payment_history"
                 android:layout_width="0dp"
                 android:layout_height="180dp"
                 android:layout_columnWeight="1"

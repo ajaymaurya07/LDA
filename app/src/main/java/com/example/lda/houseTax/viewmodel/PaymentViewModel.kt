@@ -366,7 +366,7 @@ class PaymentViewModel:ViewModel() {
                     accessToken = "1234",
                     refreshToken = "1234",
                     emailId = "amansinghraj37@gmail.com",
-                    userType = "citizen"
+                    userType = "admin"
                 ),
                 message = "Login Successful",
                 status = true,
