@@ -131,4 +131,8 @@ class PreferenceManager(context: Context) {
         return prefs.getString(KEY_USER_TYPE, null)
     }
 
+    fun clearAll() {
+        prefs.edit().clear().apply()
+    }
+
 }

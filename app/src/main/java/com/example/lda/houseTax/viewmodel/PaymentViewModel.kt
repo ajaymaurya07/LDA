@@ -412,9 +412,8 @@ class PaymentViewModel:ViewModel() {
     fun fetchGrievanceData() {
 
         incrementLoader()
-        val call = RetrofitClient.apiCallUlb.fetchGrievance(
-            appVersion = Constent.APP_VERSION,
-            authorization ="c3e82254e2a7f03ab46c6d0adff1b6d155c8f20de7630a9e3af41b6884133ecd"
+        val call = RetrofitClient.apiCall.fetchGrievance(
+            appVersion = Constent.APP_VERSION
         )
         call.enqueue(object : Callback<FetchGrievanceResponse> {
             override fun onResponse(

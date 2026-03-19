@@ -321,10 +321,9 @@ interface ApiMethod {
     ): Call<SignInResponse>
 
 
-    @GET("apis/grievance-cat-subcat")
+    @GET("api/House_tax/grievanceCategory")
     fun fetchGrievance(
-        @Header("X-App-Version") appVersion: Int,
-        @Header("Authorization") authorization: String,
+        @Header("X-App-Version") appVersion: Int
     ): Call<FetchGrievanceResponse>
 
 
