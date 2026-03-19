@@ -95,11 +95,11 @@ class DashboradFragment : Fragment() {
         }
 
         binding.mutationCard.cardMutation.setOnClickListener {
-            startActivity(Intent(requireActivity(), MutationService::class.java).putExtra("text","Name Transfer/Mutation"))
+//            startActivity(Intent(requireActivity(), MutationService::class.java).putExtra("text","Name Transfer/Mutation"))
         }
 
         binding.waterSewerageCard.cardWaterSewerage.setOnClickListener {
-            startActivity(Intent(requireActivity(), WaterSewerageServiceActivity::class.java).putExtra("text","Water & Sewerage"))
+//            startActivity(Intent(requireActivity(), WaterSewerageServiceActivity::class.java).putExtra("text","Water & Sewerage"))
         }
     }
 

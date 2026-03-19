@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#F4F7FA">
 
 
@@ -51,10 +51,14 @@
 
 
     <ScrollView
+        android:id="@+id/mainContent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:clipToPadding="false"
         android:layout_marginHorizontal="10dp"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@id/topAppBar"
+        app:layout_constraintBottom_toBottomOf="parent"
         >
 
         <LinearLayout
@@ -92,7 +96,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="PGF43925260008472"
+                            android:text=""
                             android:textColor="#2F3542"
                             android:textSize="14sp"/>
 
@@ -110,7 +114,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="Garbage and Cleanliness"
+                            android:text=""
                             android:textColor="#2F3542"
                             android:textSize="14sp" />
 
@@ -121,7 +125,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_medium"
-                            android:text="Lifting of Malwa"
+                            android:text=""
                             android:textColor="#747D8C"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -170,7 +174,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_bold"
-                                android:text="22-02-2026"
+                                android:text=""
                                 android:textColor="#D32F2F"
                                 android:textSize="14sp" />
                         </LinearLayout>
@@ -214,7 +218,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_medium"
-                            android:text="20-02-2026"
+                            android:text=""
                             android:textColor="#747D8C"
                             android:textSize="13sp"
                             android:layout_marginStart="5dp"/>
@@ -225,7 +229,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:fontFamily="@font/poppins_medium"
-                            android:text=", 12:51 P.M."
+                            android:text=""
                             android:textColor="#747D8C"
                             android:textSize="13sp"/>
 
@@ -251,7 +255,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:fontFamily="@font/poppins_medium"
-                            android:text="Near Post Office"
+                            android:text=""
                             android:textColor="#747D8C"
                             android:textSize="13sp"/>
 
@@ -425,7 +429,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_bold"
-                                android:text="Rekha Singh"
+                                android:text=""
                                 android:textColor="#2F3542"
                                 android:textSize="15sp" />
 
@@ -434,7 +438,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_medium"
-                                android:text="SWO • 7777766666"
+                                android:text=""
                                 android:textColor="#747D8C"
                                 android:textSize="13sp" />
                         </LinearLayout>
@@ -489,7 +493,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_bold"
-                                android:text="Amit Singh"
+                                android:text=""
                                 android:textColor="#2F3542"
                                 android:textSize="15sp" />
 
@@ -498,7 +502,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_medium"
-                                android:text="Ast SWO • 9999988888"
+                                android:text=""
                                 android:textColor="#747D8C"
                                 android:textSize="13sp" />
                         </LinearLayout>
@@ -556,4 +560,39 @@
         </LinearLayout>
     </ScrollView>
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/noStatusLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/topAppBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Status Found"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_bold"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="We couldn't find any status for this grievance ID."
+            android:textSize="14sp"
+            android:textColor="@color/gray"
+            android:gravity="center"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

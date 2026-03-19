@@ -100,7 +100,6 @@ class MainMenu : AppCompatActivity() {
         super.onStart()
         notificationPermissionHandler = NotificationPermissionHandler(this)
         notificationPermissionHandler.checkNotificationPermission()
-        notificationPermissionHandler.checkCameraPermission()
     }
 
 
