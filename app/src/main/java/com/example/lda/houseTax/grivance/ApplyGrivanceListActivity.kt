@@ -2,7 +2,9 @@ package com.example.lda.houseTax.grivance
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,11 +12,19 @@ import com.example.lda.R
 import com.example.lda.adaptor.GrievanceAdapter
 import com.example.lda.databinding.ActivityApplyGrivanceListBinding
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
-import com.example.lda.model.GrievanceStatusData
+import com.example.lda.houseTax.utils.PreferenceManager
+import com.example.lda.model.GrievanceDetailsResponse
+import com.example.lda.network.RetrofitClient
+import com.example.lda.utils.LoderHelper
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ApplyGrivanceListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityApplyGrivanceListBinding
     private lateinit var adapter: GrievanceAdapter
+    private lateinit var preferenceManager: PreferenceManager
+    private lateinit var loaderHelper: LoderHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,9 +32,12 @@ class ApplyGrivanceListActivity : AppCompatActivity() {
         setContentView(binding.root)
         enableEdgeToEdge()
 
+        preferenceManager = PreferenceManager(this)
+        loaderHelper = LoderHelper(this)
+
         setupToolbar()
         setupRecyclerView()
-        loadMockData()
+        fetchGrievanceDetails()
     }
 
     private fun setupToolbar() {
@@ -42,8 +55,7 @@ class ApplyGrivanceListActivity : AppCompatActivity() {
     private fun setupRecyclerView() {
         adapter = GrievanceAdapter(emptyList()) { grievance ->
             val intent = Intent(this, TrackGrivanceActivity::class.java)
-            // In a real app, you would pass the ID or the whole object
-            // intent.putExtra("complaintId", grievance.complaintId)
+            intent.putExtra("grievanceNo", grievance.grievanceNo)
             startActivity(intent)
         }
         binding.rvGrievances.apply {
@@ -52,48 +64,41 @@ class ApplyGrivanceListActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadMockData() {
-        val mockList = listOf(
-            GrievanceStatusData(
-                complaintId = "PGF43925260008472",
-                categoryName = "Garbage and Cleanliness",
-                subCategoryName = "Lifting of Malwa",
-                ulbName = "Nagar Nigam Lucknow",
-                mohallaName = "KALYANPUR WEST",
-                zoneName = "Zone-3",
-                wardName = "SHANKAR PURWA-2",
-                complaintDate = "20-02-2026",
-                landmark = "Near Post Office",
-                complaintDesc = "Water supply issue",
-                name = "Prasoon Mishra",
-                fatherHusbandName = "p K Mishra",
-                mobile = "9999933210",
-                email = "test@gmail.com",
-                address1 = "Civil Lines Lucknow",
-                address2 = "Near Post Office",
-                assignedEmpName = "Amit Singh",
-                assignedEmpMobile = "9999988888",
-                assignedEmpPost = "Ast SWO",
-                assignedOffName = "Rekha Singh",
-                assignedOffMobile = "7777766666",
-                assignedOffPost = "SWO",
-                status = "New application",
-                closeDate = "-",
-                closeRemark = "Processing",
-                complaintTime = "12:51 P.M.",
-                closeTime = "12:00 A.M.",
-                reComplain = 0,
-                dueDate = "22-02-2026"
-            ),
-            GrievanceStatusData(
-                complaintId = "PGF43925260008473",
-                categoryName = "Street Light",
-                subCategoryName = "New Light Installation",
-                status = "In Progress",
-                complaintDate = "21-02-2026"
-                // ... other fields can be null or empty for mock
-            )
-        )
-        adapter.updateData(mockList)
+    private fun fetchGrievanceDetails() {
+        val email = preferenceManager.getEmail()
+        if (email.isNullOrEmpty()) {
+            Toast.makeText(this, "Email not found. Please login again.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        loaderHelper.startLoadingDialog("Fetching grievance list...")
+        
+        val requestBody = mapOf("email_id" to email)
+        
+        RetrofitClient.apiCall.getGrievanceDetails(1, requestBody).enqueue(object : Callback<GrievanceDetailsResponse> {
+            override fun onResponse(
+                call: Call<GrievanceDetailsResponse>,
+                response: Response<GrievanceDetailsResponse>
+            ) {
+                loaderHelper.dismissDialog()
+                if (response.isSuccessful && response.body()?.success == true) {
+                    val list = response.body()?.data
+                    if (!list.isNullOrEmpty()) {
+                        adapter.updateData(list)
+                        binding.noDataText.visibility = View.GONE
+                    } else {
+                        binding.noDataText.visibility = View.VISIBLE
+                        binding.noDataText.text = "No grievances found."
+                    }
+                } else {
+                    Toast.makeText(this@ApplyGrivanceListActivity, "Failed to fetch grievances: ${response.body()?.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<GrievanceDetailsResponse>, t: Throwable) {
+                loaderHelper.dismissDialog()
+                Toast.makeText(this@ApplyGrivanceListActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }

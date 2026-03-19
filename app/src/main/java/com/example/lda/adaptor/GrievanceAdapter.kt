@@ -1,15 +1,14 @@
 package com.example.lda.adaptor
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lda.databinding.ItemGrievanceListBinding
-import com.example.lda.model.GrievanceStatusData
+import com.example.lda.model.GrievanceDetails
 
 class GrievanceAdapter(
-    private var list: List<GrievanceStatusData>,
-    private val onTrackClick: (GrievanceStatusData) -> Unit
+    private var list: List<GrievanceDetails>,
+    private val onTrackClick: (GrievanceDetails) -> Unit
 ) : RecyclerView.Adapter<GrievanceAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: ItemGrievanceListBinding) : RecyclerView.ViewHolder(binding.root)
@@ -22,9 +21,9 @@ class GrievanceAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = list[position]
         holder.binding.apply {
-            tvGrievanceId.text = "ID: ${item.complaintId}"
+            tvGrievanceId.text = "ID: ${item.grievanceNo}"
             tvCategory.text = "Category: ${item.categoryName}"
-            tvSubCategory.text = "Sub Category: ${item.subCategoryName}"
+            tvSubCategory.text = "Sub Category: ${item.subcategoryName}"
             
             btnTrack.setOnClickListener {
                 onTrackClick(item)
@@ -38,7 +37,7 @@ class GrievanceAdapter(
 
     override fun getItemCount(): Int = list.size
 
-    fun updateData(newList: List<GrievanceStatusData>) {
+    fun updateData(newList: List<GrievanceDetails>) {
         list = newList
         notifyDataSetChanged()
     }

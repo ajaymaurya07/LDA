@@ -13,6 +13,7 @@ import com.example.lda.model.CreateTransactionResponse
 import com.example.lda.model.FetchGrievanceResponse
 import com.example.lda.model.FinalOrderCountResponse
 import com.example.lda.model.FinalOrderDetailResponse
+import com.example.lda.model.GrievanceDetailsResponse
 import com.example.lda.model.HashResponse
 import com.example.lda.model.IaCaseDetailsResponse
 import com.example.lda.model.IaDetailsCountResponse
@@ -364,6 +365,15 @@ interface ApiMethod {
         @Header("X-App-Version") appVersion: Int,
         @Body emailId: Map<String, String>
     ): Call<TransactionsByEmailResponse>
+
+    @Headers(
+        "Content-Type: application/json",
+        "Accept: application/json")
+    @POST("api/house_tax/getGrievanceDetails")
+    fun getGrievanceDetails(
+        @Header("X-App-Version") appVersion: Int,
+        @Body emailId: Map<String, String>
+    ): Call<GrievanceDetailsResponse>
 
 
 }

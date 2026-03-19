@@ -365,7 +365,7 @@ class PaymentViewModel:ViewModel() {
                 data = SignIn(
                     accessToken = "1234",
                     refreshToken = "1234",
-                    emailId = "amansinghraj37@gmail.com",
+                    emailId = "1@gmail.com",
                     userType = "admin"
                 ),
                 message = "Login Successful",
