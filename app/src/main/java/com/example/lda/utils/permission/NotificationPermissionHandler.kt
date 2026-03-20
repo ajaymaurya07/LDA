@@ -18,7 +18,15 @@ class NotificationPermissionHandler(private val activity: Activity) {
         const val CAMERA_PERMISSION_CODE = 1003
     }
 
-    fun checkNotificationPermission() {
+    /**
+     * Starts the sequential permission check flow.
+     * First checks for Notifications, then Camera.
+     */
+    fun checkPermissions() {
+        checkNotificationPermission()
+    }
+
+    private fun checkNotificationPermission() {
         // Notification permission only required for Android 13+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(
@@ -31,7 +39,13 @@ class NotificationPermissionHandler(private val activity: Activity) {
                     arrayOf(Manifest.permission.POST_NOTIFICATIONS),
                     NOTIFICATION_PERMISSION_CODE
                 )
+            } else {
+                // Already granted, move to next
+                checkCameraPermission()
             }
+        } else {
+            // Not required for this version, move to next
+            checkCameraPermission()
         }
     }
 
@@ -59,7 +73,8 @@ class NotificationPermissionHandler(private val activity: Activity) {
                 if (grantResults.isNotEmpty() &&
                     grantResults[0] == PackageManager.PERMISSION_GRANTED
                 ) {
-                    // Permission granted
+                    // Permission granted, proceed to camera
+                    checkCameraPermission()
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
                         ActivityCompat.shouldShowRequestPermissionRationale(
@@ -71,6 +86,9 @@ class NotificationPermissionHandler(private val activity: Activity) {
                             checkNotificationPermission()
                         }
                     } else {
+                        // Denied permanently or user doesn't want to grant, 
+                        // we still might want to ask for camera if they just ignored this one.
+                        // But usually, if they deny permanently, we show settings.
                         showGoToSettingsDialog("Notification")
                     }
                 }
@@ -104,6 +122,13 @@ class NotificationPermissionHandler(private val activity: Activity) {
             .setPositiveButton("OK") { _, _ ->
                 retryAction()
             }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+                // If notification explanation is cancelled, still try camera
+                if (title == "Notification") {
+                    checkCameraPermission()
+                }
+            }
             .setCancelable(false)
             .show()
     }
@@ -117,6 +142,13 @@ class NotificationPermissionHandler(private val activity: Activity) {
                 val uri: Uri = Uri.fromParts("package", activity.packageName, null)
                 intent.data = uri
                 activity.startActivity(intent)
+            }
+            .setNegativeButton("Skip") { dialog, _ ->
+                dialog.dismiss()
+                // If notification settings is skipped, still try camera
+                if (permissionName == "Notification") {
+                    checkCameraPermission()
+                }
             }
             .setCancelable(false)
             .show()

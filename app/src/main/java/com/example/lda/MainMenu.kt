@@ -99,7 +99,7 @@ class MainMenu : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         notificationPermissionHandler = NotificationPermissionHandler(this)
-        notificationPermissionHandler.checkNotificationPermission()
+        notificationPermissionHandler.checkPermissions()
     }
 
 
