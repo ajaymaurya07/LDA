@@ -310,7 +310,7 @@ class SignUpActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             else{
-                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                AlertDialogHelper.showMessageDialog(this, it.message?:"")
             }
         }
     }

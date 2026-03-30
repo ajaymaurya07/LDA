@@ -369,14 +369,49 @@ class PaymentViewModel:ViewModel() {
                 response: Response<VerifyOtpMailResponse>
             ) {
                 decrementLoader()
-                _otpVerificationMail.value= response.body()
+                val body = response.body()
+
+                when {
+
+                    response.isSuccessful -> { //HTTP 200
+                        if (body != null) {
+                            _otpVerificationMail.value = body
+                        } else {
+                            _otpVerificationMail.value= VerifyOtpMailResponse(
+                                data = null,
+                                message = "No Response Found",
+                                status = false,
+                                responseCode = 0
+                            )
+                        }
+                    }
+
+//                    response.code() == 401 -> {
+//                        _signUpData.value = SignUpResponse(
+//                            message = "Session expired, please login again",
+//                            status = false,
+//                            responseCode = 401
+//                        )
+//                    }
+
+                    // Other
+                    else -> {
+                        _otpVerificationMail.value= VerifyOtpMailResponse(
+                            data = null,
+                            message = "Unknown error",
+                            status = false,
+                            responseCode = 0
+                        )
+                    }
+                }
+
             }
             override fun onFailure(
                 call: Call<VerifyOtpMailResponse>, t: Throwable) {
                 decrementLoader()
                 _otpVerificationMail.value= VerifyOtpMailResponse(
                     data = null,
-                    message = "error",
+                    message = "network error",
                     status = false,
                     responseCode = 0
                 )
