@@ -305,13 +305,45 @@ class PaymentViewModel:ViewModel() {
                 response: Response<SignUpResponse>
             ) {
                 decrementLoader()
-                _signUpData.value= response.body()
+                val body = response.body()
+                when {
+
+                    response.isSuccessful -> { //HTTP 200
+                        if (body != null) {
+                            _signUpData.value = body
+                        } else {
+                            _signUpData.value = SignUpResponse(
+                                message = "No response found",
+                                status = false,
+                                responseCode = 0
+                            )
+                        }
+                    }
+
+//                    response.code() == 401 -> {
+//                        _signUpData.value = SignUpResponse(
+//                            message = "Session expired, please login again",
+//                            status = false,
+//                            responseCode = 401
+//                        )
+//                    }
+
+                    // Other
+                    else -> {
+                        _signUpData.value = SignUpResponse(
+                            message = "Unknown error",
+                            status = false,
+                            responseCode = response.code()
+                        )
+                    }
+                }
+
             }
             override fun onFailure(
                 call: Call<SignUpResponse>, t: Throwable) {
                 decrementLoader()
                 _signUpData.value = SignUpResponse(
-                    message = "error",
+                    message = "network error",
                     status = false,
                     responseCode = 0
                 )

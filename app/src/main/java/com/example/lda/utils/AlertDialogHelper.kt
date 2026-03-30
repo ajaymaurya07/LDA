@@ -21,5 +21,16 @@ class AlertDialogHelper {
 
             builder.show()
         }
+
+        fun showMessageDialog(context: Context, message: String, title: String = "Alert Message") {
+            AlertDialog.Builder(context)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("OK") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .setCancelable(false)
+                .show()
+        }
     }
 }

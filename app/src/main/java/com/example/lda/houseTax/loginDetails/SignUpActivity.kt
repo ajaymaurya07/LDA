@@ -31,6 +31,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.text.InputType
+import com.example.lda.utils.AlertDialogHelper
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
@@ -284,7 +285,7 @@ class SignUpActivity : AppCompatActivity() {
                 Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
             }
             else{
-                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                AlertDialogHelper.showMessageDialog(this, it.message?:"")
             }
         }
 
