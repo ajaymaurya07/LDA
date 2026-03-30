@@ -32,6 +32,7 @@ import android.os.Build
 import android.provider.Settings
 import android.text.InputType
 import com.example.lda.utils.AlertDialogHelper
+import com.example.lda.utils.HashUtils
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
@@ -63,11 +64,13 @@ class SignUpActivity : AppCompatActivity() {
                 val email = binding.etEmail.text.toString().trim()
                 val password = binding.etPassword.text.toString().trim()
 
+                val hashedPassword = HashUtils.sha512(password)
+
                 val request = SignUpRequest(
                     name = name,
                     mobile_no = mobile,
                     email = email,
-                    password = password
+                    password = hashedPassword
                 )
                 viewModel.signUp(request)
 
