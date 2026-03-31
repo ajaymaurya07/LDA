@@ -429,7 +429,7 @@ class PaymentViewModel:ViewModel() {
 
     fun signIn(request: SignInRequest) {
 
-        if (request.username== Constent.TEST_MOBILE_NUMBER && request.password== Constent.TEST_PASSWORD){
+        if (request.username== Constent.TEST_MOBILE_NUMBER && request.hash== Constent.TEST_PASSWORD){
             _signIn.value= SignInResponse(
                 data = SignIn(
                     accessToken = "1234",
@@ -456,8 +456,33 @@ class PaymentViewModel:ViewModel() {
                 response: Response<SignInResponse>
             ) {
                 decrementLoader()
-                _signIn.value= response.body()
-                Log.d("TAG",response.body().toString())
+
+                val body=response.body()
+                when{
+                    response.isSuccessful -> { //HTTP 200
+                        if (body != null) {
+                            _signIn.value = body
+                        }
+                        else {
+                            _signIn.value = SignInResponse(
+                                data = null,
+                                message = "No Response Found",
+                                status = false,
+                                responseCode = 0
+                            )
+                        }
+                    }
+                    else -> {
+                        _signIn.value = SignInResponse(
+                            data = null,
+                            message = "Unknown error",
+                            status = false,
+                            responseCode = 0
+                        )
+                    }
+                }
+
+
             }
             override fun onFailure(
                 call: Call<SignInResponse>, t: Throwable) {

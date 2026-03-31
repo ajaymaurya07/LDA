@@ -282,7 +282,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         viewModel.signUpData.observe(this){
-            if (it.status==true){
+            if (it.status==true && it.responseCode==1){
                 openOtpBottomSheet(binding.etEmail.text.toString())
 
                 Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
@@ -301,7 +301,7 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         viewModel.otpVerificationMail.observe(this){
-            if (it.status==true){
+            if (it.status==true && it.responseCode==1){
                 Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
                 dialog.dismiss()
 

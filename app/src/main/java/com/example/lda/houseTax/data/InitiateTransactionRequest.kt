@@ -56,7 +56,11 @@ data class VerifyOtpMailRequest(
 
 data class SignInRequest(
     val username: String,
-    val password: String
+    val device_id: String,
+    val challenge_id: String,
+    val timestamp: String,
+    val nonce: String,
+    val hash: String
 )
 
 data class PaymentAlert(
