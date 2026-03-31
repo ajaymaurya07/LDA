@@ -1,5 +1,7 @@
 package com.example.lda.network
 
+import com.example.lda.houseTax.data.ChallengeRequest
+import com.example.lda.houseTax.data.ChallengeResponse
 import com.example.lda.houseTax.data.InitiateTransactionRequest
 import com.example.lda.houseTax.data.SendOtpRequest
 import com.example.lda.houseTax.data.SignInRequest
@@ -321,6 +323,13 @@ interface ApiMethod {
         @Header("X-App-Version") appVersion: Int,
         @Body request: SignInRequest
     ): Call<SignInResponse>
+
+
+    @POST("api/house_tax/get_challenge")
+    fun getChallenge(
+        @Header("X-App-Version") appVersion: Int,
+        @Body request: ChallengeRequest
+    ): Call<ChallengeResponse>
 
 
     @GET("api/House_tax/grievanceCategory")

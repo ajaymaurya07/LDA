@@ -356,6 +356,11 @@ class SignUpActivity : AppCompatActivity() {
             return false
         }
 
+        if (!isValidPassword(password)) {
+            AlertDialogHelper.showMessageDialog(this,"Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.")
+            return false
+        }
+
 
         if (confirmPassword.isEmpty()) {
             Toast.makeText(this, "Confirm password required", Toast.LENGTH_LONG).show()
@@ -373,6 +378,11 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun isValidMobile(mobile: String): Boolean {
         return mobile.length == 10 && mobile.matches(Regex("^[6-9][0-9]{9}$"))
+    }
+
+    private fun isValidPassword(password: String): Boolean {
+        val passwordPattern = Regex("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$")
+        return passwordPattern.matches(password)
     }
 
 

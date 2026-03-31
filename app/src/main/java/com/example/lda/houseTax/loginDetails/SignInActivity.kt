@@ -2,6 +2,7 @@ package com.example.lda.houseTax.loginDetails
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -10,9 +11,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.lda.R
 import com.example.lda.databinding.ActivitySignInBinding
 import com.example.lda.houseTax.PropertySearchActivity
+import com.example.lda.houseTax.data.ChallengeRequest
 import com.example.lda.houseTax.data.SignInRequest
 import com.example.lda.houseTax.utils.PreferenceManager
 import com.example.lda.houseTax.viewmodel.PaymentViewModel
+import com.example.lda.utils.AlertDialogHelper
 import com.example.lda.utils.LoderHelper
 
 class SignInActivity : AppCompatActivity() {
@@ -43,11 +46,12 @@ class SignInActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             else{
-                val request= SignInRequest(
+                val deviceId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
+                val challengeRequest = ChallengeRequest(
                     username = userId,
-                    password = password
+                    device_id = deviceId
                 )
-                viewModel.signIn(request)
+                viewModel.getChallenge(challengeRequest)
             }
 
         }
@@ -69,6 +73,23 @@ class SignInActivity : AppCompatActivity() {
                 loderHelper.startLoadingDialog("Please wait.")
             }else{
                 loderHelper.dismissDialog()
+            }
+        }
+
+        viewModel.challenge.observe(this) { response ->
+
+            if (response.status==true) {
+
+                val userId = binding.etPhoneOrEmailId.text.toString().trim()
+                val password = binding.etPassword.text.toString().trim()
+
+                val request = SignInRequest(
+                    username = userId,
+                    password = password
+                )
+                viewModel.signIn(request)
+            } else {
+                Toast.makeText(this, response?.message ?: "Failed to get challenge", Toast.LENGTH_LONG).show()
             }
         }
 

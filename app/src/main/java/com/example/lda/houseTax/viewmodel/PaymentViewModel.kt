@@ -7,6 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import com.example.lda.constent.Constent
+import com.example.lda.houseTax.data.ChallengeRequest
+import com.example.lda.houseTax.data.ChallengeResponse
 import com.example.lda.houseTax.data.InitiateTransactionRequest
 import com.example.lda.houseTax.data.SendOtpRequest
 import com.example.lda.houseTax.data.SignInRequest
@@ -472,6 +474,62 @@ class PaymentViewModel:ViewModel() {
     }
 
 
+
+    private val _challenge = MutableLiveData<ChallengeResponse>()
+    val challenge: LiveData<ChallengeResponse> = _challenge
+
+    fun getChallenge(request: ChallengeRequest) {
+        incrementLoader()
+        val call = RetrofitClient.apiCall.getChallenge(
+            appVersion = Constent.APP_VERSION,
+            request = request
+        )
+        call.enqueue(object : Callback<ChallengeResponse> {
+            override fun onResponse(
+                call: Call<ChallengeResponse>,
+                response: Response<ChallengeResponse>
+            ) {
+
+                decrementLoader()
+                val body= response.body()
+
+                when {
+                    response.isSuccessful -> { //HTTP 200
+                        if (body != null) {
+                            _challenge.value = body
+                        }
+                        else {
+                            _challenge.value = ChallengeResponse(
+                                responseCode = 0,
+                                data = null,
+                                message = "No Response Found",
+                                status = false
+                            )
+                        }
+                    }
+                    else -> {
+                        _challenge.value = ChallengeResponse(
+                            responseCode = 0,
+                            data = null,
+                            message = "Unknown error",
+                            status = false
+                        )
+                    }
+                }
+
+            }
+
+            override fun onFailure(call: Call<ChallengeResponse>, t: Throwable) {
+                decrementLoader()
+                _challenge.value = ChallengeResponse(
+                    responseCode = 0,
+                    data = null,
+                    message = "network error",
+                    status = false
+                )
+            }
+        })
+    }
 
 
     private val _grievanceData = MutableLiveData<FetchGrievanceResponse>()
