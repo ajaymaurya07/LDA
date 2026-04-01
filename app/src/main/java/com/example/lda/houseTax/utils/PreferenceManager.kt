@@ -18,6 +18,8 @@ class PreferenceManager(context: Context) {
         private const val LOGIN_MOBILE_NUMBER = "login_mobile_number"
         private const val KEY_EMAIL = "key_email"
         private const val KEY_USER_TYPE = "key_user_type"
+        private const val ACCESS_TOKEN = "access_token"
+        private const val REFRESH_TOKEN = "refresh_token"
     }
 
     private val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
@@ -133,6 +135,21 @@ class PreferenceManager(context: Context) {
 
     fun clearAll() {
         prefs.edit().clear().apply()
+    }
+    fun saveAccessToken(accessToken: String) {
+        prefs.edit().putString(ACCESS_TOKEN, accessToken).apply()
+    }
+
+    fun getAccessToken(): String? {
+        return prefs.getString(ACCESS_TOKEN, null)
+    }
+
+    fun saveRefreshToken(refreshToken: String) {
+        prefs.edit().putString(REFRESH_TOKEN, refreshToken).apply()
+    }
+
+    fun getRefreshToken(): String? {
+        return prefs.getString(REFRESH_TOKEN, null)
     }
 
 }

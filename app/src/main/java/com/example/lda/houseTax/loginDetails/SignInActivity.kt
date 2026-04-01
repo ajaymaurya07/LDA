@@ -62,6 +62,10 @@ class SignInActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.tvForgotPassword.setOnClickListener {
+            startActivity(Intent(this, ForgotPasswordActivity::class.java))
+        }
+
         observeViewModel()
     }
 
@@ -119,6 +123,8 @@ class SignInActivity : AppCompatActivity() {
                 preferenceManager.saveLoginMobileNumber(binding.etPhoneOrEmailId.text.toString().trim())
                 preferenceManager.saveEmail(it.data?.emailId.toString())
                 preferenceManager.saveUserType(it.data?.userType.toString())
+                preferenceManager.saveAccessToken(it.data?.accessToken.toString())
+                preferenceManager.saveRefreshToken(it.data?.refreshToken.toString())
                 Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
                 val intent = Intent(this, PropertySearchActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

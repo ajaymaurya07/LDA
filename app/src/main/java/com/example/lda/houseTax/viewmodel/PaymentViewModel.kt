@@ -9,6 +9,8 @@ import androidx.lifecycle.map
 import com.example.lda.constent.Constent
 import com.example.lda.houseTax.data.ChallengeRequest
 import com.example.lda.houseTax.data.ChallengeResponse
+import com.example.lda.houseTax.data.ForgotPasswordRequest
+import com.example.lda.houseTax.data.ForgotPasswordResponse
 import com.example.lda.houseTax.data.InitiateTransactionRequest
 import com.example.lda.houseTax.data.SendOtpRequest
 import com.example.lda.houseTax.data.SignInRequest
@@ -551,6 +553,59 @@ class PaymentViewModel:ViewModel() {
                     data = null,
                     message = "network error",
                     status = false
+                )
+            }
+        })
+    }
+
+
+    private val _forgotPassword = MutableLiveData<ForgotPasswordResponse>()
+    val forgotPassword: LiveData<ForgotPasswordResponse> = _forgotPassword
+
+    fun forgotPassword(request: ForgotPasswordRequest) {
+        incrementLoader()
+        val call = RetrofitClient.apiCall.forgotPassword(
+            appVersion = Constent.APP_VERSION,
+            request = request
+        )
+        call.enqueue(object : Callback<ForgotPasswordResponse> {
+            override fun onResponse(
+                call: Call<ForgotPasswordResponse>,
+                response: Response<ForgotPasswordResponse>
+            ) {
+                decrementLoader()
+                val body= response.body()
+
+                when {
+                    response.isSuccessful -> { //HTTP 200
+                        if (body != null) {
+                            _forgotPassword.value = body
+                        }
+                        else {
+                            _forgotPassword.value = ForgotPasswordResponse(
+                                status = false,
+                                message = "No Response Found",
+                                responseCode = 0
+                            )
+                        }
+                    }
+                    else -> {
+                        _forgotPassword.value = ForgotPasswordResponse(
+                            status = false,
+                            message = "Unknown error",
+                            responseCode = 0
+                        )
+                    }
+                }
+
+            }
+
+            override fun onFailure(call: Call<ForgotPasswordResponse>, t: Throwable) {
+                decrementLoader()
+                _forgotPassword.value = ForgotPasswordResponse(
+                    status = false,
+                    message = "network error",
+                    responseCode = 0
                 )
             }
         })

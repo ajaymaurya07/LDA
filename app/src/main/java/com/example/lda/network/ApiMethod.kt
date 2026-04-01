@@ -2,6 +2,8 @@ package com.example.lda.network
 
 import com.example.lda.houseTax.data.ChallengeRequest
 import com.example.lda.houseTax.data.ChallengeResponse
+import com.example.lda.houseTax.data.ForgotPasswordRequest
+import com.example.lda.houseTax.data.ForgotPasswordResponse
 import com.example.lda.houseTax.data.InitiateTransactionRequest
 import com.example.lda.houseTax.data.SendOtpRequest
 import com.example.lda.houseTax.data.SignInRequest
@@ -330,6 +332,12 @@ interface ApiMethod {
         @Header("X-App-Version") appVersion: Int,
         @Body request: ChallengeRequest
     ): Call<ChallengeResponse>
+
+    @POST("api/house_tax/forgot_password")
+    fun forgotPassword(
+        @Header("X-App-Version") appVersion: Int,
+        @Body request: ForgotPasswordRequest
+    ): Call<ForgotPasswordResponse>
 
 
     @GET("api/House_tax/grievanceCategory")
