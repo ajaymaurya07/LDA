@@ -112,8 +112,7 @@ class SharedViewModel : ViewModel() {
             _errorMessage.value = null
             return
         }
-
-        val token = preferenceManager.getAccessToken() ?: ""
+        val token = "Bearer ${preferenceManager.getAccessToken() ?: ""}"
 
         incrementLoader()
         val call = RetrofitClient.apiCall.ulbData(Constent.APP_VERSION, deviceId, token)
@@ -124,7 +123,7 @@ class SharedViewModel : ViewModel() {
             ) {
                 if (response.code() == 403) {
                     decrementLoader()
-                    handleTokenRefresh(loginMobileNumber, deviceId, preferenceManager) {
+                    handleTokenRefresh( preferenceManager) {
                         ulbData(loginMobileNumber, deviceId, preferenceManager)
                     }
                     return
@@ -150,8 +149,6 @@ class SharedViewModel : ViewModel() {
     }
 
     private fun handleTokenRefresh(
-        loginMobileNumber: String,
-        deviceId: String,
         preferenceManager: PreferenceManager,
         onSuccess: () -> Unit
     ) {
@@ -185,7 +182,7 @@ class SharedViewModel : ViewModel() {
 
             override fun onFailure(call: Call<RefreshTokenResponse>, t: Throwable) {
                 decrementLoader()
-                _errorMessage.value = "Network error during token refresh"
+                _errorMessage.value = "Network error"
             }
         })
     }
@@ -241,7 +238,7 @@ class SharedViewModel : ViewModel() {
             _zoneList.value = emptyList() // Or dummy data
             return
         }
-        val token = preferenceManager.getAccessToken() ?: ""
+        val token = "Bearer ${preferenceManager.getAccessToken() ?: ""}"
         incrementLoader()
         val call = RetrofitClient.apiCall.zoneList(Constent.APP_VERSION, deviceId, token, ulbId)
         call.enqueue(object : Callback<ZoneListResponse> {
@@ -251,7 +248,7 @@ class SharedViewModel : ViewModel() {
             ) {
                 if (response.code() == 403) {
                     decrementLoader()
-                    handleTokenRefresh(loginMobileNumber, deviceId, preferenceManager) {
+                    handleTokenRefresh(preferenceManager) {
                         zoneData(loginMobileNumber, ulbId, deviceId, preferenceManager)
                     }
                     return
@@ -303,7 +300,7 @@ class SharedViewModel : ViewModel() {
             _wardList.value = emptyList()
             return
         }
-        val token = preferenceManager.getAccessToken() ?: ""
+        val token = "Bearer ${preferenceManager.getAccessToken() ?: ""}"
         incrementLoader()
         val call = RetrofitClient.apiCall.wardList(Constent.APP_VERSION, deviceId, token, ulbId, zoneId)
         call.enqueue(object : Callback<WardListResponse> {
@@ -313,7 +310,7 @@ class SharedViewModel : ViewModel() {
             ) {
                 if (response.code() == 403) {
                     decrementLoader()
-                    handleTokenRefresh(loginMobileNumber, deviceId, preferenceManager) {
+                    handleTokenRefresh(preferenceManager) {
                         wardData(loginMobileNumber, ulbId, zoneId, deviceId, preferenceManager)
                     }
                     return
@@ -368,7 +365,7 @@ class SharedViewModel : ViewModel() {
             _mohallaList.value = emptyList()
             return
         }
-        val token = preferenceManager.getAccessToken() ?: ""
+        val token = "Bearer ${preferenceManager.getAccessToken() ?: ""}"
         incrementLoader()
         val call = RetrofitClient.apiCall.mohallaList(Constent.APP_VERSION, deviceId, token, ulbId, zoneId, wardId)
         call.enqueue(object : Callback<MohallaListResponse> {
@@ -378,7 +375,7 @@ class SharedViewModel : ViewModel() {
             ) {
                 if (response.code() == 403) {
                     decrementLoader()
-                    handleTokenRefresh(loginMobileNumber, deviceId, preferenceManager) {
+                    handleTokenRefresh(preferenceManager) {
                         mohallaData(loginMobileNumber, ulbId, zoneId, wardId, deviceId, preferenceManager)
                     }
                     return
