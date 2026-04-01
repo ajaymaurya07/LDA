@@ -15,6 +15,8 @@ import com.example.lda.houseTax.data.InitiateTransactionRequest
 import com.example.lda.houseTax.data.SendOtpRequest
 import com.example.lda.houseTax.data.SignInRequest
 import com.example.lda.houseTax.data.SignUpRequest
+import com.example.lda.houseTax.data.VerifyForgotPasswordOtpRequest
+import com.example.lda.houseTax.data.VerifyForgotPasswordOtpResponse
 import com.example.lda.houseTax.data.VerifyOtpMailRequest
 import com.example.lda.houseTax.data.VerifyOtpRequest
 import com.example.lda.model.CreateTransactionResponse
@@ -606,6 +608,44 @@ class PaymentViewModel:ViewModel() {
                     status = false,
                     message = "network error",
                     responseCode = 0
+                )
+            }
+        })
+    }
+
+    private val _verifyForgotPasswordOtp = MutableLiveData<VerifyForgotPasswordOtpResponse>()
+    val verifyForgotPasswordOtp: LiveData<VerifyForgotPasswordOtpResponse> = _verifyForgotPasswordOtp
+
+    fun verifyForgotPasswordOtp(request: VerifyForgotPasswordOtpRequest) {
+        incrementLoader()
+        val call = RetrofitClient.apiCall.verifyForgotPasswordOtp(
+            appVersion = Constent.APP_VERSION,
+            request = request
+        )
+        call.enqueue(object : Callback<VerifyForgotPasswordOtpResponse> {
+            override fun onResponse(
+                call: Call<VerifyForgotPasswordOtpResponse>,
+                response: Response<VerifyForgotPasswordOtpResponse>
+            ) {
+                decrementLoader()
+                val body = response.body()
+                if (response.isSuccessful && body != null) {
+                    _verifyForgotPasswordOtp.value = body
+                } else {
+                    _verifyForgotPasswordOtp.value = VerifyForgotPasswordOtpResponse(
+                        status = false,
+                        responseCode = 0,
+                        message = body?.message ?: "Unknown error"
+                    )
+                }
+            }
+
+            override fun onFailure(call: Call<VerifyForgotPasswordOtpResponse>, t: Throwable) {
+                decrementLoader()
+                _verifyForgotPasswordOtp.value = VerifyForgotPasswordOtpResponse(
+                    status = false,
+                    responseCode = 0,
+                    message = "network error"
                 )
             }
         })

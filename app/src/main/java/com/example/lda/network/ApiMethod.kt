@@ -8,6 +8,8 @@ import com.example.lda.houseTax.data.InitiateTransactionRequest
 import com.example.lda.houseTax.data.SendOtpRequest
 import com.example.lda.houseTax.data.SignInRequest
 import com.example.lda.houseTax.data.SignUpRequest
+import com.example.lda.houseTax.data.VerifyForgotPasswordOtpRequest
+import com.example.lda.houseTax.data.VerifyForgotPasswordOtpResponse
 import com.example.lda.houseTax.data.VerifyOtpMailRequest
 import com.example.lda.houseTax.data.VerifyOtpRequest
 import com.example.lda.model.AllCaseDetailsResponse
@@ -338,6 +340,12 @@ interface ApiMethod {
         @Header("X-App-Version") appVersion: Int,
         @Body request: ForgotPasswordRequest
     ): Call<ForgotPasswordResponse>
+
+    @POST("api/house_tax/verify_forgot_password_otp")
+    fun verifyForgotPasswordOtp(
+        @Header("X-App-Version") appVersion: Int,
+        @Body request: VerifyForgotPasswordOtpRequest
+    ): Call<VerifyForgotPasswordOtpResponse>
 
 
     @GET("api/House_tax/grievanceCategory")
