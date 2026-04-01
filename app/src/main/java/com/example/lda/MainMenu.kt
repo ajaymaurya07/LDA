@@ -81,7 +81,7 @@ class MainMenu : AppCompatActivity() {
         val pid=preferenceManager.getPropertyId()
         viewModel.pid.value=pid
         viewModel.propertyDetailsRequest= PropertyDetailsRequest(propertyId = pid!!)
-        viewModel.propertyDetailsData(preferenceManager.getLoginMobileNumber().toString())
+        viewModel.propertyDetailsData(preferenceManager.getLoginMobileNumber().toString(), this, preferenceManager.getAccessToken().toString())
 
 //        FirebaseMessaging.getInstance().token  // get token for more reliable update fcm token but jajuri nhi h
 //            .addOnCompleteListener { task ->

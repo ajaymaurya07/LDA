@@ -52,7 +52,7 @@ class LocationBasedFragment : Fragment() {
             val ulbId = viewModel.selectedUlb.value?.ulbId.orEmpty()
             val zoneId = viewModel.selectedZone.value?.zoneId.orEmpty()
             val wardId = viewModel.selectedWard.value?.wardId.orEmpty()
-            val mohallaId = viewModel.selectedMohalla.value?.wardId.orEmpty()
+            val mohallaId = viewModel.selectedMohalla.value?.mohallaId.orEmpty()
             val houseNo = binding.etHouseNo.text.toString().trim()
 
 //            Log.d("TAG", "onViewCreated: $ulbId ,$zoneId ,$wardId ,$mohallaId ,$houseNo")
@@ -80,7 +80,11 @@ class LocationBasedFragment : Fragment() {
                 ulbId = ulbId,
                 searchType = "LOCATION"
             )
-            viewModel.propertySearch(preferenceManager.getLoginMobileNumber().toString())
+            viewModel.propertySearch(
+                loginMobileNumber = preferenceManager.getLoginMobileNumber().toString(),
+                deviceId = DeviceUtils.getDeviceId(requireContext()),
+                preferenceManager = preferenceManager
+            )
 
         }
     }

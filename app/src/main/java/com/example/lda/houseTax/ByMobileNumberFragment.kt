@@ -16,6 +16,7 @@ import com.example.lda.databinding.FragmentByMobileNumberBinding
 import com.example.lda.houseTax.utils.PreferenceManager
 import com.example.lda.houseTax.viewmodel.SharedViewModel
 import com.example.lda.model.UlbItem
+import com.example.lda.utils.DeviceUtils
 import com.example.lda.utils.dataClass.PropertySearchRequest
 
 class ByMobileNumberFragment : Fragment() {
@@ -68,7 +69,11 @@ class ByMobileNumberFragment : Fragment() {
                 ulbId = ulbId,
                 searchType = "MOBILE"
             )
-            viewModel.propertySearch(preferenceManager.getLoginMobileNumber().toString())
+            viewModel.propertySearch(
+                loginMobileNumber = preferenceManager.getLoginMobileNumber().toString(),
+                deviceId = DeviceUtils.getDeviceId(requireContext()),
+                preferenceManager = preferenceManager
+            )
 
         }
     }

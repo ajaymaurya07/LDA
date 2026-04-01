@@ -79,7 +79,7 @@ class PropertyDetailsActivity : AppCompatActivity() {
                 adapter = PropertyAdaptor(propertyList) { selected ->
                     selectedPropertyId=selected.pid
                     propertyDetailsViewmodel.propertyDetailsRequest= PropertyDetailsRequest(propertyId = selected.pid)
-                    propertyDetailsViewmodel.propertyDetailsData(preferenceManager.getLoginMobileNumber().toString())
+                    propertyDetailsViewmodel.propertyDetailsData(preferenceManager.getLoginMobileNumber().toString(), this@PropertyDetailsActivity, preferenceManager.getAccessToken().toString())
                 }
                 rv.adapter = adapter
             }

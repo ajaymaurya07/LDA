@@ -78,7 +78,11 @@ class SearchByHouseNoFragment : Fragment() {
                 ulbId = ulbId,
                 searchType = "HOUSE"
             )
-            viewModel.propertySearch(preferenceManager.getLoginMobileNumber().toString())
+            viewModel.propertySearch(
+                loginMobileNumber = preferenceManager.getLoginMobileNumber().toString(),
+                deviceId = DeviceUtils.getDeviceId(requireContext()),
+                preferenceManager = preferenceManager
+            )
 
         }
     }

@@ -17,6 +17,7 @@ import com.example.lda.model.UlbItem
 import com.example.lda.utils.dataClass.PropertySearchRequest
 import android.widget.Filter
 import com.example.lda.houseTax.utils.PreferenceManager
+import com.example.lda.utils.DeviceUtils
 
 
 class ByOwnerNameFragment : Fragment() {
@@ -74,7 +75,11 @@ class ByOwnerNameFragment : Fragment() {
             )
 
             Log.d("TAG", "ulb: $ulbId")
-            viewModel.propertySearch(preferenceManager.getLoginMobileNumber().toString())
+            viewModel.propertySearch(
+                loginMobileNumber = preferenceManager.getLoginMobileNumber().toString(),
+                deviceId = DeviceUtils.getDeviceId(requireContext()),
+                preferenceManager = preferenceManager
+            )
 
         }
 

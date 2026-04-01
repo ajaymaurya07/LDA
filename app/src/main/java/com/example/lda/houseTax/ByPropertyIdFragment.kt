@@ -16,6 +16,7 @@ import com.example.lda.databinding.FragmentByPropertyIdBinding
 import com.example.lda.houseTax.utils.PreferenceManager
 import com.example.lda.houseTax.viewmodel.SharedViewModel
 import com.example.lda.model.UlbItem
+import com.example.lda.utils.DeviceUtils
 import com.example.lda.utils.dataClass.PropertySearchRequest
 
 class ByPropertyIdFragment : Fragment() {
@@ -69,7 +70,11 @@ class ByPropertyIdFragment : Fragment() {
                 ulbId = ulbId,
                 searchType = "PROPERTY"
             )
-            viewModel.propertySearch(preferenceManager.getLoginMobileNumber().toString())
+            viewModel.propertySearch(
+                loginMobileNumber = preferenceManager.getLoginMobileNumber().toString(),
+                deviceId = DeviceUtils.getDeviceId(requireContext()),
+                preferenceManager = preferenceManager
+            )
 
         }
 

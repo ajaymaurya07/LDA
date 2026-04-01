@@ -4,8 +4,6 @@ package com.example.lda.houseTax.viewmodel
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
 import com.example.lda.constent.Constent
 import com.example.lda.houseTax.data.ChallengeRequest
 import com.example.lda.houseTax.data.ChallengeResponse
@@ -32,9 +30,9 @@ import com.example.lda.model.TransactionsByEmailResponse
 import com.example.lda.model.TransactionsDetailsResponse
 import com.example.lda.model.VerifyOtpMailResponse
 import com.example.lda.network.RetrofitClient
+import com.example.lda.viewmodel.BaseViewModel
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
@@ -42,7 +40,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 
-class PaymentViewModel:ViewModel() {
+class PaymentViewModel: BaseViewModel() {
     fun hashData(
         appVersion: Int,
         hashName: String,
@@ -68,20 +66,6 @@ class PaymentViewModel:ViewModel() {
                 onResult(null)
             }
         })
-    }
-
-
-    // Track number of active API calls
-    private val _loadingCount = MutableLiveData(0)
-    val isLoading: LiveData<Boolean> = _loadingCount.map { it > 0 }
-
-    fun incrementLoader() {
-        _loadingCount.value = (_loadingCount.value ?: 0) + 1
-    }
-
-    fun decrementLoader() {
-        val current = _loadingCount.value ?: 0
-        if (current > 0) _loadingCount.value = current - 1
     }
 
 

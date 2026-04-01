@@ -1,11 +1,11 @@
 package com.example.lda.houseTax.viewmodel
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
 import com.example.lda.constent.Constent
+import com.example.lda.houseTax.utils.PreferenceManager
 import com.example.lda.model.BillDetails
 import com.example.lda.model.CurrReceiptDetailsItem
 import com.example.lda.model.Data
@@ -14,26 +14,14 @@ import com.example.lda.model.PrevReceiptDetailsItem
 import com.example.lda.model.PropertyDetails
 import com.example.lda.model.PropertyDetailsResponse
 import com.example.lda.network.RetrofitClient
+import com.example.lda.utils.DeviceUtils
 import com.example.lda.utils.dataClass.PropertyDetailsRequest
+import com.example.lda.viewmodel.BaseViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PropertyDetailsViewmodel:ViewModel() {
-
-    // Track number of active API calls
-    private val _loadingCount = MutableLiveData(0)
-    val isLoading: LiveData<Boolean> = _loadingCount.map { it > 0 }
-
-    fun incrementLoader() {
-        _loadingCount.value = (_loadingCount.value ?: 0) + 1
-    }
-
-    fun decrementLoader() {
-        val current = _loadingCount.value ?: 0
-        if (current > 0) _loadingCount.value = current - 1
-    }
-
+class PropertyDetailsViewmodel: BaseViewModel() {
 
     // for ulb data
     private val _dataList = MutableLiveData<PropertyDetailsResponse>()
@@ -43,7 +31,7 @@ class PropertyDetailsViewmodel:ViewModel() {
 
     var propertyDetailsRequest = PropertyDetailsRequest()
 
-    fun propertyDetailsData(loginMobileNumber: String) {
+    fun propertyDetailsData(loginMobileNumber: String, context: Context, token: String) {
 
         Log.d("TAG", "propertyDetailsData: called")
 
@@ -52,18 +40,44 @@ class PropertyDetailsViewmodel:ViewModel() {
             return
         }
 
+        val token = "Bearer $token"
+        val preferenceManager = PreferenceManager(context)
 
         incrementLoader()
         val call = RetrofitClient.apiCall.propertyDetails(
-            authorization = Constent.APP_VERSION,
+            appVersion = Constent.APP_VERSION,
+            deviceId = DeviceUtils.getDeviceId(context),
+            token = token,
             request = propertyDetailsRequest)
         call.enqueue(object : Callback<PropertyDetailsResponse> {
             override fun onResponse(
                 call: Call<PropertyDetailsResponse>,
                 response: Response<PropertyDetailsResponse>
             ) {
+
+                Log.d("TAG", "onResponse: $response")
+
+                if (response.code() == 403) {
+                    decrementLoader()
+                    handleTokenRefresh(preferenceManager) {
+                        val newToken = preferenceManager.getAccessToken() ?: ""
+                        propertyDetailsData(loginMobileNumber, context, newToken)
+                    }
+                    return
+                }
+
                 decrementLoader()
-                _dataList.value= response.body()
+                if (response.isSuccessful && response.body()?.success == true) {
+                    _dataList.value = response.body()
+                }
+                 else {
+                    _dataList.value=PropertyDetailsResponse(
+                        data = null,
+                        success = false,
+                        message = "No Data Found",
+                        responseCode = 0
+                    )
+                }
             }
 
             override fun onFailure(call: Call<PropertyDetailsResponse>, t: Throwable) {
@@ -72,7 +86,7 @@ class PropertyDetailsViewmodel:ViewModel() {
                     data = null,
                     success = false,
                     message = "network error.",
-                    responseCode = 401
+                    responseCode = 0
                 )
             }
 

@@ -260,7 +260,9 @@ interface ApiMethod {
         "Accept: application/json")
     @POST("api/House_tax/propertysearch")
     fun propertySearch(
-        @Header("X-App-Version") authorization: Int,
+        @Header("X-App-Version") appVersion: Int,
+        @Header("X-Device-Id") deviceId: String,
+        @Header("Authorization") token: String,
         @Body request: PropertySearchRequest
     ): Call<PropertySearchResponse>
 
@@ -270,7 +272,9 @@ interface ApiMethod {
         "Accept: application/json")
     @POST("api/House_tax/propertydetails")
     fun propertyDetails(
-        @Header("X-App-Version") authorization: Int,
+        @Header("X-App-Version") appVersion: Int,
+        @Header("X-Device-Id") deviceId: String,
+        @Header("Authorization") token: String,
         @Body request: PropertyDetailsRequest
     ): Call<PropertyDetailsResponse>
 

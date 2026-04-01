@@ -3,8 +3,6 @@ package com.example.lda.houseTax.viewmodel
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
 import com.example.lda.constent.Constent
 import com.example.lda.houseTax.data.AreaAndStructureDetails
 import com.example.lda.houseTax.data.PropertyDetails
@@ -14,7 +12,6 @@ import com.example.lda.model.MohallaItem
 import com.example.lda.model.MohallaListResponse
 import com.example.lda.model.PropertyItem
 import com.example.lda.model.PropertySearchResponse
-import com.example.lda.model.RefreshTokenResponse
 import com.example.lda.model.UlbDataResponse
 import com.example.lda.model.UlbItem
 import com.example.lda.model.WardItem
@@ -23,11 +20,12 @@ import com.example.lda.model.ZoneItem
 import com.example.lda.model.ZoneListResponse
 import com.example.lda.network.RetrofitClient
 import com.example.lda.utils.dataClass.PropertySearchRequest
+import com.example.lda.viewmodel.BaseViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SharedViewModel : ViewModel() {
+class SharedViewModel : BaseViewModel() {
 
     // fragment three
     val rentArea = MutableLiveData<String?>()
@@ -65,30 +63,6 @@ class SharedViewModel : ViewModel() {
 
 
 
-    // Track number of active API calls
-    private val _loadingCount = MutableLiveData(0)
-    val isLoading: LiveData<Boolean> = _loadingCount.map { it > 0 }
-
-    fun incrementLoader() {
-        _loadingCount.value = (_loadingCount.value ?: 0) + 1
-    }
-
-    fun decrementLoader() {
-        val current = _loadingCount.value ?: 0
-        if (current > 0) _loadingCount.value = current - 1
-    }
-
-
-
-
-    // api error message
-    private val _errorMessage = MutableLiveData<String?>()
-    val errorMessage: LiveData<String?> = _errorMessage
-
-    private val _isLogout = MutableLiveData<Boolean>(false)
-    val isLogout: LiveData<Boolean> = _isLogout
-
-
     // for ulb data
     private val _ulbList = MutableLiveData<List<UlbItem>>()
     val ulbList: LiveData<List<UlbItem>> = _ulbList
@@ -123,7 +97,7 @@ class SharedViewModel : ViewModel() {
             ) {
                 if (response.code() == 403) {
                     decrementLoader()
-                    handleTokenRefresh( preferenceManager) {
+                    handleTokenRefresh(preferenceManager) {
                         ulbData(loginMobileNumber, deviceId, preferenceManager)
                     }
                     return
@@ -145,45 +119,6 @@ class SharedViewModel : ViewModel() {
                 _errorMessage.value = t.localizedMessage ?: "ULB API failed"
             }
 
-        })
-    }
-
-    private fun handleTokenRefresh(
-        preferenceManager: PreferenceManager,
-        onSuccess: () -> Unit
-    ) {
-        val refreshToken = preferenceManager.getRefreshToken() ?: ""
-        val body = mapOf("refresh_token" to refreshToken)
-
-        incrementLoader()
-        RetrofitClient.apiCall.refreshToken(Constent.APP_VERSION, body).enqueue(object : Callback<RefreshTokenResponse> {
-            override fun onResponse(call: Call<RefreshTokenResponse>, response: Response<RefreshTokenResponse>) {
-                decrementLoader()
-                if (response.code() == 403) {
-                    _isLogout.value = true
-                    _errorMessage.value = "Session expired. Please login again."
-                    return
-                }
-
-                if (response.isSuccessful && response.body()?.status == true) {
-                    val newToken = response.body()?.data?.accessToken
-                    if (newToken != null) {
-                        preferenceManager.saveAccessToken(newToken)
-                        onSuccess()
-                    } else {
-                        _isLogout.value = true
-                        _errorMessage.value = "Session expired. Please login again."
-                    }
-                } else {
-                    _isLogout.value = true
-                    _errorMessage.value = "Session expired. Please login again."
-                }
-            }
-
-            override fun onFailure(call: Call<RefreshTokenResponse>, t: Throwable) {
-                decrementLoader()
-                _errorMessage.value = "Network error"
-            }
         })
     }
 
@@ -411,16 +346,20 @@ class SharedViewModel : ViewModel() {
 
 
     // property search
-    fun propertySearch(loginMobileNumber: String){
+    fun propertySearch(loginMobileNumber: String, deviceId: String, preferenceManager: PreferenceManager){
 
         if (loginMobileNumber == Constent.TEST_MOBILE_NUMBER) {
             _propertyList.value = getDummyPropertyData()
             return
         }
 
+        val token = "Bearer ${preferenceManager.getAccessToken() ?: ""}"
+
         incrementLoader()
         val call = RetrofitClient.apiCall.propertySearch(
-            authorization = Constent.APP_VERSION,
+            appVersion = Constent.APP_VERSION,
+            deviceId = deviceId,
+            token = token,
             request = propertySearchRequest)
 
         call.enqueue(object : Callback<PropertySearchResponse> {
@@ -428,6 +367,13 @@ class SharedViewModel : ViewModel() {
                 call: Call<PropertySearchResponse>,
                 response: Response<PropertySearchResponse>
             ) {
+                if (response.code() == 403) {
+                    decrementLoader()
+                    handleTokenRefresh(preferenceManager) {
+                        propertySearch(loginMobileNumber, deviceId, preferenceManager)
+                    }
+                    return
+                }
 
                 decrementLoader()
                 if (response.isSuccessful && response.body()?.success == true) {
