@@ -9,10 +9,12 @@ import com.example.lda.constent.Constent
 import com.example.lda.houseTax.data.AreaAndStructureDetails
 import com.example.lda.houseTax.data.PropertyDetails
 import com.example.lda.houseTax.data.PropertyTaxCalculation
+import com.example.lda.houseTax.utils.PreferenceManager
 import com.example.lda.model.MohallaItem
 import com.example.lda.model.MohallaListResponse
 import com.example.lda.model.PropertyItem
 import com.example.lda.model.PropertySearchResponse
+import com.example.lda.model.RefreshTokenResponse
 import com.example.lda.model.UlbDataResponse
 import com.example.lda.model.UlbItem
 import com.example.lda.model.WardItem
@@ -83,7 +85,8 @@ class SharedViewModel : ViewModel() {
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> = _errorMessage
 
-
+    private val _isLogout = MutableLiveData<Boolean>(false)
+    val isLogout: LiveData<Boolean> = _isLogout
 
 
     // for ulb data
@@ -102,7 +105,7 @@ class SharedViewModel : ViewModel() {
     }
 
 
-    fun ulbData( loginMobileNumber: String ) {
+    fun ulbData( loginMobileNumber: String, deviceId: String, preferenceManager: PreferenceManager ) {
 
         if (loginMobileNumber == Constent.TEST_MOBILE_NUMBER) {
             _ulbList.value = getDummyUlbData()
@@ -110,13 +113,23 @@ class SharedViewModel : ViewModel() {
             return
         }
 
+        val token = preferenceManager.getAccessToken() ?: ""
+
         incrementLoader()
-        val call = RetrofitClient.apiCall.ulbData(Constent.APP_VERSION)
+        val call = RetrofitClient.apiCall.ulbData(Constent.APP_VERSION, deviceId, token)
         call.enqueue(object : Callback<UlbDataResponse> {
             override fun onResponse(
                 call: Call<UlbDataResponse>,
                 response: Response<UlbDataResponse>
             ) {
+                if (response.code() == 403) {
+                    decrementLoader()
+                    handleTokenRefresh(loginMobileNumber, deviceId, preferenceManager) {
+                        ulbData(loginMobileNumber, deviceId, preferenceManager)
+                    }
+                    return
+                }
+
                 decrementLoader()
                 if (response.isSuccessful && response.body()?.success == true) {
                     _ulbList.value = response.body()?.data?.filterNotNull() ?: emptyList()
@@ -130,9 +143,50 @@ class SharedViewModel : ViewModel() {
             override fun onFailure(call: Call<UlbDataResponse>, t: Throwable) {
                 decrementLoader()
                 _ulbList.value = emptyList()
-                _errorMessage.value = t.localizedMessage ?: "Zone API failed"
+                _errorMessage.value = t.localizedMessage ?: "ULB API failed"
             }
 
+        })
+    }
+
+    private fun handleTokenRefresh(
+        loginMobileNumber: String,
+        deviceId: String,
+        preferenceManager: PreferenceManager,
+        onSuccess: () -> Unit
+    ) {
+        val refreshToken = preferenceManager.getRefreshToken() ?: ""
+        val body = mapOf("refresh_token" to refreshToken)
+
+        incrementLoader()
+        RetrofitClient.apiCall.refreshToken(Constent.APP_VERSION, body).enqueue(object : Callback<RefreshTokenResponse> {
+            override fun onResponse(call: Call<RefreshTokenResponse>, response: Response<RefreshTokenResponse>) {
+                decrementLoader()
+                if (response.code() == 403) {
+                    _isLogout.value = true
+                    _errorMessage.value = "Session expired. Please login again."
+                    return
+                }
+
+                if (response.isSuccessful && response.body()?.status == true) {
+                    val newToken = response.body()?.data?.accessToken
+                    if (newToken != null) {
+                        preferenceManager.saveAccessToken(newToken)
+                        onSuccess()
+                    } else {
+                        _isLogout.value = true
+                        _errorMessage.value = "Session expired. Please login again."
+                    }
+                } else {
+                    _isLogout.value = true
+                    _errorMessage.value = "Session expired. Please login again."
+                }
+            }
+
+            override fun onFailure(call: Call<RefreshTokenResponse>, t: Throwable) {
+                decrementLoader()
+                _errorMessage.value = "Network error during token refresh"
+            }
         })
     }
 
@@ -181,14 +235,27 @@ class SharedViewModel : ViewModel() {
     fun clearSelectedZone() {
         _selectedZone.value = null
     }
-    fun zoneData(ulbId: String) {
+
+    fun zoneData(loginMobileNumber: String, ulbId: String, deviceId: String, preferenceManager: PreferenceManager) {
+        if (loginMobileNumber == Constent.TEST_MOBILE_NUMBER) {
+            _zoneList.value = emptyList() // Or dummy data
+            return
+        }
+        val token = preferenceManager.getAccessToken() ?: ""
         incrementLoader()
-        val call = RetrofitClient.apiCall.zoneList(Constent.APP_VERSION, ulbId)
+        val call = RetrofitClient.apiCall.zoneList(Constent.APP_VERSION, deviceId, token, ulbId)
         call.enqueue(object : Callback<ZoneListResponse> {
             override fun onResponse(
                 call: Call<ZoneListResponse>,
                 response: Response<ZoneListResponse>
             ) {
+                if (response.code() == 403) {
+                    decrementLoader()
+                    handleTokenRefresh(loginMobileNumber, deviceId, preferenceManager) {
+                        zoneData(loginMobileNumber, ulbId, deviceId, preferenceManager)
+                    }
+                    return
+                }
                 decrementLoader()
                 if (response.isSuccessful && response.body()?.success == true) {
                     _zoneList.value = response.body()?.data?.filterNotNull() ?: emptyList()
@@ -231,14 +298,26 @@ class SharedViewModel : ViewModel() {
         _wardList.value = emptyList()
     }
 
-    fun wardData(ulbId: String,zoneId:String) {
+    fun wardData(loginMobileNumber: String, ulbId: String, zoneId: String, deviceId: String, preferenceManager: PreferenceManager) {
+        if (loginMobileNumber == Constent.TEST_MOBILE_NUMBER) {
+            _wardList.value = emptyList()
+            return
+        }
+        val token = preferenceManager.getAccessToken() ?: ""
         incrementLoader()
-        val call = RetrofitClient.apiCall.wardList(Constent.APP_VERSION, ulbId,zoneId)
+        val call = RetrofitClient.apiCall.wardList(Constent.APP_VERSION, deviceId, token, ulbId, zoneId)
         call.enqueue(object : Callback<WardListResponse> {
             override fun onResponse(
                 call: Call<WardListResponse>,
                 response: Response<WardListResponse>
             ) {
+                if (response.code() == 403) {
+                    decrementLoader()
+                    handleTokenRefresh(loginMobileNumber, deviceId, preferenceManager) {
+                        wardData(loginMobileNumber, ulbId, zoneId, deviceId, preferenceManager)
+                    }
+                    return
+                }
                 decrementLoader()
                 if (response.isSuccessful && response.body()?.success == true) {
                     _wardList.value = response.body()?.data?.filterNotNull() ?: emptyList()
@@ -284,14 +363,26 @@ class SharedViewModel : ViewModel() {
         _mohallaList.value = emptyList()
     }
 
-    fun mohallaData(ulbId: String,zoneId:String,wardId:String) {
+    fun mohallaData(loginMobileNumber: String, ulbId: String, zoneId: String, wardId: String, deviceId: String, preferenceManager: PreferenceManager) {
+        if (loginMobileNumber == Constent.TEST_MOBILE_NUMBER) {
+            _mohallaList.value = emptyList()
+            return
+        }
+        val token = preferenceManager.getAccessToken() ?: ""
         incrementLoader()
-        val call = RetrofitClient.apiCall.mohallaList(Constent.APP_VERSION, ulbId,zoneId,wardId)
+        val call = RetrofitClient.apiCall.mohallaList(Constent.APP_VERSION, deviceId, token, ulbId, zoneId, wardId)
         call.enqueue(object : Callback<MohallaListResponse> {
             override fun onResponse(
                 call: Call<MohallaListResponse>,
                 response: Response<MohallaListResponse>
             ) {
+                if (response.code() == 403) {
+                    decrementLoader()
+                    handleTokenRefresh(loginMobileNumber, deviceId, preferenceManager) {
+                        mohallaData(loginMobileNumber, ulbId, zoneId, wardId, deviceId, preferenceManager)
+                    }
+                    return
+                }
                 decrementLoader()
                 if (response.isSuccessful && response.body()?.success == true) {
                     _mohallaList.value = response.body()?.data?.filterNotNull() ?: emptyList()

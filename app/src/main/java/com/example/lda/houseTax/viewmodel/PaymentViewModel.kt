@@ -433,6 +433,8 @@ class PaymentViewModel:ViewModel() {
 
     fun signIn(request: SignInRequest) {
 
+        Log.d("TAG", "signIn: $request")
+
         if (request.username== Constent.TEST_MOBILE_NUMBER && request.hash== Constent.TEST_PASSWORD){
             _signIn.value= SignInResponse(
                 data = SignIn(

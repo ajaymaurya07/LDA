@@ -2,7 +2,6 @@ package com.example.lda.houseTax.loginDetails
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +15,7 @@ import com.example.lda.houseTax.data.SignInRequest
 import com.example.lda.houseTax.utils.PreferenceManager
 import com.example.lda.houseTax.viewmodel.PaymentViewModel
 import com.example.lda.utils.AlertDialogHelper
+import com.example.lda.utils.DeviceUtils
 import com.example.lda.utils.HashUtils
 import com.example.lda.utils.LoderHelper
 import java.util.UUID
@@ -49,7 +49,7 @@ class SignInActivity : AppCompatActivity() {
             } else {
                 val challengeRequest = ChallengeRequest(
                     username = userId,
-                    device_id = getAppDeviceId()
+                    device_id = DeviceUtils.getDeviceId(this)
                 )
                 viewModel.getChallenge(challengeRequest)
             }
@@ -67,10 +67,6 @@ class SignInActivity : AppCompatActivity() {
         }
 
         observeViewModel()
-    }
-
-    private fun getAppDeviceId(): String {
-        return Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
     }
 
 
@@ -104,7 +100,7 @@ class SignInActivity : AppCompatActivity() {
 
                 val request = SignInRequest(
                     username = userId,
-                    device_id = getAppDeviceId(),
+                    device_id = DeviceUtils.getDeviceId(this),
                     challenge_id = challengeId,
                     timestamp = timestamp,
                     nonce = nonce,

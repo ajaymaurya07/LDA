@@ -17,6 +17,7 @@ import com.example.lda.houseTax.viewmodel.SharedViewModel
 import com.example.lda.model.UlbItem
 import com.example.lda.model.WardItem
 import com.example.lda.model.ZoneItem
+import com.example.lda.utils.DeviceUtils
 import com.example.lda.utils.dataClass.PropertySearchRequest
 
 
@@ -147,7 +148,12 @@ class SearchByHouseNoFragment : Fragment() {
             viewModel.setSelectedUlb(selectedUlb)
 
             selectedUlb.ulbId?.let {
-                viewModel.zoneData(it)
+                viewModel.zoneData(
+                    loginMobileNumber = preferenceManager.getLoginMobileNumber().toString(),
+                    ulbId = it,
+                    deviceId = DeviceUtils.getDeviceId(requireContext()),
+                    preferenceManager = preferenceManager
+                )
             }
         }
 
@@ -224,7 +230,13 @@ class SearchByHouseNoFragment : Fragment() {
             val zoneId = selectedZone.zoneId
 
             if (ulbId != null && zoneId != null) {
-                viewModel.wardData(ulbId, zoneId)
+                viewModel.wardData(
+                    loginMobileNumber = preferenceManager.getLoginMobileNumber().toString(),
+                    ulbId = ulbId,
+                    zoneId = zoneId,
+                    deviceId = DeviceUtils.getDeviceId(requireContext()),
+                    preferenceManager = preferenceManager
+                )
             }
         }
     }

@@ -31,6 +31,7 @@ import com.example.lda.houseTax.data.SendOtpRequest
 import com.example.lda.houseTax.data.VerifyOtpRequest
 import com.example.lda.houseTax.data.database.AppDatabase
 import com.example.lda.houseTax.data.database.entity.PropertyEntity
+import com.example.lda.houseTax.utils.PreferenceManager
 import com.example.lda.houseTax.viewmodel.PaymentViewModel
 import com.example.lda.houseTax.viewmodel.SharedViewModel
 import com.example.lda.model.DataItem
@@ -39,6 +40,7 @@ import com.example.lda.model.SubCategoriesItem
 import com.example.lda.model.UlbItem
 import com.example.lda.model.WardItem
 import com.example.lda.model.ZoneItem
+import com.example.lda.utils.DeviceUtils
 import com.example.lda.utils.LoderHelper
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -99,7 +101,11 @@ class ApplyGrivanceActivity : AppCompatActivity() {
         otpObserver()
 
         viewModel.fetchGrievanceData()
-        sharedViewModel.ulbData("")
+        sharedViewModel.ulbData(
+            loginMobileNumber = "",
+            deviceId = DeviceUtils.getDeviceId(this),
+            preferenceManager = PreferenceManager(this)
+        )
 
         loderHelper= LoderHelper(this)
     }
@@ -171,14 +177,25 @@ class ApplyGrivanceActivity : AppCompatActivity() {
         binding.spinnerUlb.setOnClickListener {
             if (ulbList.isEmpty()) {
                 Toast.makeText(this, "No Data Found", Toast.LENGTH_SHORT).show()
-                sharedViewModel.ulbData("")
+                sharedViewModel.ulbData(
+                    loginMobileNumber = "",
+                    deviceId = DeviceUtils.getDeviceId(this),
+                    preferenceManager = PreferenceManager(this)
+                )
                 return@setOnClickListener
             }
             showSearchableDialog("Select ULB", ulbList, { "${it.ulbName} (${it.ulbType})" }) { item ->
                 selectedUlbItem = item
                 binding.spinnerUlb.setText("${item.ulbName} (${item.ulbType})", false)
                 resetLocationFields(1)
-                item.ulbId?.let { sharedViewModel.zoneData(it) }
+                item.ulbId?.let { ulbId ->
+                    sharedViewModel.zoneData(
+                        loginMobileNumber = "",
+                        ulbId = ulbId,
+                        deviceId = DeviceUtils.getDeviceId(this),
+                        preferenceManager = PreferenceManager(this)
+                    )
+                }
             }
         }
 
@@ -196,7 +213,15 @@ class ApplyGrivanceActivity : AppCompatActivity() {
                 binding.spinnerZone.setText(item.zoneName, false)
                 resetLocationFields(2)
                 selectedUlbItem?.ulbId?.let { ulbId ->
-                    item.zoneId?.let { zoneId -> sharedViewModel.wardData(ulbId, zoneId) }
+                    item.zoneId?.let { zoneId ->
+                        sharedViewModel.wardData(
+                            loginMobileNumber = "",
+                            ulbId = ulbId,
+                            zoneId = zoneId,
+                            deviceId = DeviceUtils.getDeviceId(this),
+                            preferenceManager = PreferenceManager(this)
+                        )
+                    }
                 }
             }
         }
@@ -216,8 +241,16 @@ class ApplyGrivanceActivity : AppCompatActivity() {
                 resetLocationFields(3)
                 val ulbId = selectedUlbItem?.ulbId
                 val zoneId = selectedZoneItem?.zoneId
-                if (ulbId != null && zoneId != null && item.wardId != null) {
-                    sharedViewModel.mohallaData(ulbId, zoneId, item.wardId)
+                val wardId = item.wardId
+                if (ulbId != null && zoneId != null && wardId != null) {
+                    sharedViewModel.mohallaData(
+                        loginMobileNumber = "",
+                        ulbId = ulbId,
+                        zoneId = zoneId,
+                        wardId = wardId,
+                        deviceId = DeviceUtils.getDeviceId(this),
+                        preferenceManager = PreferenceManager(this)
+                    )
                 }
             }
         }

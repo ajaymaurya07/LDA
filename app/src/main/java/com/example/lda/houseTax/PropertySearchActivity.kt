@@ -15,6 +15,7 @@ import com.example.lda.databinding.ActivityPropertySearchBinding
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
 import com.example.lda.houseTax.utils.PreferenceManager
 import com.example.lda.houseTax.viewmodel.SharedViewModel
+import com.example.lda.utils.DeviceUtils
 import com.example.lda.utils.LoderHelper
 
 
@@ -46,7 +47,11 @@ class PropertySearchActivity : AppCompatActivity() {
         setupCardClicks()
 
 
-        viewModel.ulbData(preferanceManager.getLoginMobileNumber().toString())
+        viewModel.ulbData(
+            loginMobileNumber = preferanceManager.getLoginMobileNumber().toString(),
+            deviceId = DeviceUtils.getDeviceId(this),
+            preferenceManager = preferanceManager
+        )
         observerErrorMessage()
         observerLoader()
         observePropertyResult()
@@ -170,4 +175,3 @@ class PropertySearchActivity : AppCompatActivity() {
             .commit()
     }
 }
-

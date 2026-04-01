@@ -33,6 +33,7 @@ import com.example.lda.model.OtpVerificationResponse
 import com.example.lda.model.PropertyDetailsResponse
 import com.example.lda.model.PropertySearchResponse
 import com.example.lda.model.RecentInterimOrderCaseDetailByTypeResponse
+import com.example.lda.model.RefreshTokenResponse
 import com.example.lda.model.SaveGrievanceResponse
 import com.example.lda.model.SendOtpResponse
 import com.example.lda.model.SignInResponse
@@ -219,27 +220,35 @@ interface ApiMethod {
 
     @GET("api/House_tax/ulbdata")
     fun ulbData(
-        @Header("X-App-Version") authorization:Int,
-        ):Call<UlbDataResponse>
+        @Header("X-App-Version") appVersion: Int,
+        @Header("X-Device-Id") deviceId: String,
+        @Header("Authorization") token: String
+    ): Call<UlbDataResponse>
 
 
     @GET("api/House_tax/zonedata/{ulbId}")
     fun zoneList(
-        @Header("X-App-Version") authorization: Int,
+        @Header("X-App-Version") appVersion: Int,
+        @Header("X-Device-Id") deviceId: String,
+        @Header("Authorization") token: String,
         @Path("ulbId") ulbId: String
     ): Call<ZoneListResponse>
 
 
     @GET("api/House_tax/warddata/{ulbId}/{zoneId}")
     fun wardList(
-        @Header("X-App-Version") authorization: Int,
+        @Header("X-App-Version") appVersion: Int,
+        @Header("X-Device-Id") deviceId: String,
+        @Header("Authorization") token: String,
         @Path("ulbId") ulbId: String,
         @Path("zoneId") zoneId: String
     ): Call<WardListResponse>
 
     @GET("api/House_tax/mohalladata/{ulbId}/{zoneId}/{wardId}")
     fun mohallaList(
-        @Header("X-App-Version") authorization: Int,
+        @Header("X-App-Version") appVersion: Int,
+        @Header("X-Device-Id") deviceId: String,
+        @Header("Authorization") token: String,
         @Path("ulbId") ulbId: String,
         @Path("zoneId") zoneId: String,
         @Path("wardId") wardId: String
@@ -409,6 +418,12 @@ interface ApiMethod {
         @Header("X-App-Version") appVersion: Int,
         @Body request: Map<String, String>
     ): Call<GrievanceStatusResponse>
+
+    @POST("api/house_tax/refreshToken")
+    fun refreshToken(
+        @Header("X-App-Version") appVersion: Int,
+        @Body body: Map<String, String>
+    ): Call<RefreshTokenResponse>
 
 
 }

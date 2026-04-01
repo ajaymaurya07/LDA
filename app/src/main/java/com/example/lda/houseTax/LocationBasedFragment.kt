@@ -1,7 +1,6 @@
 package com.example.lda.houseTax
 
 import android.R
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -19,6 +18,7 @@ import com.example.lda.model.MohallaItem
 import com.example.lda.model.UlbItem
 import com.example.lda.model.WardItem
 import com.example.lda.model.ZoneItem
+import com.example.lda.utils.DeviceUtils
 import com.example.lda.utils.dataClass.PropertySearchRequest
 
 
@@ -144,7 +144,12 @@ class LocationBasedFragment : Fragment() {
             viewModel.setSelectedUlb(selectedUlb)
 
             selectedUlb.ulbId?.let {
-                viewModel.zoneData(it)
+                viewModel.zoneData(
+                    loginMobileNumber = preferenceManager.getLoginMobileNumber().toString(),
+                    ulbId = it,
+                    deviceId = DeviceUtils.getDeviceId(requireContext()),
+                    preferenceManager = preferenceManager
+                )
             }
         }
 
@@ -159,26 +164,6 @@ class LocationBasedFragment : Fragment() {
             setupZoneDropdown(list)
         }
     }
-//    private fun setupZoneDropdown(list: List<ZoneItem>) {
-//        if (list.isEmpty()) {
-//            binding.etZone.setText("", false)
-//            binding.etZone.setAdapter(null)
-//            return
-//        }
-//        val zoneNames = list.map { it.zoneName }
-//        val adapter = ArrayAdapter(requireContext(), R.layout.simple_list_item_1, zoneNames)
-//        binding.etZone.setAdapter(adapter)
-//        binding.etZone.threshold = 1
-//        binding.etZone.setOnItemClickListener { _, _, position, _ ->
-//            viewModel.clearWardList()
-//            val selectedZone = list[position]
-//            viewModel.setSelectedZone(selectedZone)
-//            viewModel.wardData(viewModel.selectedUlb.value?.ulbId!!,selectedZone.zoneId!!)
-//        }
-//    }
-
-
-
 
     private fun setupZoneDropdown(list: List<ZoneItem>) {
 
@@ -241,7 +226,13 @@ class LocationBasedFragment : Fragment() {
             val zoneId = selectedZone.zoneId
 
             if (ulbId != null && zoneId != null) {
-                viewModel.wardData(ulbId, zoneId)
+                viewModel.wardData(
+                    loginMobileNumber = preferenceManager.getLoginMobileNumber().toString(),
+                    ulbId = ulbId,
+                    zoneId = zoneId,
+                    deviceId = DeviceUtils.getDeviceId(requireContext()),
+                    preferenceManager = preferenceManager
+                )
             }
         }
     }
@@ -306,7 +297,19 @@ class LocationBasedFragment : Fragment() {
             viewModel.clearMohallaList()
             val selectedWard = parent.getItemAtPosition(position) as WardItem
             viewModel.setSelectedWard(selectedWard)
-            viewModel.mohallaData(viewModel.selectedUlb.value?.ulbId!!,viewModel.selectedZone.value?.zoneId!!,selectedWard.wardId!!)
+            val ulbId = viewModel.selectedUlb.value?.ulbId
+            val zoneId = viewModel.selectedZone.value?.zoneId
+            val wardId = selectedWard.wardId
+            if (ulbId != null && zoneId != null && wardId != null) {
+                viewModel.mohallaData(
+                    loginMobileNumber = preferenceManager.getLoginMobileNumber().toString(),
+                    ulbId = ulbId,
+                    zoneId = zoneId,
+                    wardId = wardId,
+                    deviceId = DeviceUtils.getDeviceId(requireContext()),
+                    preferenceManager = preferenceManager
+                )
+            }
         }
     }
 
