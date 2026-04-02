@@ -11,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.lda.BaseActivity
 import com.example.lda.MainMenu
 import com.example.lda.R
 import com.example.lda.databinding.ActivityPaymentFailedBinding
@@ -24,7 +25,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
-class PaymentPendingActivity : AppCompatActivity() {
+class PaymentPendingActivity : BaseActivity() {
     lateinit var binding: ActivityPaymentPendingBinding
     private var pollingJob: Job? = null
     private var retryCount = 0

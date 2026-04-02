@@ -10,9 +10,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.lda.BaseActivity
 import com.example.lda.R
 
-class SbiTestActivity : AppCompatActivity() {
+class SbiTestActivity : BaseActivity() {
 
     private lateinit var webView: WebView
 

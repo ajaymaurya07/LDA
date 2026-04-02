@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.lda.BaseActivity
 import com.example.lda.R
 import com.example.lda.databinding.ActivityPropertySearchBinding
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
@@ -19,7 +20,7 @@ import com.example.lda.utils.DeviceUtils
 import com.example.lda.utils.LoderHelper
 
 
-class PropertySearchActivity : AppCompatActivity() {
+class PropertySearchActivity : BaseActivity() {
 
     lateinit var binding: ActivityPropertySearchBinding
     lateinit var viewModel: SharedViewModel

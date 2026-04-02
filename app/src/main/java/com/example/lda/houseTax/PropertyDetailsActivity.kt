@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lda.BaseActivity
 import com.example.lda.R
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
 import com.example.lda.houseTax.data.PropertyAdaptor
@@ -19,7 +20,7 @@ import com.example.lda.utils.LoderHelper
 import com.example.lda.utils.dataClass.PropertyDetailsRequest
 import com.google.gson.Gson
 
-class PropertyDetailsActivity : AppCompatActivity() {
+class PropertyDetailsActivity : BaseActivity() {
 
     lateinit var adapter: PropertyAdaptor
     lateinit var propertyIdFromDbViewModel : PropertyIdFromDb

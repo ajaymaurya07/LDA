@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lda.BaseActivity
 import com.example.lda.R
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
 import com.example.lda.houseTax.data.PaymentHistoryAdaptor
@@ -21,7 +22,7 @@ import com.google.gson.Gson
 import java.io.File
 import java.io.FileOutputStream
 
-class PaymentHistoryActivity : AppCompatActivity() {
+class PaymentHistoryActivity : BaseActivity() {
     lateinit var paymentHistoryAdaptor: PaymentHistoryAdaptor
 
     override fun onCreate(savedInstanceState: Bundle?) {

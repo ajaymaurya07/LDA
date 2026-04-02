@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.lda.BaseActivity
 import com.example.lda.R
 import com.example.lda.databinding.ActivityForgotPasswordBinding
 import com.example.lda.houseTax.data.ForgotPasswordRequest
@@ -19,7 +20,7 @@ import com.example.lda.utils.LoderHelper
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
-class ForgotPasswordActivity : AppCompatActivity() {
+class ForgotPasswordActivity : BaseActivity() {
     private lateinit var binding: ActivityForgotPasswordBinding
     private lateinit var viewModel: PaymentViewModel
     private lateinit var loderHelper: LoderHelper

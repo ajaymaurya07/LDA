@@ -20,11 +20,12 @@ import java.io.FileOutputStream
 import android.os.Handler
 import android.os.Looper
 import android.widget.ImageView
+import com.example.lda.BaseActivity
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class PayActivity : AppCompatActivity() {
+class PayActivity : BaseActivity() {
     lateinit var binding: ActivityPayBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

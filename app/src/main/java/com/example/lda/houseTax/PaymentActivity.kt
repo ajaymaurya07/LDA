@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.lda.BaseActivity
 import com.example.lda.MainMenu
 import com.example.lda.R
 import com.example.lda.constent.Constent
@@ -51,7 +52,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
-class PaymentActivity : AppCompatActivity() {
+class PaymentActivity : BaseActivity() {
     private lateinit var binding: ActivityPayment2Binding
     lateinit var viewModel: PaymentViewModel
     private lateinit var loderHelper: LoderHelper

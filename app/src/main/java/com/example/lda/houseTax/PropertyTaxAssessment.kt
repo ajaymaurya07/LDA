@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.lda.BaseActivity
 import com.example.lda.R
 import com.example.lda.databinding.ActivityPropertyTaxBinding
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
@@ -23,7 +24,7 @@ import com.example.lda.houseTax.viewmodel.SharedViewModel
 import org.json.JSONArray
 
 
-class PropertyTaxAssessment : AppCompatActivity() {
+class PropertyTaxAssessment : BaseActivity() {
 
     lateinit var binding: ActivityPropertyTaxBinding
     private var currentStep = 1

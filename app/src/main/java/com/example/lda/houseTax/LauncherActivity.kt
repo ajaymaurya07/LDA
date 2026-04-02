@@ -6,13 +6,14 @@ import android.os.Handler
 import android.os.Looper
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.example.lda.BaseActivity
 import com.example.lda.MainMenu
 import com.example.lda.R
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
 import com.example.lda.houseTax.loginDetails.SignInActivity
 import com.example.lda.houseTax.utils.PreferenceManager
 
-class LauncherActivity : AppCompatActivity() {
+class LauncherActivity : BaseActivity() {
     private lateinit var preferenceManager: PreferenceManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

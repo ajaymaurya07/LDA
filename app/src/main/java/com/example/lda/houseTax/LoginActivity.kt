@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.lda.BaseActivity
 import com.example.lda.MainMenu
 import com.example.lda.R
 import com.example.lda.databinding.ActivityLogin2Binding
@@ -28,7 +29,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.coroutines.launch
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
     lateinit var binding: ActivityLogin2Binding
     lateinit var viewmodel :PaymentViewModel
     private lateinit var loderHelper: LoderHelper

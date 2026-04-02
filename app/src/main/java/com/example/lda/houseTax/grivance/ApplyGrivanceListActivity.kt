@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.lda.BaseActivity
 import com.example.lda.R
 import com.example.lda.adaptor.GrievanceAdapter
 import com.example.lda.databinding.ActivityApplyGrivanceListBinding
@@ -17,7 +18,7 @@ import com.example.lda.houseTax.utils.PreferenceManager
 import com.example.lda.houseTax.viewmodel.PaymentViewModel
 import com.example.lda.utils.LoderHelper
 
-class ApplyGrivanceListActivity : AppCompatActivity() {
+class ApplyGrivanceListActivity : BaseActivity() {
     private lateinit var binding: ActivityApplyGrivanceListBinding
     private lateinit var adapter: GrievanceAdapter
     private lateinit var preferenceManager: PreferenceManager

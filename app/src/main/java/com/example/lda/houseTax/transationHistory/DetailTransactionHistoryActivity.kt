@@ -6,13 +6,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import com.example.lda.BaseActivity
 import com.example.lda.R
 import com.example.lda.databinding.ActivityDetailTransactionHistoryBinding
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
 import com.example.lda.utils.dataClass.TransactionItem
 import com.example.lda.utils.downloadPdfAndReceipt.ReceiptPdfUtil
 
-class DetailTransactionHistoryActivity : AppCompatActivity() {
+class DetailTransactionHistoryActivity : BaseActivity() {
     lateinit var binding: ActivityDetailTransactionHistoryBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

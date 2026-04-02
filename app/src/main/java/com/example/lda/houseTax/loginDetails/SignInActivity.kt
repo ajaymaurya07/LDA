@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.lda.BaseActivity
 import com.example.lda.R
 import com.example.lda.databinding.ActivitySignInBinding
 import com.example.lda.houseTax.PropertySearchActivity
@@ -20,7 +21,7 @@ import com.example.lda.utils.HashUtils
 import com.example.lda.utils.LoderHelper
 import java.util.UUID
 
-class SignInActivity : AppCompatActivity() {
+class SignInActivity : BaseActivity() {
     private lateinit var binding: ActivitySignInBinding
     private lateinit var viewModel: PaymentViewModel
     private lateinit var loderHelper: LoderHelper

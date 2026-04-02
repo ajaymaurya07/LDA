@@ -31,10 +31,11 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.text.InputType
+import com.example.lda.BaseActivity
 import com.example.lda.utils.AlertDialogHelper
 import com.example.lda.utils.HashUtils
 
-class SignUpActivity : AppCompatActivity() {
+class SignUpActivity : BaseActivity() {
     private lateinit var binding: ActivitySignUpBinding
     private lateinit var dialog: BottomSheetDialog
     private lateinit var viewModel: PaymentViewModel

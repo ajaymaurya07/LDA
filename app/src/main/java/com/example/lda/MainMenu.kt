@@ -30,7 +30,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.launch
 
-class MainMenu : AppCompatActivity() {
+class MainMenu : BaseActivity() {
     lateinit var binding: ActivityMainMenuBinding
     lateinit var viewModel:PropertyDetailsViewmodel
     private lateinit var loderHelper: LoderHelper

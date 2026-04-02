@@ -9,12 +9,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
+import com.example.lda.BaseActivity
 import com.example.lda.MainMenu
 import com.example.lda.R
 import com.example.lda.databinding.ActivityPaymentFailedBinding
 import com.example.lda.houseTax.data.receiptPdf.GenerateReceiptPdf
 
-class PaymentFailedActivity : AppCompatActivity() {
+class PaymentFailedActivity : BaseActivity() {
     lateinit var binding: ActivityPaymentFailedBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.lda.BaseActivity
 import com.example.lda.MainMenu
 import com.example.lda.R
 import com.example.lda.databinding.ActivityOtpBinding
@@ -22,7 +23,7 @@ import com.example.lda.houseTax.viewmodel.PaymentViewModel
 import com.example.lda.utils.LoderHelper
 
 
-class OtpActivity : AppCompatActivity() {
+class OtpActivity : BaseActivity() {
     lateinit var binding: ActivityOtpBinding
     lateinit var viewModel: PaymentViewModel
     private lateinit var loderHelper: LoderHelper

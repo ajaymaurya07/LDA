@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lda.BaseActivity
 import com.example.lda.MainMenu
 import com.example.lda.R
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
@@ -21,7 +22,7 @@ import com.example.lda.model.PropertyItem
 import com.example.lda.utils.LoderHelper
 import com.example.lda.utils.dataClass.PropertyDetailsRequest
 
-class SelectPropertyActivity : AppCompatActivity() {
+class SelectPropertyActivity : BaseActivity() {
     lateinit var adapter: PropertySelectAdaptor
     private lateinit var preferenceManager: PreferenceManager
     lateinit var propertyDetailsViewmodel: PropertyDetailsViewmodel

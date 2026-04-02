@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lda.adaptor.mutation.MutationTrackStatus
 import com.example.lda.utils.dataClass.FormSummary
 
-class NoStatusFoundActivity : AppCompatActivity() {
+class NoStatusFoundActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()

@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.example.lda.BaseActivity
 import com.example.lda.R
 import com.example.lda.databinding.ActivityTrackGrivanceBinding
 import com.example.lda.databinding.ItemTrackInfoBinding
@@ -17,7 +18,7 @@ import com.example.lda.houseTax.viewmodel.PaymentViewModel
 import com.example.lda.model.GrievanceStatusData
 import com.example.lda.utils.LoderHelper
 
-class TrackGrivanceActivity : AppCompatActivity() {
+class TrackGrivanceActivity : BaseActivity() {
     private lateinit var binding: ActivityTrackGrivanceBinding
     private lateinit var loaderHelper: LoderHelper
     private lateinit var viewModel: PaymentViewModel

@@ -8,6 +8,7 @@ import com.example.lda.constent.Constent
 import com.example.lda.houseTax.utils.PreferenceManager
 import com.example.lda.model.RefreshTokenResponse
 import com.example.lda.network.RetrofitClient
+import com.example.lda.utils.SessionManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -31,9 +32,6 @@ open class BaseViewModel : ViewModel() {
     protected val _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> = _errorMessage
 
-    protected val _isLogout = MutableLiveData<Boolean>(false)
-    val isLogout: LiveData<Boolean> = _isLogout
-
 
     fun handleTokenRefresh(
         preferenceManager: PreferenceManager,
@@ -43,34 +41,49 @@ open class BaseViewModel : ViewModel() {
         val body = mapOf("refresh_token" to refreshToken)
 
         incrementLoader()
-        RetrofitClient.apiCall.refreshToken(Constent.APP_VERSION, body).enqueue(object : Callback<RefreshTokenResponse> {
-            override fun onResponse(call: Call<RefreshTokenResponse>, response: Response<RefreshTokenResponse>) {
-                decrementLoader()
-                if (response.code() == 403) {
-                    _isLogout.value = true
-                    _errorMessage.value = "Session expired. Please login again."
-                    return
-                }
 
-                if (response.isSuccessful && response.body()?.status == true) {
-                    val newToken = response.body()?.data?.accessToken
-                    if (newToken != null) {
-                        preferenceManager.saveAccessToken(newToken)
-                        onSuccess()
-                    } else {
-                        _isLogout.value = true
-                        _errorMessage.value = "Session expired. Please login again."
+        RetrofitClient.apiCall
+            .refreshToken(Constent.APP_VERSION, body)
+            .enqueue(object : Callback<RefreshTokenResponse> {
+
+                override fun onResponse(
+                    call: Call<RefreshTokenResponse>,
+                    response: Response<RefreshTokenResponse>
+                ) {
+                    decrementLoader()
+
+                    if (response.code() == 401 || response.code() == 403) {
+                        sessionExpired()
+                        return
                     }
-                } else {
-                    _isLogout.value = true
-                    _errorMessage.value = "Session expired. Please login again."
-                }
-            }
 
-            override fun onFailure(call: Call<RefreshTokenResponse>, t: Throwable) {
-                decrementLoader()
-                _errorMessage.value = "Network error: ${t.localizedMessage}"
-            }
-        })
+                    val resBody = response.body()
+
+                    if (response.isSuccessful && resBody?.status == true) {
+                        val newToken = resBody.data?.accessToken
+
+                        if (!newToken.isNullOrEmpty()) {
+                            preferenceManager.saveAccessToken(newToken)
+                            onSuccess()
+                        } else {
+                            sessionExpired()
+                        }
+                    } else {
+                        sessionExpired()
+                    }
+                }
+
+                override fun onFailure(call: Call<RefreshTokenResponse>, t: Throwable) {
+                    decrementLoader()
+                    _errorMessage.value = "Network error: ${t.localizedMessage}"
+                }
+            })
+    }
+
+
+    private fun sessionExpired(
+    ) {
+
+        SessionManager.logoutLiveData.value = true
     }
 }

@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lda.BaseActivity
 import com.example.lda.R
 import com.example.lda.databinding.ActivityApplyGrivanceBinding
 import com.example.lda.databinding.DialogSearchableSelectionBinding
@@ -49,7 +50,7 @@ import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 
-class ApplyGrivanceActivity : AppCompatActivity() {
+class ApplyGrivanceActivity : BaseActivity() {
     private lateinit var binding: ActivityApplyGrivanceBinding
     private lateinit var viewModel: PaymentViewModel
     private lateinit var sharedViewModel: SharedViewModel
