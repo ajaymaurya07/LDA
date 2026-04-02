@@ -282,7 +282,9 @@ class PaymentViewModel: BaseViewModel() {
     private val _otpVerificationForGrievance = MutableLiveData<OtpVerificationResponse>()
     val otpVerificationGrievance: LiveData<OtpVerificationResponse> = _otpVerificationForGrievance
 
-    fun otpVerificationForGrievance(request: VerifyOtpRequest,loginMobileNumber: String) {
+    fun otpVerificationForGrievance(request: VerifyOtpRequest,loginMobileNumber: String, context: Context, preferenceManager: PreferenceManager) {
+
+        val token = "Bearer ${preferenceManager.getAccessToken() ?: ""}"
 
         if (loginMobileNumber==Constent.TEST_MOBILE_NUMBER){
             _otpVerificationForGrievance.value=dummyOtpVerificationResponse()
@@ -292,15 +294,34 @@ class PaymentViewModel: BaseViewModel() {
         incrementLoader()
         val call = RetrofitClient.apiCall.registerGrievanceVerifyOtp(
             appVersion = Constent.APP_VERSION,
-            request = request
+            request = request,
+            token = token,
+            deviceId = DeviceUtils.getDeviceId(context)
         )
         call.enqueue(object : Callback<OtpVerificationResponse> {
             override fun onResponse(
                 call: Call<OtpVerificationResponse>,
                 response: Response<OtpVerificationResponse>
             ) {
+
+                if (response.code()== 403){
+                    decrementLoader()
+                    handleTokenRefresh(preferenceManager){
+                        otpVerificationForGrievance(request,loginMobileNumber, context, preferenceManager)
+                    }
+                }
+
+
                 decrementLoader()
-                _otpVerificationForGrievance.value= response.body()
+                if (response.isSuccessful && response.body() !=null){
+                    _otpVerificationForGrievance.value= response.body()
+                }else{
+                    _otpVerificationForGrievance.value= OtpVerificationResponse(
+                        data = null,
+                        message = "no data found!",
+                        success = false
+                    )
+                }
 
             }
             override fun onFailure(

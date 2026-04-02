@@ -386,6 +386,8 @@ interface ApiMethod {
     @POST("api/house_tax/registerGrievanceAfterOtp")
     fun registerGrievanceVerifyOtp(
         @Header("X-App-Version") appVersion: Int,
+        @Header("X-Device-Id") deviceId: String,
+        @Header("Authorization") token: String,
         @Body request: VerifyOtpRequest
     ): Call<OtpVerificationResponse>
 

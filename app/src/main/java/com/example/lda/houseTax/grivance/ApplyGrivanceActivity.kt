@@ -500,7 +500,7 @@ class ApplyGrivanceActivity : AppCompatActivity() {
                 mobileNo = binding.etMobileNumber.text.toString().trim(),
                 otp = otp
             )
-            viewModel.otpVerificationForGrievance(request,"7394961460")
+            viewModel.otpVerificationForGrievance(request,"7394961460",this, preferenceManager = PreferenceManager(this))
         }
 
 
