@@ -3,10 +3,12 @@ package com.example.lda
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.lda.houseTax.LoginActivity
 import com.example.lda.houseTax.data.database.AppDatabase
+import com.example.lda.houseTax.loginDetails.SignInActivity
 import com.example.lda.houseTax.utils.PreferenceManager
 import com.example.lda.utils.SessionManager
 import kotlinx.coroutines.Dispatchers
@@ -32,6 +34,8 @@ abstract class BaseActivity : AppCompatActivity() {
     private fun performLogout() {
         val preferenceManager = PreferenceManager(this)
 
+        Log.d("TAG", "performLogout: done")
+
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 preferenceManager.clearAll()
@@ -47,7 +51,7 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     private fun goToLogin() {
-        val intent = Intent(this, LoginActivity::class.java)
+        val intent = Intent(this, SignInActivity::class.java)
         intent.flags =
             Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 

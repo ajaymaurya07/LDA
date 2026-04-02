@@ -64,27 +64,7 @@ class ProfileFragment : Fragment() {
 
 
         binding.logout.setOnClickListener {
-            logout()
-        }
-    }
-
-    private fun logout() {
-        lifecycleScope.launch {
-            // Clear Room Database
-            withContext(Dispatchers.IO) {
-                val db = AppDatabase.getDatabase(requireContext())
-                db.clearAllTables()
-            }
-
-            // Clear SharedPreferences
-            preferanceManager.clearAll()
-
-            // Navigate to LauncherActivity
-            val intent = Intent(requireActivity(), LauncherActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK
-            }
-            startActivity(intent)
+            viewModel.logout(requireContext(),preferanceManager)
         }
     }
 

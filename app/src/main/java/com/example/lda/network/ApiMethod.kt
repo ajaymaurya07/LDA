@@ -44,6 +44,7 @@ import com.example.lda.model.UlbDataResponse
 import com.example.lda.model.VerifyOtpMailResponse
 import com.example.lda.model.WardListResponse
 import com.example.lda.model.ZoneListResponse
+import com.example.lda.model.LogoutResponse
 import com.example.lda.utils.dataClass.PropertyDetailsRequest
 import com.example.lda.utils.dataClass.PropertySearchRequest
 import okhttp3.MultipartBody
@@ -459,6 +460,16 @@ interface ApiMethod {
         @Header("X-App-Version") appVersion: Int,
         @Body body: Map<String, String>
     ): Call<RefreshTokenResponse>
+
+    @Headers(
+        "Content-Type: application/json",
+        "Accept: application/json")
+    @POST("api/house_tax/logout")
+    fun logout(
+        @Header("X-App-Version") appVersion: Int,
+        @Header("X-Device-Id") deviceId: String,
+        @Header("Authorization") token: String
+    ): Call<LogoutResponse>
 
 
 }
