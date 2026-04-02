@@ -250,7 +250,7 @@ class PaymentActivity : AppCompatActivity() {
 
     private fun startPayUPayment(request: InitiateTransactionRequest){
             preferenceManager.saveMobileTransactionId(request.mobile_transaction_id)
-            viewModel.initiateTransaction(request)
+            viewModel.initiateTransaction(request,this,preferenceManager)
     }
 
 
@@ -582,7 +582,7 @@ class PaymentActivity : AppCompatActivity() {
                     val hashName = map[CP_HASH_NAME] ?: return
                     val hashString = map[CP_HASH_STRING] ?: return
 
-                    viewModel.hashData(appVersion = Constent.APP_VERSION, hashName = hashName, hashString = hashString){ serverHash ->
+                    viewModel.hashData(appVersion = Constent.APP_VERSION, hashName = hashName, hashString = hashString, context = this@PaymentActivity, preferenceManager = preferenceManager){ serverHash ->
 
                         if (serverHash.isNullOrEmpty()) return@hashData
 
@@ -638,7 +638,7 @@ class PaymentActivity : AppCompatActivity() {
             return
         }
 
-        viewModel.transactionDetails(transactionId)
+        viewModel.transactionDetails(transactionId, this, preferenceManager)
     }
 
 

@@ -155,7 +155,7 @@ class PaymentPendingActivity : AppCompatActivity() {
 
     private fun checkPaymentStatus(txnId: String) {
 
-        viewModel.transactionDetails(txnId)
+        viewModel.transactionDetails(txnId, this, preferenceManager)
 
         viewModel.transactionDetails.observe(this) { response ->
 

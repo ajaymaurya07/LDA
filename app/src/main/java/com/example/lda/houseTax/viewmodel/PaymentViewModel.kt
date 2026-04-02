@@ -38,7 +38,6 @@ import com.example.lda.utils.DeviceUtils
 import android.content.Context
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
@@ -47,16 +46,25 @@ import retrofit2.Response
 import java.io.File
 
 class PaymentViewModel: BaseViewModel() {
+
     fun hashData(
         appVersion: Int,
         hashName: String,
         hashString: String,
-        onResult: (String?) -> Unit
+        context: Context,
+        preferenceManager: PreferenceManager,
+        onResult: (String?) -> Unit,
+
     ) {
+
+        val token = "Bearer ${preferenceManager.getAccessToken() ?: ""}"
+
         val call = RetrofitClient.apiCall.hash(
             appVersion = appVersion,
             hashName = hashName,
-            hashString = hashString
+            hashString = hashString,
+            deviceId = DeviceUtils.getDeviceId(context),
+            token = token,
         )
 
         call.enqueue(object : Callback<HashResponse> {
@@ -64,8 +72,27 @@ class PaymentViewModel: BaseViewModel() {
                 call: Call<HashResponse>,
                 response: Response<HashResponse>
             ) {
-                val hash = response.body()?.data
-                onResult(hash)
+
+                if(response.code()== 403){
+
+                    handleTokenRefresh(preferenceManager) {
+                        hashData(
+                            appVersion,
+                            hashName,
+                            hashString,
+                            context,
+                            preferenceManager,
+                            onResult
+                        )
+                    }
+                }
+
+                if (response.isSuccessful && response.body() != null){
+                    val hash = response.body()?.data
+                    onResult(hash)
+                }else{
+                    onResult(null)
+                }
             }
 
             override fun onFailure(call: Call<HashResponse>, t: Throwable) {
@@ -79,27 +106,50 @@ class PaymentViewModel: BaseViewModel() {
     private val _transaction = MutableLiveData<CreateTransactionResponse>()
     val transaction: LiveData<CreateTransactionResponse> = _transaction
 
-    fun initiateTransaction(request: InitiateTransactionRequest) {
+    fun initiateTransaction(request: InitiateTransactionRequest, context: Context, preferenceManager: PreferenceManager) {
+
+        val token = "Bearer ${preferenceManager.getAccessToken() ?: ""}"
+
 
         incrementLoader()
         val call = RetrofitClient.apiCall.initiateTransaction(
             appVersion = Constent.APP_VERSION,
-            request = request
+            request = request,
+            deviceId = DeviceUtils.getDeviceId(context),
+            token = token
         )
         call.enqueue(object : Callback<CreateTransactionResponse> {
             override fun onResponse(
                 call: Call<CreateTransactionResponse>,
                 response: Response<CreateTransactionResponse>
             ) {
+
+                if (response.code()== 403){
+                    decrementLoader()
+                    handleTokenRefresh(preferenceManager){
+                        initiateTransaction(request, context, preferenceManager)
+                    }
+                }
+
+
                 decrementLoader()
-                _transaction.value= response.body()
+                if (response.isSuccessful && response.body()!= null){
+                    _transaction.value= response.body()
+                }else{
+                    _transaction.value= CreateTransactionResponse(
+                        data = null,
+                        message = "no data found!",
+                        status = false
+                    )
+                }
+
             }
 
             override fun onFailure(call: Call<CreateTransactionResponse>, t: Throwable) {
                 decrementLoader()
                 _transaction.value= CreateTransactionResponse(
                    data = null,
-                    message = "error",
+                    message = "network error",
                     status = false
                 )
             }
@@ -116,27 +166,48 @@ class PaymentViewModel: BaseViewModel() {
     val transactionDetails: LiveData<TransactionsDetailsResponse> = _transactionDetails
 
 
-    fun transactionDetails(transactionId: String) {
+    fun transactionDetails(transactionId: String, context: Context, preferenceManager: PreferenceManager) {
 
         incrementLoader()
+        val token = "Bearer ${preferenceManager.getAccessToken() ?: ""}"
         val call = RetrofitClient.apiCall.transactionDetails(
             appVersion = Constent.APP_VERSION,
-            mobileTransactionId = transactionId
+            mobileTransactionId = transactionId,
+            deviceId = DeviceUtils.getDeviceId(context),
+            token = token
         )
+
         call.enqueue(object : Callback<TransactionsDetailsResponse> {
             override fun onResponse(
                 call: Call<TransactionsDetailsResponse>,
                 response: Response<TransactionsDetailsResponse>
             ) {
+
+                if (response.code()== 403) {
+                    decrementLoader()
+                    handleTokenRefresh(preferenceManager) {
+                        transactionDetails(transactionId, context, preferenceManager)
+                    }
+                }
+
                 decrementLoader()
-                _transactionDetails.value= response.body()
+                if (response.isSuccessful && response.body() != null){
+                    _transactionDetails.value= response.body()
+                }else{
+                    _transactionDetails.value= TransactionsDetailsResponse(
+                        data = null,
+                        message = "no data found!",
+                        status = false
+                    )
+                }
+
             }
 
             override fun onFailure(call: Call<TransactionsDetailsResponse>, t: Throwable) {
                 decrementLoader()
                 _transactionDetails.value= TransactionsDetailsResponse(
                     data = null,
-                    message = "error",
+                    message = "network error",
                     status = false
                 )
             }

@@ -285,6 +285,8 @@ interface ApiMethod {
     @POST("api/Payment/generate_hash")
     fun hash(
         @Header("X-App-Version") appVersion: Int,
+        @Header("X-Device-Id") deviceId: String,
+        @Header("Authorization") token: String,
         @Field("hashName") hashName: String,
         @Field("hashString") hashString: String,
     ): Call<HashResponse>
@@ -295,6 +297,8 @@ interface ApiMethod {
     @POST("api/Payment/create_transaction")
     fun initiateTransaction(
         @Header("X-App-Version") appVersion: Int,
+        @Header("X-Device-Id") deviceId: String,
+        @Header("Authorization") token: String,
         @Body request: InitiateTransactionRequest
     ): Call<CreateTransactionResponse>
 
@@ -304,6 +308,8 @@ interface ApiMethod {
     @POST("api/payment/getTransactionDetails")
     fun transactionDetails(
         @Header("X-App-Version") appVersion: Int,
+        @Header("X-Device-Id") deviceId: String,
+        @Header("Authorization") token: String,
         @Field("mobile_transaction_id") mobileTransactionId: String,
     ): Call<TransactionsDetailsResponse>
 
