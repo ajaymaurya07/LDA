@@ -40,6 +40,7 @@ import com.example.lda.model.SubCategoriesItem
 import com.example.lda.model.UlbItem
 import com.example.lda.model.WardItem
 import com.example.lda.model.ZoneItem
+import com.example.lda.utils.AlertDialogHelper
 import com.example.lda.utils.DeviceUtils
 import com.example.lda.utils.LoderHelper
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -154,7 +155,7 @@ class ApplyGrivanceActivity : AppCompatActivity() {
                 Toast.makeText(this, response.message, Toast.LENGTH_LONG).show()
                 finish()
             } else {
-                Toast.makeText(this, response?.message, Toast.LENGTH_LONG).show()
+                AlertDialogHelper.showMessageDialog(this, response?.message.toString())
             }
         }
     }
@@ -411,7 +412,7 @@ class ApplyGrivanceActivity : AppCompatActivity() {
     private fun submitGrievanceData() {
         val file = imageUri?.let { getFileFromUri(it) }
         
-        viewModel.saveGrievance(
+        viewModel.saveGrievanceData(
             ulbId = selectedUlbItem?.ulbId.toString(),
             zoneId = selectedZoneItem?.zoneId.toString(),
             wardId = selectedWardItem?.wardId.toString(),
@@ -425,7 +426,9 @@ class ApplyGrivanceActivity : AppCompatActivity() {
             mobileNo = binding.etMobileNumber.text.toString().trim(),
             email = binding.etEmail.text.toString().trim(),
             address = binding.etAddress.text.toString().trim(),
-            file = file
+            file = file,
+            context = this,
+            preferenceManager = PreferenceManager(this)
         )
     }
 

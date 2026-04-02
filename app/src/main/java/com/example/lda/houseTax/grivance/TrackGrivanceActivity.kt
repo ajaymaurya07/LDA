@@ -7,21 +7,21 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.lda.R
 import com.example.lda.databinding.ActivityTrackGrivanceBinding
 import com.example.lda.databinding.ItemTrackInfoBinding
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
+import com.example.lda.houseTax.utils.PreferenceManager
+import com.example.lda.houseTax.viewmodel.PaymentViewModel
 import com.example.lda.model.GrievanceStatusData
-import com.example.lda.model.GrievanceStatusResponse
-import com.example.lda.network.RetrofitClient
 import com.example.lda.utils.LoderHelper
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class TrackGrivanceActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTrackGrivanceBinding
     private lateinit var loaderHelper: LoderHelper
+    private lateinit var viewModel: PaymentViewModel
+    private lateinit var preferenceManager: PreferenceManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +30,11 @@ class TrackGrivanceActivity : AppCompatActivity() {
         enableEdgeToEdge()
 
         loaderHelper = LoderHelper(this)
+        preferenceManager = PreferenceManager(this)
+        viewModel = ViewModelProvider(this)[PaymentViewModel::class.java]
 
         setupToolbar()
+        observeViewModel()
         
         val grievanceNo = intent.getStringExtra("grievanceNo")
         if (grievanceNo != null) {
@@ -53,19 +56,19 @@ class TrackGrivanceActivity : AppCompatActivity() {
         }
     }
 
-    private fun fetchGrievanceStatus(grievanceNo: String) {
-        loaderHelper.startLoadingDialog("Fetching status...")
-        
-        val request = mapOf("grievanceNo" to grievanceNo)
-        
-        RetrofitClient.apiCall.getGrievanceStatus(1, request).enqueue(object : Callback<GrievanceStatusResponse> {
-            override fun onResponse(
-                call: Call<GrievanceStatusResponse>,
-                response: Response<GrievanceStatusResponse>
-            ) {
+    private fun observeViewModel() {
+        viewModel.isLoading.observe(this) { isLoading ->
+            if (isLoading) {
+                loaderHelper.startLoadingDialog("Fetching status...")
+            } else {
                 loaderHelper.dismissDialog()
-                if (response.isSuccessful && response.body()?.success == true) {
-                    val dataList = response.body()?.data
+            }
+        }
+
+        viewModel.grievanceStatus.observe(this) { response ->
+            if (response != null) {
+                if (response.success) {
+                    val dataList = response.data
                     if (!dataList.isNullOrEmpty()) {
                         showContent(true)
                         updateUI(dataList[0])
@@ -74,16 +77,14 @@ class TrackGrivanceActivity : AppCompatActivity() {
                     }
                 } else {
                     showContent(false)
-                    Toast.makeText(this@TrackGrivanceActivity, "Failed: ${response.body()?.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Failed: ${response.message}", Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+    }
 
-            override fun onFailure(call: Call<GrievanceStatusResponse>, t: Throwable) {
-                loaderHelper.dismissDialog()
-                showContent(false)
-                Toast.makeText(this@TrackGrivanceActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
+    private fun fetchGrievanceStatus(grievanceNo: String) {
+        viewModel.fetchGrievanceStatus(grievanceNo, this, preferenceManager)
     }
 
     private fun showContent(found: Boolean) {

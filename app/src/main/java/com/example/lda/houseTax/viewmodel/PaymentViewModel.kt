@@ -29,6 +29,7 @@ import com.example.lda.model.SignUpResponse
 import com.example.lda.model.TransactionsByEmailResponse
 import com.example.lda.model.TransactionsDetailsResponse
 import com.example.lda.model.VerifyOtpMailResponse
+import com.example.lda.model.GrievanceStatusResponse
 import com.example.lda.network.RetrofitClient
 import com.example.lda.viewmodel.BaseViewModel
 import com.example.lda.houseTax.utils.PreferenceManager
@@ -36,7 +37,6 @@ import com.example.lda.utils.DeviceUtils
 import android.content.Context
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
@@ -742,7 +742,7 @@ class PaymentViewModel: BaseViewModel() {
     private val _saveGrievance = MutableLiveData<SaveGrievanceResponse>()
     val saveGrievance: LiveData<SaveGrievanceResponse> = _saveGrievance
 
-    fun saveGrievance(
+    fun saveGrievanceData(
         ulbId: String,
         zoneId: String,
         wardId: String,
@@ -756,7 +756,9 @@ class PaymentViewModel: BaseViewModel() {
         mobileNo: String,
         email: String,
         address: String,
-        file: File?
+        file: File?,
+        context: Context,
+        preferenceManager: PreferenceManager
     ) {
         incrementLoader()
 
@@ -779,6 +781,8 @@ class PaymentViewModel: BaseViewModel() {
             MultipartBody.Part.createFormData("file", it.name, requestFile)
         }
 
+        val token = "Bearer ${preferenceManager.getAccessToken() ?: ""}"
+
         val call = RetrofitClient.apiCall.saveGrievance(
             appVersion = Constent.APP_VERSION,
             ulbId = ulbIdBody,
@@ -794,15 +798,52 @@ class PaymentViewModel: BaseViewModel() {
             mobileNo = mobileNoBody,
             email = emailBody,
             address = addressBody,
-            file = filePart
+            file = filePart,
+            deviceId = DeviceUtils.getDeviceId(context),
+            token = token,
         )
         call.enqueue(object : Callback<SaveGrievanceResponse> {
             override fun onResponse(
                 call: Call<SaveGrievanceResponse>,
                 response: Response<SaveGrievanceResponse>
             ) {
+
+                if (response.code() == 403) {
+                    decrementLoader()
+                    handleTokenRefresh(preferenceManager) {
+                        saveGrievanceData(
+                            ulbId,
+                            zoneId,
+                            wardId,
+                            mohallaId,
+                            categoryId,
+                            subCategoryId,
+                            landmark,
+                            description,
+                            name,
+                            fatherName,
+                            mobileNo,
+                            email,
+                            address,
+                            file,
+                            context,
+                            preferenceManager
+                        )
+                    }
+                    return
+                }
+
                 decrementLoader()
-                _saveGrievance.value = response.body()
+                if (response.isSuccessful && response.body()!=null){
+                    _saveGrievance.value= response.body()
+                }else{
+                    _saveGrievance.value= SaveGrievanceResponse(
+                        success = false,
+                        message = "no data found!"
+                    )
+                }
+
+
             }
 
             override fun onFailure(call: Call<SaveGrievanceResponse>, t: Throwable) {
@@ -810,6 +851,54 @@ class PaymentViewModel: BaseViewModel() {
                 _saveGrievance.value = SaveGrievanceResponse(
                     success = false,
                     message = t.message
+                )
+            }
+        })
+    }
+
+    private val _grievanceStatus = MutableLiveData<GrievanceStatusResponse>()
+    val grievanceStatus: LiveData<GrievanceStatusResponse> = _grievanceStatus
+
+    fun fetchGrievanceStatus(grievanceNo: String, context: Context, preferenceManager: PreferenceManager) {
+        val token = "Bearer ${preferenceManager.getAccessToken() ?: ""}"
+        incrementLoader()
+        val request = mapOf("grievanceNo" to grievanceNo)
+        RetrofitClient.apiCall.getGrievanceStatus(
+            appVersion = Constent.APP_VERSION,
+            deviceId = DeviceUtils.getDeviceId(context),
+            token = token,
+            request = request
+        ).enqueue(object : Callback<GrievanceStatusResponse> {
+            override fun onResponse(
+                call: Call<GrievanceStatusResponse>,
+                response: Response<GrievanceStatusResponse>
+            ) {
+                if (response.code() == 403) {
+                    decrementLoader()
+                    handleTokenRefresh(preferenceManager) {
+                        fetchGrievanceStatus(grievanceNo, context, preferenceManager)
+                    }
+                    return
+                }
+
+                decrementLoader()
+                if (response.isSuccessful && response.body() != null) {
+                    _grievanceStatus.value = response.body()
+                } else {
+                    _grievanceStatus.value = GrievanceStatusResponse(
+                        success = false,
+                        message = "Failed to fetch status",
+                        data = null
+                    )
+                }
+            }
+
+            override fun onFailure(call: Call<GrievanceStatusResponse>, t: Throwable) {
+                decrementLoader()
+                _grievanceStatus.value = GrievanceStatusResponse(
+                    success = false,
+                    message = "Error: ${t.message}",
+                    data = null
                 )
             }
         })

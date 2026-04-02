@@ -6,7 +6,7 @@ data class GrievanceStatusResponse(
     @SerializedName("success") val success: Boolean = false,
     @SerializedName("responseCode") val responseCode: Int = 0,
     @SerializedName("message") val message: String = "",
-    @SerializedName("data") val data: List<GrievanceStatusData> = emptyList()
+    @SerializedName("data") val data: List<GrievanceStatusData>? = emptyList()
 )
 
 data class GrievanceStatusData(

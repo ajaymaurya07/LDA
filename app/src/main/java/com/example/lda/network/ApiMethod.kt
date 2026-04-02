@@ -394,6 +394,8 @@ interface ApiMethod {
     @POST("api/house_tax/saveGrievance")
     fun saveGrievance(
         @Header("X-App-Version") appVersion: Int,
+        @Header("X-Device-Id") deviceId: String,
+        @Header("Authorization") token: String,
         @Part("ulbId") ulbId: RequestBody,
         @Part("zoneId") zoneId: RequestBody,
         @Part("wardId") wardId: RequestBody,
@@ -435,6 +437,8 @@ interface ApiMethod {
     @POST("api/house_tax/getGrievanceStatus")
     fun getGrievanceStatus(
         @Header("X-App-Version") appVersion: Int,
+        @Header("X-Device-Id") deviceId: String,
+        @Header("Authorization") token: String,
         @Body request: Map<String, String>
     ): Call<GrievanceStatusResponse>
 
