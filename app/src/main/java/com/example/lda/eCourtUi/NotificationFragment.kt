@@ -45,7 +45,7 @@ class NotificationFragment : Fragment() {
         observeViewModel()
         
         sharedPreferences.getEmail()?.let { email ->
-            viewModel.getTransactionsByEmail(email)
+            viewModel.getTransactionsByEmail(email, requireContext(), sharedPreferences)
         } ?: run {
             Toast.makeText(requireContext(), "Email not found", Toast.LENGTH_SHORT).show()
         }

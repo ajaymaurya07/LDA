@@ -419,6 +419,8 @@ interface ApiMethod {
     @POST("api/payment/get_transactions_by_email")
     fun getTransactionsByEmail(
         @Header("X-App-Version") appVersion: Int,
+        @Header("X-Device-Id") deviceId: String,
+        @Header("Authorization") token: String,
         @Body emailId: Map<String, String>
     ): Call<TransactionsByEmailResponse>
 

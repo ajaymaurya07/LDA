@@ -957,11 +957,14 @@ class PaymentViewModel: BaseViewModel() {
     private val _transactionsByEmail = MutableLiveData<TransactionsByEmailResponse>()
     val transactionsByEmail: LiveData<TransactionsByEmailResponse> = _transactionsByEmail
 
-    fun getTransactionsByEmail(email: String) {
+    fun getTransactionsByEmail(email: String, context: Context, preferenceManager: PreferenceManager) {
+        val token = "Bearer ${preferenceManager.getAccessToken() ?: ""}"
         incrementLoader()
         val emailMap = mapOf("email_id" to email)
         val call = RetrofitClient.apiCall.getTransactionsByEmail(
             appVersion = Constent.APP_VERSION,
+            deviceId = DeviceUtils.getDeviceId(context),
+            token = token,
             emailId = emailMap
         )
         call.enqueue(object : Callback<TransactionsByEmailResponse> {
@@ -969,8 +972,25 @@ class PaymentViewModel: BaseViewModel() {
                 call: Call<TransactionsByEmailResponse>,
                 response: Response<TransactionsByEmailResponse>
             ) {
+                if (response.code() == 403) {
+                    decrementLoader()
+                    handleTokenRefresh(preferenceManager) {
+                        getTransactionsByEmail(email, context, preferenceManager)
+                    }
+                    return
+                }
+
                 decrementLoader()
-                _transactionsByEmail.value = response.body()
+                if (response.isSuccessful && response.body()!=null){
+                    _transactionsByEmail.value = response.body()
+                }else{
+                    _transactionsByEmail.value = TransactionsByEmailResponse(
+                        status = false,
+                        message = "no data found!",
+                        data = null
+                    )
+                }
+
             }
 
             override fun onFailure(call: Call<TransactionsByEmailResponse>, t: Throwable) {
