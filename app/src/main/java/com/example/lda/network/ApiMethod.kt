@@ -428,6 +428,8 @@ interface ApiMethod {
     @POST("api/house_tax/getGrievanceDetails")
     fun getGrievanceDetails(
         @Header("X-App-Version") appVersion: Int,
+        @Header("X-Device-Id") deviceId: String,
+        @Header("Authorization") token: String,
         @Body emailId: Map<String, String>
     ): Call<GrievanceDetailsResponse>
 

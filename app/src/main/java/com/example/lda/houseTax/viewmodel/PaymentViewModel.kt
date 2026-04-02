@@ -30,6 +30,7 @@ import com.example.lda.model.TransactionsByEmailResponse
 import com.example.lda.model.TransactionsDetailsResponse
 import com.example.lda.model.VerifyOtpMailResponse
 import com.example.lda.model.GrievanceStatusResponse
+import com.example.lda.model.GrievanceDetailsResponse
 import com.example.lda.network.RetrofitClient
 import com.example.lda.viewmodel.BaseViewModel
 import com.example.lda.houseTax.utils.PreferenceManager
@@ -37,6 +38,7 @@ import com.example.lda.utils.DeviceUtils
 import android.content.Context
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
@@ -896,6 +898,54 @@ class PaymentViewModel: BaseViewModel() {
             override fun onFailure(call: Call<GrievanceStatusResponse>, t: Throwable) {
                 decrementLoader()
                 _grievanceStatus.value = GrievanceStatusResponse(
+                    success = false,
+                    message = "Error: ${t.message}",
+                    data = null
+                )
+            }
+        })
+    }
+
+    private val _grievanceDetails = MutableLiveData<GrievanceDetailsResponse>()
+    val grievanceDetails: LiveData<GrievanceDetailsResponse> = _grievanceDetails
+
+    fun fetchGrievanceDetails(email: String, context: Context, preferenceManager: PreferenceManager) {
+        val token = "Bearer ${preferenceManager.getAccessToken() ?: ""}"
+        incrementLoader()
+        val requestBody = mapOf("email_id" to email)
+        RetrofitClient.apiCall.getGrievanceDetails(
+            appVersion = Constent.APP_VERSION,
+            deviceId = DeviceUtils.getDeviceId(context),
+            token = token,
+            emailId = requestBody
+        ).enqueue(object : Callback<GrievanceDetailsResponse> {
+            override fun onResponse(
+                call: Call<GrievanceDetailsResponse>,
+                response: Response<GrievanceDetailsResponse>
+            ) {
+                if (response.code() == 403) {
+                    decrementLoader()
+                    handleTokenRefresh(preferenceManager) {
+                        fetchGrievanceDetails(email, context, preferenceManager)
+                    }
+                    return
+                }
+
+                decrementLoader()
+                if (response.isSuccessful && response.body() != null) {
+                    _grievanceDetails.value = response.body()
+                } else {
+                    _grievanceDetails.value = GrievanceDetailsResponse(
+                        success = false,
+                        message = "Failed to fetch grievances",
+                        data = null
+                    )
+                }
+            }
+
+            override fun onFailure(call: Call<GrievanceDetailsResponse>, t: Throwable) {
+                decrementLoader()
+                _grievanceDetails.value = GrievanceDetailsResponse(
                     success = false,
                     message = "Error: ${t.message}",
                     data = null

@@ -7,24 +7,22 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lda.R
 import com.example.lda.adaptor.GrievanceAdapter
 import com.example.lda.databinding.ActivityApplyGrivanceListBinding
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
 import com.example.lda.houseTax.utils.PreferenceManager
-import com.example.lda.model.GrievanceDetailsResponse
-import com.example.lda.network.RetrofitClient
+import com.example.lda.houseTax.viewmodel.PaymentViewModel
 import com.example.lda.utils.LoderHelper
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class ApplyGrivanceListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityApplyGrivanceListBinding
     private lateinit var adapter: GrievanceAdapter
     private lateinit var preferenceManager: PreferenceManager
     private lateinit var loaderHelper: LoderHelper
+    private lateinit var viewModel: PaymentViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,9 +32,11 @@ class ApplyGrivanceListActivity : AppCompatActivity() {
 
         preferenceManager = PreferenceManager(this)
         loaderHelper = LoderHelper(this)
+        viewModel = ViewModelProvider(this)[PaymentViewModel::class.java]
 
         setupToolbar()
         setupRecyclerView()
+        observeViewModel()
         fetchGrievanceDetails()
     }
 
@@ -64,25 +64,19 @@ class ApplyGrivanceListActivity : AppCompatActivity() {
         }
     }
 
-    private fun fetchGrievanceDetails() {
-        val email = preferenceManager.getEmail()
-        if (email.isNullOrEmpty()) {
-            Toast.makeText(this, "Email not found. Please login again.", Toast.LENGTH_SHORT).show()
-            return
+    private fun observeViewModel() {
+        viewModel.isLoading.observe(this) {
+            if (it) {
+                loaderHelper.startLoadingDialog("Fetching grievance list...")
+            } else {
+                loaderHelper.dismissDialog()
+            }
         }
 
-        loaderHelper.startLoadingDialog("Fetching grievance list...")
-        
-        val requestBody = mapOf("email_id" to email)
-        
-        RetrofitClient.apiCall.getGrievanceDetails(1, requestBody).enqueue(object : Callback<GrievanceDetailsResponse> {
-            override fun onResponse(
-                call: Call<GrievanceDetailsResponse>,
-                response: Response<GrievanceDetailsResponse>
-            ) {
-                loaderHelper.dismissDialog()
-                if (response.isSuccessful && response.body()?.success == true) {
-                    val list = response.body()?.data
+        viewModel.grievanceDetails.observe(this) { response ->
+            if (response != null) {
+                if (response.success == true) {
+                    val list = response.data
                     if (!list.isNullOrEmpty()) {
                         adapter.updateData(list)
                         binding.noDataText.visibility = View.GONE
@@ -91,14 +85,18 @@ class ApplyGrivanceListActivity : AppCompatActivity() {
                         binding.noDataText.text = "No grievances found."
                     }
                 } else {
-                    Toast.makeText(this@ApplyGrivanceListActivity, "Failed to fetch grievances: ${response.body()?.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Failed to fetch grievances: ${response.message}", Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+    }
 
-            override fun onFailure(call: Call<GrievanceDetailsResponse>, t: Throwable) {
-                loaderHelper.dismissDialog()
-                Toast.makeText(this@ApplyGrivanceListActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
+    private fun fetchGrievanceDetails() {
+        val email = preferenceManager.getEmail()
+        if (email.isNullOrEmpty()) {
+            Toast.makeText(this, "Email not found. Please login again.", Toast.LENGTH_SHORT).show()
+            return
+        }
+        viewModel.fetchGrievanceDetails(email, this, preferenceManager)
     }
 }
