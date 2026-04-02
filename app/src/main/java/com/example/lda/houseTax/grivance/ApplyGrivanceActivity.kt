@@ -402,7 +402,7 @@ class ApplyGrivanceActivity : AppCompatActivity() {
                 mobileNo = mobile,
                 propertyId = selectedProperty?.propertyId ?: ""
             )
-            viewModel.sendOtp(request, "7394961460")
+            viewModel.sendOtp(request, "7394961460",this, preferenceManager =PreferenceManager(this) )
         } else {
             submitGrievanceData()
         }

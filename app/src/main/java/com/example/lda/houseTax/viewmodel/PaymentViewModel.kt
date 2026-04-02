@@ -31,6 +31,9 @@ import com.example.lda.model.TransactionsDetailsResponse
 import com.example.lda.model.VerifyOtpMailResponse
 import com.example.lda.network.RetrofitClient
 import com.example.lda.viewmodel.BaseViewModel
+import com.example.lda.houseTax.utils.PreferenceManager
+import com.example.lda.utils.DeviceUtils
+import android.content.Context
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -145,17 +148,21 @@ class PaymentViewModel: BaseViewModel() {
     private val _sendOtp = MutableLiveData<SendOtpResponse>()
     val sendOtp: LiveData<SendOtpResponse> = _sendOtp
 
-    fun sendOtp(request: SendOtpRequest,loginMobileNumber:String) {
+    fun sendOtp(request: SendOtpRequest, loginMobileNumber: String, context: Context, preferenceManager: PreferenceManager) {
 
-        if (loginMobileNumber==Constent.TEST_MOBILE_NUMBER){
-            _sendOtp.value=dummyResponse()
+        if (loginMobileNumber == Constent.TEST_MOBILE_NUMBER) {
+            _sendOtp.value = dummyResponse()
             return
         }
+
+        val token = "Bearer ${preferenceManager.getAccessToken() ?: ""}"
 
         incrementLoader()
 
         val call = RetrofitClient.apiCall.sendOtp(
             appVersion = Constent.APP_VERSION,
+            deviceId = DeviceUtils.getDeviceId(context),
+            token = token,
             request = request
         )
         call.enqueue(object : Callback<SendOtpResponse> {
@@ -163,15 +170,32 @@ class PaymentViewModel: BaseViewModel() {
                 call: Call<SendOtpResponse>,
                 response: Response<SendOtpResponse>
             ) {
+                if (response.code() == 403) {
+                    decrementLoader()
+                    handleTokenRefresh(preferenceManager) {
+                        sendOtp(request, loginMobileNumber, context, preferenceManager)
+                    }
+                    return
+                }
+
                 decrementLoader()
-                _sendOtp.value= response.body()
+                if(response.isSuccessful && response.body() != null){
+                    _sendOtp.value = response.body()
+                }else{
+                    _sendOtp.value = SendOtpResponse(
+                        data = null,
+                        message = "no data found!",
+                        success = false
+                    )
+                }
+
             }
             override fun onFailure(
                 call: Call<SendOtpResponse>, t: Throwable) {
                 decrementLoader()
                 _sendOtp.value= SendOtpResponse(
                     data = null,
-                    message = "error",
+                    message = "network error",
                     success = false
                 )
             }
@@ -193,16 +217,20 @@ class PaymentViewModel: BaseViewModel() {
     private val _otpVerification = MutableLiveData<OtpVerificationResponse>()
     val otpVerification: LiveData<OtpVerificationResponse> = _otpVerification
 
-    fun otpVerification(request: VerifyOtpRequest,loginMobileNumber: String) {
+    fun otpVerification(request: VerifyOtpRequest, loginMobileNumber: String, context: Context, preferenceManager: PreferenceManager) {
 
-        if (loginMobileNumber==Constent.TEST_MOBILE_NUMBER){
-            _otpVerification.value=dummyOtpVerificationResponse()
+        if (loginMobileNumber == Constent.TEST_MOBILE_NUMBER) {
+            _otpVerification.value = dummyOtpVerificationResponse()
             return
         }
+
+        val token = "Bearer ${preferenceManager.getAccessToken() ?: ""}"
 
         incrementLoader()
         val call = RetrofitClient.apiCall.otpVerification(
             appVersion = Constent.APP_VERSION,
+            deviceId = DeviceUtils.getDeviceId(context),
+            token = token,
             request = request
         )
         call.enqueue(object : Callback<OtpVerificationResponse> {
@@ -210,16 +238,32 @@ class PaymentViewModel: BaseViewModel() {
                 call: Call<OtpVerificationResponse>,
                 response: Response<OtpVerificationResponse>
             ) {
+                if (response.code() == 403) {
+                    decrementLoader()
+                    handleTokenRefresh(preferenceManager) {
+                        otpVerification(request, loginMobileNumber, context, preferenceManager)
+                    }
+                    return
+                }
+
                 decrementLoader()
-                _otpVerification.value= response.body()
+                if(response.isSuccessful && response.body() != null){
+                    _otpVerification.value = response.body()
+                }else{
+                    _otpVerification.value = OtpVerificationResponse(
+                        data = null,
+                        message = "no data found!",
+                        success = false
+                    )
+                }
 
             }
             override fun onFailure(
                 call: Call<OtpVerificationResponse>, t: Throwable) {
                 decrementLoader()
-                _otpVerification.value= OtpVerificationResponse(
+                _otpVerification.value = OtpVerificationResponse(
                     data = null,
-                    message = "error",
+                    message = "network error",
                     success = false
                 )
             }

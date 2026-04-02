@@ -22,6 +22,7 @@ import com.example.lda.houseTax.data.database.AppDatabase
 import com.example.lda.houseTax.data.database.entity.PropertyEntity
 import com.example.lda.houseTax.utils.PreferenceManager
 import com.example.lda.houseTax.viewmodel.PaymentViewModel
+import com.example.lda.utils.AlertDialogHelper
 import com.example.lda.utils.LoderHelper
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -83,7 +84,7 @@ class LoginActivity : AppCompatActivity() {
                 mobileNo = phoneNumber,
                 propertyId = propertyId
             )
-            viewmodel.sendOtp(request,sharedPreferences.getLoginMobileNumber().toString())
+            viewmodel.sendOtp(request,sharedPreferences.getLoginMobileNumber().toString(),this,sharedPreferences)
         }
         observeViewModel()
     }
@@ -106,7 +107,7 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
             }
             else{
-                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                AlertDialogHelper.showMessageDialog(this, it.message.toString())
             }
         }
 
@@ -172,7 +173,7 @@ class LoginActivity : AppCompatActivity() {
                 mobileNo = phoneNumber,
                 otp = otp
             )
-            viewmodel.otpVerification(request,sharedPreferences.getLoginMobileNumber().toString())
+            viewmodel.otpVerification(request,sharedPreferences.getLoginMobileNumber().toString(),this,sharedPreferences)
         }
 
         dialog.setOnShowListener {

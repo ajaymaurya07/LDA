@@ -109,8 +109,8 @@ interface ApiMethod {
     @POST("api/getCaseDetailsByCnr")
     fun caseDetailsByCn(
         @Header("api_key") apiKey:String,
+        @Header("app_version") version: String,
         @Field("user_id") userId: String,
-        @Field("app_version") version: String,
         @Field("user_type") userType:String,
         @Field("department") department:String,
         @Field("cnr_number") cnrNumber:String
@@ -308,15 +308,25 @@ interface ApiMethod {
     ): Call<TransactionsDetailsResponse>
 
 
+    @Headers(
+        "Content-Type: application/json",
+        "Accept: application/json")
     @POST("api/house_tax/sendOtp")
     fun sendOtp(
         @Header("X-App-Version") appVersion: Int,
+        @Header("X-Device-Id") deviceId: String,
+        @Header("Authorization") token: String,
         @Body request: SendOtpRequest
     ): Call<SendOtpResponse>
 
+    @Headers(
+        "Content-Type: application/json",
+        "Accept: application/json")
     @POST("api/house_tax/verifyOtp")
     fun otpVerification(
         @Header("X-App-Version") appVersion: Int,
+        @Header("X-Device-Id") deviceId: String,
+        @Header("Authorization") token: String,
         @Body request: VerifyOtpRequest
     ): Call<OtpVerificationResponse>
 

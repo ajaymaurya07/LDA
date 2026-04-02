@@ -291,7 +291,7 @@ class PaymentActivity : AppCompatActivity() {
 
 
             sendOtpDialog.dismiss()
-            viewModel.sendOtp(request,preferenceManager.getLoginMobileNumber().toString())
+            viewModel.sendOtp(request,preferenceManager.getLoginMobileNumber().toString(),this,preferenceManager)
 
         }
 
@@ -338,7 +338,7 @@ class PaymentActivity : AppCompatActivity() {
                 mobileNo = otpMobileNo,
                 otp = otp
             )
-            viewModel.otpVerification(request,preferenceManager.getLoginMobileNumber().toString())
+            viewModel.otpVerification(request,preferenceManager.getLoginMobileNumber().toString(),this,preferenceManager)
         }
 
 
