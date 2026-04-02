@@ -41,7 +41,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val request = ForgotPasswordRequest(email_or_mobile = emailOrMobile)
+            val request = ForgotPasswordRequest(username = emailOrMobile)
             viewModel.forgotPassword(request)
         }
 
@@ -64,8 +64,9 @@ class ForgotPasswordActivity : AppCompatActivity() {
         viewModel.forgotPassword.observe(this) { response ->
             if (response != null) {
                 if (response.status && response.responseCode == 1) {
-                    val message = if (response.data?.email_hint != null) {
-                        "${response.message}\nEmail Hint: ${response.data.email_hint}"
+                    val safeData = response.getSafeData()
+                    val message = if (safeData?.email_hint != null) {
+                        "${response.message}\nEmail Hint: ${safeData.email_hint}"
                     } else {
                         response.message ?: ""
                     }

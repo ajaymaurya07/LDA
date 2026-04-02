@@ -100,7 +100,7 @@ class ApplyGrivanceActivity : AppCompatActivity() {
         fetchProperties()
         otpObserver()
 
-        viewModel.fetchGrievanceData()
+        viewModel.fetchGrievanceData(this, preferenceManager = PreferenceManager(this))
         sharedViewModel.ulbData(
             loginMobileNumber = "",
             deviceId = DeviceUtils.getDeviceId(this),

@@ -36,6 +36,7 @@ import com.example.lda.utils.DeviceUtils
 import android.content.Context
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
@@ -157,6 +158,9 @@ class PaymentViewModel: BaseViewModel() {
 
         val token = "Bearer ${preferenceManager.getAccessToken() ?: ""}"
 
+
+        Log.d("TAG", "sendOtp: $request $token")
+
         incrementLoader()
 
         val call = RetrofitClient.apiCall.sendOtp(
@@ -193,6 +197,7 @@ class PaymentViewModel: BaseViewModel() {
             override fun onFailure(
                 call: Call<SendOtpResponse>, t: Throwable) {
                 decrementLoader()
+                Log.d("TAG", "onFailure: $t")
                 _sendOtp.value= SendOtpResponse(
                     data = null,
                     message = "network error",
@@ -684,26 +689,48 @@ class PaymentViewModel: BaseViewModel() {
 
     private val _grievanceData = MutableLiveData<FetchGrievanceResponse>()
     val grievanceData: LiveData<FetchGrievanceResponse> = _grievanceData
-    fun fetchGrievanceData() {
+    fun fetchGrievanceData(context: Context, preferenceManager: PreferenceManager) {
+
+        val token = "Bearer ${preferenceManager.getAccessToken() ?: ""}"
 
         incrementLoader()
         val call = RetrofitClient.apiCall.fetchGrievance(
-            appVersion = Constent.APP_VERSION
+            appVersion = Constent.APP_VERSION,
+            deviceId = DeviceUtils.getDeviceId(context),
+            token = token
         )
         call.enqueue(object : Callback<FetchGrievanceResponse> {
             override fun onResponse(
                 call: Call<FetchGrievanceResponse>,
                 response: Response<FetchGrievanceResponse>
             ) {
+                if (response.code() == 403) {
+                    decrementLoader()
+                    handleTokenRefresh(preferenceManager) {
+                        fetchGrievanceData(context, preferenceManager)
+                    }
+                    return
+                }
+
                 decrementLoader()
-                _grievanceData.value= response.body()
+
+                if (response.isSuccessful && response.body() != null){
+                    _grievanceData.value= response.body()
+                }else{
+                    _grievanceData.value= FetchGrievanceResponse(
+                        data = null,
+                        message = "no data found!",
+                        success = false
+                    )
+                }
+
             }
             override fun onFailure(
                 call: Call<FetchGrievanceResponse>, t: Throwable) {
                 decrementLoader()
                 _grievanceData.value= FetchGrievanceResponse(
                     data = null,
-                    message = "error",
+                    message = "network error",
                     success = false,
                     responseCode = 0
                 )

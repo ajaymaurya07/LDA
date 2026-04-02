@@ -1,15 +1,30 @@
 package com.example.lda.houseTax.data
 
+import com.google.gson.JsonElement
+import com.google.gson.Gson
+
 data class ForgotPasswordRequest(
-    val email_or_mobile: String
+    val username: String
 )
 
 data class ForgotPasswordResponse(
     val status: Boolean,
     val message: String? = null,
     val responseCode: Int,
-    val data: ForgotPasswordData? = null
-)
+    val data: JsonElement? = null // Change to JsonElement to handle both Object {} and Array []
+) {
+    fun getSafeData(): ForgotPasswordData? {
+        return try {
+            if (data != null && data.isJsonObject) {
+                Gson().fromJson(data, ForgotPasswordData::class.java)
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            null
+        }
+    }
+}
 
 data class ForgotPasswordData(
     val email_hint: String? = null

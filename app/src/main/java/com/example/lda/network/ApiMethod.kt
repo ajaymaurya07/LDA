@@ -358,7 +358,7 @@ interface ApiMethod {
         @Body request: ChallengeRequest
     ): Call<ChallengeResponse>
 
-    @POST("api/house_tax/forgot_password")
+    @POST("api/house_tax/forgot_password_request")
     fun forgotPassword(
         @Header("X-App-Version") appVersion: Int,
         @Body request: ForgotPasswordRequest
@@ -371,9 +371,14 @@ interface ApiMethod {
     ): Call<VerifyForgotPasswordOtpResponse>
 
 
+    @Headers(
+        "Content-Type: application/json",
+        "Accept: application/json")
     @GET("api/House_tax/grievanceCategory")
     fun fetchGrievance(
-        @Header("X-App-Version") appVersion: Int
+        @Header("X-App-Version") appVersion: Int,
+        @Header("X-Device-Id") deviceId: String,
+        @Header("Authorization") token: String
     ): Call<FetchGrievanceResponse>
 
 
