@@ -94,15 +94,25 @@ class ForgotPasswordActivity : BaseActivity() {
         }
     }
 
+    private fun isValidPassword(password: String): Boolean {
+        val passwordPattern = Regex("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$")
+        return passwordPattern.matches(password)
+    }
+
     private fun openVerifyOtpBottomSheet(username: String) {
         otpDialog = BottomSheetDialog(this, R.style.BottomSheetTheme)
         val view = layoutInflater.inflate(R.layout.bottom_sheet_forgot_password_otp, null)
         otpDialog.setContentView(view)
+        
+        // Prevent dialog from closing on outside touch or back press
+        otpDialog.setCancelable(false)
+        otpDialog.setCanceledOnTouchOutside(false)
 
         val etOtp = view.findViewById<EditText>(R.id.etOtp)
         val etNewPassword = view.findViewById<EditText>(R.id.etNewPassword)
         val etConfirmPassword = view.findViewById<EditText>(R.id.etConfirmPassword)
         val btnVerify = view.findViewById<View>(R.id.btnVerify)
+        val btnClose = view.findViewById<View>(R.id.btnClose)
 
         btnVerify.setOnClickListener {
             val otp = etOtp.text.toString().trim()
@@ -119,8 +129,18 @@ class ForgotPasswordActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
+            if (!isValidPassword(newPass)) {
+                AlertDialogHelper.showMessageDialog(this, "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.")
+                return@setOnClickListener
+            }
+
+            if (confirmPass.isEmpty()) {
+                Toast.makeText(this, "Confirm password required", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             if (newPass != confirmPass) {
-                Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Password & Confirm Password does not match", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -132,6 +152,10 @@ class ForgotPasswordActivity : BaseActivity() {
                 confirm_password = hashedPass
             )
             viewModel.verifyForgotPasswordOtp(request)
+        }
+        
+        btnClose?.setOnClickListener {
+            otpDialog.dismiss()
         }
 
         otpDialog.setOnShowListener {
