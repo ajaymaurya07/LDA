@@ -24,7 +24,9 @@ data class InitiateTransactionRequest(
     val net_payable: String,
 
     val totalArv: String,
-    val user_id: String
+    val user_id: String,
+
+    val email_id: String
 )
 
 

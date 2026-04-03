@@ -124,13 +124,15 @@ class PaymentViewModel: BaseViewModel() {
                 response: Response<CreateTransactionResponse>
             ) {
 
+                Log.d("TAG", "onFailure: $response")
+                Log.d("TAG", "onFailure: ${response.body()?.message}")
+
                 if (response.code()== 403){
                     decrementLoader()
                     handleTokenRefresh(preferenceManager){
                         initiateTransaction(request, context, preferenceManager)
                     }
                 }
-
 
                 decrementLoader()
                 if (response.isSuccessful && response.body()!= null){
@@ -146,6 +148,8 @@ class PaymentViewModel: BaseViewModel() {
             }
 
             override fun onFailure(call: Call<CreateTransactionResponse>, t: Throwable) {
+
+                Log.d("TAG", "onFailure: $t")
                 decrementLoader()
                 _transaction.value= CreateTransactionResponse(
                    data = null,
@@ -651,6 +655,8 @@ class PaymentViewModel: BaseViewModel() {
                 decrementLoader()
                 val body= response.body()
 
+                Log.d("TAG", "onResponse: $body")
+
                 when {
                     response.isSuccessful -> { //HTTP 200
                         if (body != null) {
@@ -678,6 +684,7 @@ class PaymentViewModel: BaseViewModel() {
             }
 
             override fun onFailure(call: Call<ChallengeResponse>, t: Throwable) {
+                Log.d("TAG", "onResponse: $t")
                 decrementLoader()
                 _challenge.value = ChallengeResponse(
                     responseCode = 0,

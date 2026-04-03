@@ -83,7 +83,7 @@ class PaymentActivity : BaseActivity() {
         preferenceManager = PreferenceManager(this)
 
         val json = intent.getStringExtra("property_data_json")
-        val pid = intent.getStringExtra("pid")
+        val pid = intent.getStringExtra("pid").toString()
 
         val data: Data? = json?.let { Gson().fromJson(it, Data::class.java) }
 
@@ -125,19 +125,19 @@ class PaymentActivity : BaseActivity() {
             startActivity(intent)
         }
 
-        val ulbId=preferenceManager.getUlbId()
-        val arvValue=preferenceManager.getArvValue()
+        val ulbId=preferenceManager.getUlbId().toString()
+        val arvValue=preferenceManager.getArvValue().toString()
 
         val billDetails=data?.billDetails
-        val billNo=billDetails?.billNo
-        val financialYear=billDetails?.finYear
-        val houseTax=billDetails?.houseTaxNetAmount
-        val waterTax=billDetails?.waterTaxNetAmount
-        val sewerTax=billDetails?.sewerTaxNetAmount
-        val otherTax=billDetails?.othertaxNetAmount
-        val waterCharge=billDetails?.waterChargeNetAmount
-        val netDemand=billDetails?.netDemand
-        val netPayable=billDetails?.netPayble
+        val billNo=billDetails?.billNo.toString()
+        val financialYear=billDetails?.finYear.toString()
+        val houseTax=billDetails?.houseTaxNetAmount.toString()
+        val waterTax=billDetails?.waterTaxNetAmount.toString()
+        val sewerTax=billDetails?.sewerTaxNetAmount.toString()
+        val otherTax=billDetails?.othertaxNetAmount.toString()
+        val waterCharge=billDetails?.waterChargeNetAmount.toString()
+        val netDemand=billDetails?.netDemand.toString()
+        val netPayable=billDetails?.netPayble.toString()
 
         val houseTaxAdvance = billDetails?.houseTaxAdvance?.toDoubleOrNull() ?: 0.0
         val waterTaxAdvance = billDetails?.waterTaxAdvance?.toDoubleOrNull() ?: 0.0
@@ -149,9 +149,9 @@ class PaymentActivity : BaseActivity() {
 
 
         val ownerDetails=data?.ownerDetails
-        val ownerName=ownerDetails?.ownerName
-        val fatherName=ownerDetails?.fatherName
-        val mobileNumber=ownerDetails?.mobileNo
+        val ownerName=ownerDetails?.ownerName.toString()
+        val fatherName=ownerDetails?.fatherName.toString()
+        val mobileNumber=ownerDetails?.mobileNo.toString()
 
 
         otpMobileNo=ownerDetails?.mobileNo.toString()
@@ -164,28 +164,29 @@ class PaymentActivity : BaseActivity() {
                 mobile_transaction_id =mobile_id,
                 mobile_transaction_timestamp = getCurrentTime(),
 
-                bill_no = billNo!!,   // payment screen show
-                property_id = pid!!,
-                ulb_id = ulbId!!,      // // property details show
-                financial_year = financialYear!!,
+                bill_no = billNo,   // payment screen show
+                property_id = pid,
+                ulb_id = ulbId,      // // property details show
+                financial_year = financialYear,
 
-                ownerName = ownerName!!, // save in property details
-                fatherName = fatherName!!,
-                mobileNo = mobileNumber!!,
+                ownerName = ownerName, // save in property details
+                fatherName = fatherName,
+                mobileNo = mobileNumber,
 
-                property_tax = houseTax!!,   // payment screen show
-                water_tax = waterTax!!,
-                sewer_tax = sewerTax!!,
-                other_tax = otherTax!!,
-                water_charge = waterCharge!!,
+                property_tax = houseTax,   // payment screen show
+                water_tax = waterTax,
+                sewer_tax = sewerTax,
+                other_tax = otherTax,
+                water_charge = waterCharge,
 
-                net_demand = netDemand!!,
-                net_payable = netPayable!!,
+                net_demand = netDemand,
+                net_payable = netPayable,
 
-                totalArv = arvValue!!,
+                totalArv = arvValue,
 
-                user_id = preferenceManager.getUserId().toString()
+                user_id = preferenceManager.getUserId().toString(),
 
+                email_id = preferenceManager.getLoginMobileNumber().toString()
             )
 
 
