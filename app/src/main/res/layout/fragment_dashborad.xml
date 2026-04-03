@@ -5,10 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:orientation="vertical"
     tools:context=".houseTax.DashboradFragment">
-<!--    android:background="@drawable/last_01"-->
+
     <!-- Top Navbar -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +19,6 @@
         android:paddingHorizontal="20dp"
         android:paddingTop="10dp">
 
-        <!-- Dashboard Title -->
         <TextView
             android:id="@+id/tvDashboardTitle"
             android:layout_width="match_parent"
@@ -29,7 +27,7 @@
             android:textSize="16sp"
             android:fontFamily="@font/poppins_medium"
             android:textColor="#000000"/>
-        <!-- Welcome Text -->
+
         <TextView
             android:id="@+id/etPid"
             android:layout_width="match_parent"
@@ -41,7 +39,6 @@
 
     </LinearLayout>
 
-
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/sliderViewPager"
         android:layout_width="match_parent"
@@ -49,10 +46,6 @@
         android:padding="8dp"
         android:layout_marginTop="10dp"/>
 
-
-
-
-    <!-- Quick Services Title -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -63,7 +56,6 @@
         android:textSize="18sp"
         android:textColor="#000000"/>
 
-    <!-- Services Grid -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -77,73 +69,67 @@
             android:alignmentMode="alignMargins"
             android:useDefaultMargins="true">
 
-            <!-- CARD 1 -->
             <include
                 android:id="@+id/property_tax_card"
                 layout="@layout/item_service_card"
                 android:layout_width="0dp"
-                android:layout_height="180dp"
+                android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
+                android:layout_gravity="fill"
                 android:layout_margin="8dp"/>
 
-
-
-
-
-            <!-- CARD 3 -->
             <include
                 android:id="@+id/track_grivance_card"
                 layout="@layout/item_track_grivance"
                 android:layout_width="0dp"
-                android:layout_height="180dp"
+                android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
+                android:layout_gravity="fill"
                 android:layout_margin="8dp"/>
-
-
 
             <include
                 android:id="@+id/arv_history_card"
                 layout="@layout/item_arv_history"
                 android:layout_width="0dp"
-                android:layout_height="180dp"
+                android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
+                android:layout_gravity="fill"
                 android:layout_margin="8dp"/>
 
-
-            <!-- CARD 2 -->
             <include
                 android:id="@+id/property_tax_assesment_card"
                 layout="@layout/item_service_assesment"
                 android:layout_width="0dp"
-                android:layout_height="180dp"
+                android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
+                android:layout_gravity="fill"
                 android:layout_margin="8dp"/>
-
-            <!-- CARD 4 -->
-
 
             <include
                 android:id="@+id/mutation_card"
                 layout="@layout/item_mutation"
                 android:layout_width="0dp"
-                android:layout_height="180dp"
+                android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
+                android:layout_gravity="fill"
                 android:layout_margin="8dp"/>
 
             <include
                 android:id="@+id/water_sewerage_card"
                 layout="@layout/item_water_sewerage"
                 android:layout_width="0dp"
-                android:layout_height="180dp"
+                android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
+                android:layout_gravity="fill"
                 android:layout_margin="8dp"/>
 
             <include
                 android:id="@+id/property_search"
                 layout="@layout/item_payment_history"
                 android:layout_width="0dp"
-                android:layout_height="180dp"
+                android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
+                android:layout_gravity="fill"
                 android:layout_margin="8dp"/>
 
         </GridLayout>
