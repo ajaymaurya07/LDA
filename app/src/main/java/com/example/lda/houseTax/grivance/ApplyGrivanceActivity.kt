@@ -335,7 +335,7 @@ class ApplyGrivanceActivity : BaseActivity() {
         displayNameMapper: (T) -> String,
         onItemSelected: (T) -> Unit
     ) {
-        val dialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
+        val dialog = BottomSheetDialog(this, R.style.BottomSheetTheme)
         val dialogBinding = DialogSearchableSelectionBinding.inflate(layoutInflater)
         dialog.setContentView(dialogBinding.root)
         

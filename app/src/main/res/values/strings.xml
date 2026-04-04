@@ -77,6 +77,7 @@
     <string name="financial_year">Financial year</string>
     <string name="connection_amp_documents"><![CDATA[Connection & Documents]]></string>
     <string name="water_amp_sewerage"><![CDATA[Water & Sewerage]]></string>
+    <string name="verify_amp_reset_password"><![CDATA[Verify & Reset Password]]></string>
 
 
 </resources>
