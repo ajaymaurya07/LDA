@@ -49,7 +49,6 @@
         android:textColor="#777777"
         android:textSize="13sp"
         android:fontFamily="@font/poppins_regular"
-        android:maxLines="2"
-        android:ellipsize="end" />
+         />
 
 </LinearLayout>

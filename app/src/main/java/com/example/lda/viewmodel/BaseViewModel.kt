@@ -60,11 +60,6 @@ open class BaseViewModel : ViewModel() {
                 ) {
                     decrementLoader()
 
-                    if (response.code() == 401 || response.code() == 403) {
-                        sessionExpired()
-                        return
-                    }
-
                     val resBody = response.body()
 
                     if (response.isSuccessful && resBody?.status == true) {
@@ -83,13 +78,11 @@ open class BaseViewModel : ViewModel() {
 
                 override fun onFailure(call: Call<RefreshTokenResponse>, t: Throwable) {
                     decrementLoader()
-                    _errorMessage.value = "Network error: ${t.localizedMessage}"
+                    sessionExpired()
                 }
             })
     }
 
-    private val _logoutData = MutableLiveData<LogoutResponse>()
-    val logoutData: LiveData<LogoutResponse> = _logoutData
 
     fun logout(context: Context, preferenceManager: PreferenceManager) {
         val token = "Bearer ${preferenceManager.getAccessToken() ?: ""}"
@@ -98,36 +91,13 @@ open class BaseViewModel : ViewModel() {
         incrementLoader()
         RetrofitClient.apiCall.logout(Constent.APP_VERSION, deviceId, token).enqueue(object : Callback<LogoutResponse> {
             override fun onResponse(call: Call<LogoutResponse>, response: Response<LogoutResponse>) {
-
-                if (response.code() == 403) {
-                    decrementLoader()
-                    handleTokenRefresh(preferenceManager){
-                        logout(context, preferenceManager)
-                    }
-                }
-
                 decrementLoader()
-                if (response.isSuccessful && response.body() != null) {
-                    _logoutData.value = response.body()
-                    sessionExpired()
-                }
-                else{
-                    _logoutData.value = LogoutResponse(
-                        message = "No Response Found",
-                        status = false,
-                        responseCode = 0
-                    )
-                }
-
+                sessionExpired()
             }
 
             override fun onFailure(call: Call<LogoutResponse>, t: Throwable) {
                 decrementLoader()
-                _logoutData.value = LogoutResponse(
-                    message = "No Response Found",
-                    status = false,
-                    responseCode = 0
-                )
+                sessionExpired()
             }
         })
     }
