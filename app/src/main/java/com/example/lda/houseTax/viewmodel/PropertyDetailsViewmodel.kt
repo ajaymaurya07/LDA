@@ -67,7 +67,7 @@ class PropertyDetailsViewmodel: BaseViewModel() {
                 }
 
                 decrementLoader()
-                if (response.isSuccessful && response.body()?.success == true) {
+                if (response.isSuccessful && response.body()!=null) {
                     _dataList.value = response.body()
                 }
                  else {

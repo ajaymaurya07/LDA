@@ -236,8 +236,6 @@ class PaymentViewModel: BaseViewModel() {
         val token = "Bearer ${preferenceManager.getAccessToken() ?: ""}"
 
 
-        Log.d("TAG", "sendOtp: $request $token")
-
         incrementLoader()
 
         val call = RetrofitClient.apiCall.sendOtp(
@@ -260,6 +258,7 @@ class PaymentViewModel: BaseViewModel() {
                 }
 
                 decrementLoader()
+                Log.d("TAG", "sendOtp: ${response.body()}")
                 if(response.isSuccessful && response.body() != null){
                     _sendOtp.value = response.body()
                 }else{
@@ -274,7 +273,7 @@ class PaymentViewModel: BaseViewModel() {
             override fun onFailure(
                 call: Call<SendOtpResponse>, t: Throwable) {
                 decrementLoader()
-                Log.d("TAG", "onFailure: $t")
+                Log.d("TAG", "onFailure send otp: $t")
                 _sendOtp.value= SendOtpResponse(
                     data = null,
                     message = "network error",
@@ -379,6 +378,7 @@ class PaymentViewModel: BaseViewModel() {
                 response: Response<OtpVerificationResponse>
             ) {
 
+                Log.d("TAG", "onrespone otp verification: $response")
                 if (response.code()== 403){
                     decrementLoader()
                     handleTokenRefresh(preferenceManager){
@@ -401,6 +401,8 @@ class PaymentViewModel: BaseViewModel() {
             }
             override fun onFailure(
                 call: Call<OtpVerificationResponse>, t: Throwable) {
+
+                Log.d("TAG", "onFailure otp verication: $t")
                 decrementLoader()
                 _otpVerificationForGrievance.value= OtpVerificationResponse(
                     data = null,
@@ -935,6 +937,7 @@ class PaymentViewModel: BaseViewModel() {
                 }
 
                 decrementLoader()
+                Log.d("TAG", "onResponse save grievance: ${response.body()}")
                 if (response.isSuccessful && response.body()!=null){
                     _saveGrievance.value= response.body()
                 }else{
@@ -949,6 +952,7 @@ class PaymentViewModel: BaseViewModel() {
 
             override fun onFailure(call: Call<SaveGrievanceResponse>, t: Throwable) {
                 decrementLoader()
+                Log.d("TAG", "onResponse save grivance: ${t}")
                 _saveGrievance.value = SaveGrievanceResponse(
                     success = false,
                     message = t.message

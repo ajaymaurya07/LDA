@@ -77,7 +77,6 @@ class ApplyGrivanceActivity : BaseActivity() {
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
 
     private lateinit var verifyOtpDialog:BottomSheetDialog
-    private var isOtpVerificationIsDone=false
     private lateinit var loderHelper: LoderHelper
 
 
@@ -130,7 +129,6 @@ class ApplyGrivanceActivity : BaseActivity() {
                     binding.tvPropertyHeader.visibility = View.GONE
                 }
             } catch (e: Exception) {
-                Log.e("ApplyGrivance", "Error fetching properties", e)
             }
         }
     }
@@ -151,14 +149,23 @@ class ApplyGrivanceActivity : BaseActivity() {
         sharedViewModel.wardList.observe(this) { list -> wardList = list }
         sharedViewModel.mohallaList.observe(this) { list -> mohallaList = list }
 
+        // Step 1: saveGrievance success triggers Step 2: sendOtp
         viewModel.saveGrievance.observe(this) { response ->
             if (response?.success == true) {
-                Toast.makeText(this, response.message, Toast.LENGTH_LONG).show()
-                finish()
+                sendOtp()
             } else {
                 AlertDialogHelper.showMessageDialog(this, response?.message.toString())
             }
         }
+    }
+
+    private fun sendOtp() {
+        val mobile = binding.etMobileNumber.text.toString().trim()
+        val request = SendOtpRequest(
+            mobileNo = mobile,
+            propertyId = selectedProperty?.propertyId ?: ""
+        )
+        viewModel.sendOtp(request, "7394961460", this, preferenceManager = PreferenceManager(this))
     }
 
     private fun setupListeners() {
@@ -399,19 +406,14 @@ class ApplyGrivanceActivity : BaseActivity() {
         if (selectedCategory == null) { Toast.makeText(this, "Select Category", Toast.LENGTH_SHORT).show(); return }
         if (desc.isEmpty()) { Toast.makeText(this, "Enter Grievance Details", Toast.LENGTH_SHORT).show(); return }
 
-        if (!isOtpVerificationIsDone) {
-            val request = SendOtpRequest(
-                mobileNo = mobile,
-                propertyId = selectedProperty?.propertyId ?: ""
-            )
-            viewModel.sendOtp(request, "7394961460",this, preferenceManager =PreferenceManager(this) )
-        } else {
-            submitGrievanceData()
-        }
+        // Trigger Step 1
+        submitGrievanceData()
     }
 
     private fun submitGrievanceData() {
         val file = imageUri?.let { getFileFromUri(it) }
+        
+        val nameValue = binding.etName.text.toString().trim()
         
         viewModel.saveGrievanceData(
             ulbId = selectedUlbItem?.ulbId.toString(),
@@ -422,7 +424,7 @@ class ApplyGrivanceActivity : BaseActivity() {
             subCategoryId = selectedSubCategory?.subCatCode.toString(),
             landmark = binding.etLandmark.text.toString().trim(),
             description = binding.etDescription.text.toString().trim(),
-            name = binding.etName.text.toString().trim(),
+            name = nameValue,
             fatherName = binding.etFatherName.text.toString().trim(),
             mobileNo = binding.etMobileNumber.text.toString().trim(),
             email = binding.etEmail.text.toString().trim(),
@@ -451,6 +453,7 @@ class ApplyGrivanceActivity : BaseActivity() {
     }
 
     private fun otpObserver(){
+        // Listener for Step 2 Response
         viewModel.sendOtp.observe(this){
             if (it.success==true){
                 openPropertyVerifyOtpBottomSheet()
@@ -461,12 +464,12 @@ class ApplyGrivanceActivity : BaseActivity() {
             }
         }
         
+        // Listener for Step 3 Response
         viewModel.otpVerificationGrievance.observe(this){
             if (it.success==true){
-                isOtpVerificationIsDone=true
                 Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
                 verifyOtpDialog.dismiss()
-                submitGrievanceData()
+                finish()
             }
             else{
                 Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
@@ -475,7 +478,7 @@ class ApplyGrivanceActivity : BaseActivity() {
 
         viewModel.isLoading.observe(this){
             if (it){
-                loderHelper.startLoadingDialog("Loading Data, Please wait.")
+                loderHelper.startLoadingDialog("Processing, please wait.")
             }else{
                 loderHelper.dismissDialog()
             }

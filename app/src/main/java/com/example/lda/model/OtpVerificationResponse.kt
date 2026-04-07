@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class OtpVerificationResponse(
 
 	@field:SerializedName("data")
-	val data: List<Any?>? = null,
+	val data: String? = null,
 
 	@field:SerializedName("success")
 	val success: Boolean? = null,

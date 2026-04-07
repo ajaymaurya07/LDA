@@ -16,6 +16,7 @@ import com.example.lda.houseTax.data.PropertyModel
 import com.example.lda.houseTax.utils.PreferenceManager
 import com.example.lda.houseTax.viewmodel.PropertyDetailsViewmodel
 import com.example.lda.houseTax.viewmodel.PropertyIdFromDb
+import com.example.lda.utils.AlertDialogHelper
 import com.example.lda.utils.LoderHelper
 import com.example.lda.utils.dataClass.PropertyDetailsRequest
 import com.google.gson.Gson
@@ -101,6 +102,8 @@ class PropertyDetailsActivity : BaseActivity() {
                 intent.putExtra("property_data_json", json)
                 intent.putExtra("pid", selectedPropertyId)
                 startActivity(intent)
+            }else{
+                AlertDialogHelper.showMessageDialog(this,response.message.toString())
             }
 
         }

@@ -23,6 +23,7 @@ import com.example.lda.houseTax.viewmodel.PropertyDetailsViewmodel
 import com.example.lda.houseTax.viewmodel.PropertyIdFromDb
 import com.example.lda.model.OwnerDetails
 import com.example.lda.model.PropertyDetails
+import com.example.lda.utils.AlertDialogHelper
 import com.example.lda.utils.LoderHelper
 import com.example.lda.utils.dataClass.PropertyDetailsRequest
 import com.example.lda.utils.permission.NotificationPermissionHandler
@@ -126,13 +127,13 @@ class MainMenu : BaseActivity() {
             }
         }
 
-//        viewModel.dataList.observe(this){
-//
-//            if (it.success == true){
-//                Log.d("TAG", "mainmenu: $it")
-//            }
-//
-//        }
+        viewModel.dataList.observe(this){
+
+            if (it.success == false){
+                AlertDialogHelper.showMessageDialog(this,it.message.toString())
+            }
+
+        }
     }
 
 
