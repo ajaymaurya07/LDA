@@ -24,6 +24,7 @@ class GrievanceAdapter(
             tvGrievanceId.text = "ID: ${item.grievanceNo}"
             tvCategory.text = "Category: ${item.categoryName}"
             tvSubCategory.text = "Sub Category: ${item.subcategoryName}"
+            tvDateTime.text = "Date & Time: ${item.updatedAt}"
             
             btnTrack.setOnClickListener {
                 onTrackClick(item)
