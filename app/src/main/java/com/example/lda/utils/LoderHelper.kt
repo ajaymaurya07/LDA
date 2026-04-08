@@ -9,6 +9,12 @@ class LoderHelper(private val activity: Activity) {
     private var dialog: AlertDialog? = null
 
     fun startLoadingDialog(message: String) {
+        if (dialog?.isShowing == true) {
+            // Update message if already showing
+            dialog?.findViewById<TextView>(R.id.progress_text)?.text = message
+            return
+        }
+
         val builder = AlertDialog.Builder(activity)
         val inflater = activity.layoutInflater
         val view = inflater.inflate(R.layout.loading, null)
@@ -23,7 +29,6 @@ class LoderHelper(private val activity: Activity) {
     }
 
     fun dismissDialog() {
-        // Check if dialog is showing and activity is still valid
         if (dialog?.isShowing == true && !activity.isFinishing && !activity.isDestroyed) {
             dialog?.dismiss()
         }

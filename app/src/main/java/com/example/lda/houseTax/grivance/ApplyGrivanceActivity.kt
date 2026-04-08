@@ -95,6 +95,8 @@ class ApplyGrivanceActivity : BaseActivity() {
             lightStatusBar = true,
         )
 
+        loderHelper= LoderHelper(this)
+
         setupToolbar()
         observeData()
         setupLaunchers()
@@ -108,8 +110,6 @@ class ApplyGrivanceActivity : BaseActivity() {
             deviceId = DeviceUtils.getDeviceId(this),
             preferenceManager = PreferenceManager(this)
         )
-
-        loderHelper= LoderHelper(this)
     }
 
     private fun fetchProperties() {
@@ -160,6 +160,20 @@ class ApplyGrivanceActivity : BaseActivity() {
                 AlertDialogHelper.showMessageDialog(this, response?.message.toString())
             }
         }
+
+        sharedViewModel.isLoading.observe(this) { updateLoader() }
+        viewModel.isLoading.observe(this) { updateLoader() }
+    }
+
+    private fun updateLoader() {
+        val isSharedLoading = sharedViewModel.isLoading.value ?: false
+        val isViewModelLoading = viewModel.isLoading.value ?: false
+        
+        if (isSharedLoading || isViewModelLoading) {
+            loderHelper.startLoadingDialog("Processing, please wait.")
+        } else {
+            loderHelper.dismissDialog()
+        }
     }
 
     private fun setupListeners() {
@@ -179,7 +193,6 @@ class ApplyGrivanceActivity : BaseActivity() {
 
         binding.spinnerUlb.setOnClickListener {
             if (ulbList.isEmpty()) {
-                Toast.makeText(this, "No Data Found", Toast.LENGTH_SHORT).show()
                 sharedViewModel.ulbData(
                     loginMobileNumber = "",
                     deviceId = DeviceUtils.getDeviceId(this),
@@ -208,7 +221,9 @@ class ApplyGrivanceActivity : BaseActivity() {
                 return@setOnClickListener
             }
             if (zoneList.isEmpty()) {
-                Toast.makeText(this, "No Zones found", Toast.LENGTH_SHORT).show()
+                selectedUlbItem?.ulbId?.let { ulbId ->
+                    sharedViewModel.zoneData("", ulbId, DeviceUtils.getDeviceId(this), PreferenceManager(this))
+                }
                 return@setOnClickListener
             }
             showSearchableDialog("Select Zone", zoneList, { it.zoneName ?: "" }) { item ->
@@ -235,7 +250,11 @@ class ApplyGrivanceActivity : BaseActivity() {
                 return@setOnClickListener
             }
             if (wardList.isEmpty()) {
-                Toast.makeText(this, "No Wards found", Toast.LENGTH_SHORT).show()
+                val ulbId = selectedUlbItem?.ulbId
+                val zoneId = selectedZoneItem?.zoneId
+                if (ulbId != null && zoneId != null) {
+                    sharedViewModel.wardData("", ulbId, zoneId, DeviceUtils.getDeviceId(this), PreferenceManager(this))
+                }
                 return@setOnClickListener
             }
             showSearchableDialog("Select Ward", wardList, { it.wardName ?: "" }) { item ->
@@ -264,7 +283,12 @@ class ApplyGrivanceActivity : BaseActivity() {
                 return@setOnClickListener
             }
             if (mohallaList.isEmpty()) {
-                Toast.makeText(this, "No Mohalla found", Toast.LENGTH_SHORT).show()
+                val ulbId = selectedUlbItem?.ulbId
+                val zoneId = selectedZoneItem?.zoneId
+                val wardId = selectedWardItem?.wardId
+                if (ulbId != null && zoneId != null && wardId != null) {
+                    sharedViewModel.mohallaData("", ulbId, zoneId, wardId, DeviceUtils.getDeviceId(this), PreferenceManager(this))
+                }
                 return@setOnClickListener
             }
             showSearchableDialog("Select Mohalla", mohallaList, { it.mohallaName ?: "" }) { item ->
@@ -466,13 +490,6 @@ class ApplyGrivanceActivity : BaseActivity() {
             }
         }
 
-        viewModel.isLoading.observe(this){
-            if (it){
-                loderHelper.startLoadingDialog("Processing, please wait.")
-            }else{
-                loderHelper.dismissDialog()
-            }
-        }
     }
 
     private fun openPropertyVerifyOtpBottomSheet(grivanceId: String) {
