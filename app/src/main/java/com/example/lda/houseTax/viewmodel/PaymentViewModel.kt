@@ -332,7 +332,6 @@ class PaymentViewModel: BaseViewModel() {
                     _otpVerification.value = response.body()
                 }else{
                     _otpVerification.value = OtpVerificationResponse(
-                        data = null,
                         message = "no data found!",
                         success = false
                     )
@@ -341,9 +340,10 @@ class PaymentViewModel: BaseViewModel() {
             }
             override fun onFailure(
                 call: Call<OtpVerificationResponse>, t: Throwable) {
+                Log.d("TAG", "onFailure otp verification: $t")
+
                 decrementLoader()
                 _otpVerification.value = OtpVerificationResponse(
-                    data = null,
                     message = "network error",
                     success = false
                 )
@@ -392,7 +392,6 @@ class PaymentViewModel: BaseViewModel() {
                     _otpVerificationForGrievance.value= response.body()
                 }else{
                     _otpVerificationForGrievance.value= OtpVerificationResponse(
-                        data = null,
                         message = "no data found!",
                         success = false
                     )
@@ -405,7 +404,6 @@ class PaymentViewModel: BaseViewModel() {
                 Log.d("TAG", "onFailure otp verication: $t")
                 decrementLoader()
                 _otpVerificationForGrievance.value= OtpVerificationResponse(
-                    data = null,
                     message = "error",
                     success = false
                 )
@@ -416,7 +414,6 @@ class PaymentViewModel: BaseViewModel() {
 
     private fun dummyOtpVerificationResponse():OtpVerificationResponse{
         return OtpVerificationResponse(
-            data = null,
             message = "Otp verify Successfully",
             success = true,
             responseCode = 1,
@@ -773,7 +770,9 @@ class PaymentViewModel: BaseViewModel() {
                     _verifyForgotPasswordOtp.value = VerifyForgotPasswordOtpResponse(
                         status = false,
                         responseCode = 0,
-                        message = body?.message ?: "Unknown error"
+                        message = body?.message ?: "Unknown error",
+                        data = null
+
                     )
                 }
             }
@@ -783,7 +782,8 @@ class PaymentViewModel: BaseViewModel() {
                 _verifyForgotPasswordOtp.value = VerifyForgotPasswordOtpResponse(
                     status = false,
                     responseCode = 0,
-                    message = "network error"
+                    message = "network error",
+                    data = null
                 )
             }
         })
