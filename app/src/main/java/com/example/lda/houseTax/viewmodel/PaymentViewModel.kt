@@ -779,6 +779,8 @@ class PaymentViewModel: BaseViewModel() {
             }
 
             override fun onFailure(call: Call<VerifyForgotPasswordOtpResponse>, t: Throwable) {
+
+                Log.d("TAG", "onFailure forget verify otp: $t")
                 decrementLoader()
                 _verifyForgotPasswordOtp.value = VerifyForgotPasswordOtpResponse(
                     status = false,

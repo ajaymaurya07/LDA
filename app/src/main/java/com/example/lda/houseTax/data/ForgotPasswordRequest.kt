@@ -41,5 +41,8 @@ data class VerifyForgotPasswordOtpResponse(
     val status: Boolean,
     val responseCode: Int,
     val message: String,
-    val data: List<Any>? = null
+    val data: VerifyForgotPasswordOtpData? = null
+)
+data class VerifyForgotPasswordOtpData(
+    val attempts_left: Int?
 )
