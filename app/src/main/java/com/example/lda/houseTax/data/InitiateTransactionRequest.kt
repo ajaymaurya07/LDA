@@ -41,6 +41,13 @@ data class VerifyOtpRequest(
     val otp: String
 )
 
+
+data class VerifyOtpRequestForGrievance(
+    val mobileNo: String,
+    val otp: String,
+    val grievance_id: String
+)
+
 data class SignUpRequest(
     val name: String,
     val mobile_no: String,

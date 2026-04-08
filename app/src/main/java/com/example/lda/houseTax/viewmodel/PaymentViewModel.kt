@@ -36,6 +36,7 @@ import com.example.lda.viewmodel.BaseViewModel
 import com.example.lda.houseTax.utils.PreferenceManager
 import com.example.lda.utils.DeviceUtils
 import android.content.Context
+import com.example.lda.houseTax.data.VerifyOtpRequestForGrievance
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -356,7 +357,7 @@ class PaymentViewModel: BaseViewModel() {
     private val _otpVerificationForGrievance = MutableLiveData<OtpVerificationResponse>()
     val otpVerificationGrievance: LiveData<OtpVerificationResponse> = _otpVerificationForGrievance
 
-    fun otpVerificationForGrievance(request: VerifyOtpRequest,loginMobileNumber: String, context: Context, preferenceManager: PreferenceManager) {
+    fun otpVerificationForGrievance(request: VerifyOtpRequestForGrievance,loginMobileNumber: String, context: Context, preferenceManager: PreferenceManager) {
 
         val token = "Bearer ${preferenceManager.getAccessToken() ?: ""}"
 
@@ -878,6 +879,7 @@ class PaymentViewModel: BaseViewModel() {
         val mobileNoBody = mobileNo.toRequestBody("text/plain".toMediaTypeOrNull())
         val emailBody = email.toRequestBody("text/plain".toMediaTypeOrNull())
         val addressBody = address.toRequestBody("text/plain".toMediaTypeOrNull())
+        val propertyId= preferenceManager.getPropertyId().toString().toRequestBody("text/plain".toMediaTypeOrNull())
 
         val filePart = file?.let {
             val requestFile = it.asRequestBody("image/*".toMediaTypeOrNull())
@@ -904,6 +906,7 @@ class PaymentViewModel: BaseViewModel() {
             file = filePart,
             deviceId = DeviceUtils.getDeviceId(context),
             token = token,
+            propertyId = propertyId
         )
         call.enqueue(object : Callback<SaveGrievanceResponse> {
             override fun onResponse(
@@ -943,7 +946,9 @@ class PaymentViewModel: BaseViewModel() {
                 }else{
                     _saveGrievance.value= SaveGrievanceResponse(
                         success = false,
-                        message = "no data found!"
+                        message = "no data found!",
+                        data = null,
+                        responseCode = 0
                     )
                 }
 
@@ -955,7 +960,9 @@ class PaymentViewModel: BaseViewModel() {
                 Log.d("TAG", "onResponse save grivance: ${t}")
                 _saveGrievance.value = SaveGrievanceResponse(
                     success = false,
-                    message = t.message
+                    message = t.message,
+                    data = null,
+                    responseCode = 0
                 )
             }
         })

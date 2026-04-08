@@ -12,6 +12,7 @@ import com.example.lda.houseTax.data.VerifyForgotPasswordOtpRequest
 import com.example.lda.houseTax.data.VerifyForgotPasswordOtpResponse
 import com.example.lda.houseTax.data.VerifyOtpMailRequest
 import com.example.lda.houseTax.data.VerifyOtpRequest
+import com.example.lda.houseTax.data.VerifyOtpRequestForGrievance
 import com.example.lda.model.AllCaseDetailsResponse
 import com.example.lda.model.CaseDetailsByCnrResponse
 import com.example.lda.model.CaseStatusCountResponse
@@ -395,7 +396,7 @@ interface ApiMethod {
         @Header("X-App-Version") appVersion: Int,
         @Header("X-Device-Id") deviceId: String,
         @Header("Authorization") token: String,
-        @Body request: VerifyOtpRequest
+        @Body request: VerifyOtpRequestForGrievance
     ): Call<OtpVerificationResponse>
 
 
@@ -418,7 +419,8 @@ interface ApiMethod {
         @Part("mobileNo") mobileNo: RequestBody,
         @Part("email") email: RequestBody,
         @Part("address") address: RequestBody,
-        @Part file: MultipartBody.Part?
+        @Part file: MultipartBody.Part?,
+        @Part("propertyId") propertyId: RequestBody,
     ): Call<SaveGrievanceResponse>
 
 

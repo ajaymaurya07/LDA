@@ -30,6 +30,7 @@ import com.example.lda.databinding.LayoutPhotoPickerBinding
 import com.example.lda.eCourtUi.utils.SystemBarsHelper.applySafeAreaInsets
 import com.example.lda.houseTax.data.SendOtpRequest
 import com.example.lda.houseTax.data.VerifyOtpRequest
+import com.example.lda.houseTax.data.VerifyOtpRequestForGrievance
 import com.example.lda.houseTax.data.database.AppDatabase
 import com.example.lda.houseTax.data.database.entity.PropertyEntity
 import com.example.lda.houseTax.utils.PreferenceManager
@@ -149,23 +150,16 @@ class ApplyGrivanceActivity : BaseActivity() {
         sharedViewModel.wardList.observe(this) { list -> wardList = list }
         sharedViewModel.mohallaList.observe(this) { list -> mohallaList = list }
 
-        // Step 1: saveGrievance success triggers Step 2: sendOtp
+        // Step 1: saveGrievance success triggers Step 2: Open OTP Bottom Sheet (No need to call sendOtp separately)
         viewModel.saveGrievance.observe(this) { response ->
             if (response?.success == true) {
-                sendOtp()
+                Toast.makeText(this, "${response.message}", Toast.LENGTH_SHORT).show()
+                val grivanceId = response.data?.grievanceId.toString()
+                openPropertyVerifyOtpBottomSheet(grivanceId)
             } else {
                 AlertDialogHelper.showMessageDialog(this, response?.message.toString())
             }
         }
-    }
-
-    private fun sendOtp() {
-        val mobile = binding.etMobileNumber.text.toString().trim()
-        val request = SendOtpRequest(
-            mobileNo = mobile,
-            propertyId = selectedProperty?.propertyId ?: ""
-        )
-        viewModel.sendOtp(request, "7394961460", this, preferenceManager = PreferenceManager(this))
     }
 
     private fun setupListeners() {
@@ -453,18 +447,8 @@ class ApplyGrivanceActivity : BaseActivity() {
     }
 
     private fun otpObserver(){
-        // Listener for Step 2 Response
-        viewModel.sendOtp.observe(this){
-            if (it.success==true){
-                openPropertyVerifyOtpBottomSheet()
-                Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
-            }
-            else{
-                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-            }
-        }
         
-        // Listener for Step 3 Response
+        // Listener for Step 3 Response (Final Verification)
         viewModel.otpVerificationGrievance.observe(this){
             if (it.success==true){
                 Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
@@ -485,7 +469,7 @@ class ApplyGrivanceActivity : BaseActivity() {
         }
     }
 
-    private fun openPropertyVerifyOtpBottomSheet() {
+    private fun openPropertyVerifyOtpBottomSheet(grivanceId: String) {
 
         verifyOtpDialog = BottomSheetDialog(this, R.style.BottomSheetTheme)
         val view = layoutInflater.inflate(R.layout.bottom_sheet_otp, null)
@@ -500,11 +484,17 @@ class ApplyGrivanceActivity : BaseActivity() {
                 Toast.makeText(this, "Enter OTP first", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
-            val request = VerifyOtpRequest(
+            val request = VerifyOtpRequestForGrievance(
                 mobileNo = binding.etMobileNumber.text.toString().trim(),
-                otp = otp
+                otp = otp,
+                grievance_id = grivanceId
             )
-            viewModel.otpVerificationForGrievance(request,"7394961460",this, preferenceManager = PreferenceManager(this))
+            viewModel.otpVerificationForGrievance(
+                request,
+                "7394961460",
+                this,
+                preferenceManager = PreferenceManager(this)
+                )
         }
 
 
