@@ -407,6 +407,12 @@ class ApplyGrivanceActivity : BaseActivity() {
     private fun submitGrievanceData() {
         val file = imageUri?.let { getFileFromUri(it) }
         
+        // Image size validation (max 200kb)
+        if (file != null && file.length() > 200 * 1024) {
+            Toast.makeText(this, "Image size must be less than 200KB", Toast.LENGTH_LONG).show()
+            return
+        }
+        
         val nameValue = binding.etName.text.toString().trim()
         
         viewModel.saveGrievanceData(
