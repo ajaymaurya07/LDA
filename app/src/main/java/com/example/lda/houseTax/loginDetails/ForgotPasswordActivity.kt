@@ -2,6 +2,7 @@ package com.example.lda.houseTax.loginDetails
 
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -108,6 +109,9 @@ class ForgotPasswordActivity : BaseActivity() {
         otpDialog.setCancelable(false)
         otpDialog.setCanceledOnTouchOutside(false)
 
+        // Fix for keyboard pushing bottom sheet up and making it scrollable
+//        otpDialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
         val etOtp = view.findViewById<EditText>(R.id.etOtp)
         val etNewPassword = view.findViewById<EditText>(R.id.etNewPassword)
         val etConfirmPassword = view.findViewById<EditText>(R.id.etConfirmPassword)
@@ -164,6 +168,11 @@ class ForgotPasswordActivity : BaseActivity() {
                 val behavior = BottomSheetBehavior.from(it)
                 behavior.state = BottomSheetBehavior.STATE_EXPANDED
                 behavior.skipCollapsed = true
+                
+                // Allow the bottom sheet to be taller when keyboard is open
+                val layoutParams = it.layoutParams
+                layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT
+                it.layoutParams = layoutParams
             }
         }
 
