@@ -10,10 +10,8 @@ import android.telephony.SubscriptionManager
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.lda.R
@@ -48,15 +46,14 @@ class SignUpActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        
+        // enableEdgeToEdge() ko remove kiya kyunki ye scrolling behavior ko disturb kar sakta hai
+        
         dialog= BottomSheetDialog(this)
         viewModel= ViewModelProvider(this)[PaymentViewModel::class.java]
         loderHelper=LoderHelper(this)
-
-        enableEdgeToEdge()
-
 
         binding.btnSignUp.setOnClickListener {
             if (validateInput()) {
