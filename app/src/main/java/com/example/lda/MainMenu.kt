@@ -24,6 +24,7 @@ import com.example.lda.houseTax.viewmodel.PropertyIdFromDb
 import com.example.lda.model.OwnerDetails
 import com.example.lda.model.PropertyDetails
 import com.example.lda.utils.AlertDialogHelper
+import com.example.lda.utils.DeviceUtils
 import com.example.lda.utils.LoderHelper
 import com.example.lda.utils.dataClass.PropertyDetailsRequest
 import com.example.lda.utils.permission.NotificationPermissionHandler
@@ -58,6 +59,11 @@ class MainMenu : BaseActivity() {
 
         loderHelper= LoderHelper(this)
         preferenceManager = PreferenceManager(this)
+
+        Log.d("TAG", "onCreate: ${preferenceManager.getAccessToken()}")
+        Log.d("TAG", "onCreate: ${preferenceManager.getRefreshToken()}")
+        Log.d("TAG", "onCreate: ${DeviceUtils.getDeviceId(this)}")
+
 
         observerLoader()
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)

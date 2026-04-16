@@ -111,6 +111,8 @@ class PaymentViewModel: BaseViewModel() {
 
         val token = "Bearer ${preferenceManager.getAccessToken() ?: ""}"
 
+        Log.d("TAG", "initiateTransaction: $request")
+
 
         incrementLoader()
         val call = RetrofitClient.apiCall.initiateTransaction(
@@ -125,8 +127,8 @@ class PaymentViewModel: BaseViewModel() {
                 response: Response<CreateTransactionResponse>
             ) {
 
-                Log.d("TAG", "onFailure: $response")
-                Log.d("TAG", "onFailure: ${response.body()?.message}")
+                Log.d("TAG", "initiateTransaction: $response")
+                Log.d("TAG", "initiateTransaction: ${response.body()?.message}")
 
                 if (response.code()== 403){
                     decrementLoader()
@@ -150,7 +152,7 @@ class PaymentViewModel: BaseViewModel() {
 
             override fun onFailure(call: Call<CreateTransactionResponse>, t: Throwable) {
 
-                Log.d("TAG", "onFailure: $t")
+                Log.d("TAG", "initiateTransaction: $t")
                 decrementLoader()
                 _transaction.value= CreateTransactionResponse(
                    data = null,

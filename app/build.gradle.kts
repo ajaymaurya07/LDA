@@ -14,8 +14,8 @@ android {
         applicationId = "com.vdsai.house_tax_final"
         minSdk = 26   // upgrade 24 to 26 for ChronoUnit time calculate
         targetSdk = 35
-        versionCode = 3
-        versionName = "2.0.1"
+        versionCode = 5
+        versionName = "2.2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

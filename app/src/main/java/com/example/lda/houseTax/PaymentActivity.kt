@@ -136,7 +136,7 @@ class PaymentActivity : BaseActivity() {
         val sewerTax=billDetails?.sewerTaxNetAmount.toString()
         val otherTax=billDetails?.othertaxNetAmount.toString()
         val waterCharge=billDetails?.waterChargeNetAmount.toString()
-        val netDemand=billDetails?.netDemand.toString()
+        val netDemand= billDetails?.netDemand ?: "0"
         val netPayable=billDetails?.netPayble.toString()
 
         val houseTaxAdvance = billDetails?.houseTaxAdvance?.toDoubleOrNull() ?: 0.0
@@ -186,7 +186,7 @@ class PaymentActivity : BaseActivity() {
 
                 user_id = preferenceManager.getUserId().toString(),
 
-                email_id = preferenceManager.getLoginMobileNumber().toString()
+                email_id = preferenceManager.getEmail().toString()
             )
 
 
@@ -418,7 +418,7 @@ class PaymentActivity : BaseActivity() {
                 Toast.makeText(this, response?.message ?: "Payment can’t be processed right now. Please try again later.", Toast.LENGTH_LONG).show()
                 return@observe
             }
-            val data = response.data ?: return@observe
+            val data = response.data?: return@observe
             if (
                 data.txnid.isNullOrBlank() ||
                 data.amount.isNullOrBlank() ||
